@@ -1,0 +1,29 @@
+<!-- <app-login></app-login> -->
+
+
+<div class="main"   >
+ 
+        <!-- <div class="row"> -->
+            <div >
+                <app-des-menu *ngIf="routerLink != '/login'"></app-des-menu>
+            </div>
+            <div >
+                
+                <app-mob-menu *ngIf="routerLink != '/login'"></app-mob-menu>
+                <router-outlet></router-outlet>
+            </div>
+            
+        <!-- </div> -->
+  
+   
+</div>
+<div *ngIf="addItemrouterLink == '/addnewitem' ">
+    <!-- <app-mob-menu></app-mob-menu> -->
+    <!-- <router-outlet></router-outlet> -->
+
+</div>
+
+
+
+
+

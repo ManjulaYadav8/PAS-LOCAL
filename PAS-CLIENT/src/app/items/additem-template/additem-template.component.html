@@ -1,0 +1,413 @@
+<div class="main-container">
+    <div class="head-line">
+        <div>
+            <h5>New Item</h5>
+        </div>
+        <div class="savecancel-items-btns">
+            <div class="">
+                <button class="btn btn-primary savebtn" (click)="saveNewitem()">Add</button>
+            </div>
+            <div class="">
+                <button class="cancelbtn btn btn-light" routerLink="/items"> Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+
+        <form [formGroup]="newitemform" enctype="multipart/form-data">
+            <div class="form-group">
+
+                <div class="row">
+                    <div class="col">
+                        <!-- <label>Item Code</label> -->
+                        <input type="text" class="form-control" placeholder="Item Code" aria-label="First name"
+                            formControlName="item_code">
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="Item Name" aria-label="Last name"
+                            formControlName="item_name">
+                    </div>
+                    <div class="col">
+                        <!-- <label>Item Code</label> -->
+                        <input type="text" class="form-control" placeholder="Item Group" aria-label="First name"
+                            formControlName="item_group">
+                    </div>
+
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <!-- <label>Item Code</label> -->
+                        <input type="text" class="form-control" placeholder="HSN/SAC" aria-label="First name"
+                            formControlName="hsn_sac">
+                    </div>
+                    <div class="col">
+                        <input type="text"  class="form-control" placeholder="Valuation Rate" aria-label="Last name"
+                            formControlName="valuation_rate"  >
+                    </div>
+                    <div class="col">
+                        <!-- <label>Item Code</label> -->
+                        <input type="text" class="form-control" placeholder="Opening Stock" aria-label="First name"
+                            formControlName="opening_stock">
+                    </div>
+
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col">
+                        <!-- <label>Item Code</label> -->
+                        <input type="text" class="form-control" placeholder="Standard Selling Rate"
+                            aria-label="First name" formControlName="standard_selling_rate">
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="Selling Price" aria-label="Last name"
+                            formControlName="selling_price">
+                    </div>
+                    <div class="col input-group ImageFile">
+                        <!-- <label>Item Code</label> -->
+                        <label class="input-group-text" for="inputGroupFile">Image</label>
+                        <input type="file" class="form-control" name="itemimage" placeholder="Image" aria-label="First name"
+                            (change)="item_image($event)" formControlName="image" accept="image/png, image/jpeg"
+                            size="60">
+                    </div>
+
+                </div>
+                <br>
+
+                <div class="row">
+                    <div class="col">
+
+
+                        <div class="accordion" id="itemattributeExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#itemattribute" aria-expanded="true"
+                                        aria-controls="itemattribute">
+                                        Item Attribute
+                                    </button>
+                                </h2>
+                                <div id="itemattribute" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                                    data-bs-parent="#itemattributeExample">
+                                    <div [formGroup]="itemattributeform" class="accordion-body">
+                                        <!-- <div class="row">
+                                            <div class="col">
+                                                <input type="text" class="form-control" placeholder="Attribute Name"
+                                                    aria-label="First name" formControlName="attribute">
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" class="form-control" placeholder="Attribute Value"
+                                                    aria-label="First name" formControlName="attribute_value">
+                                            </div>
+                                        </div> -->
+
+
+                                        <table class="table table-bordered text-center">
+                                            <thead>
+                                                <tr>
+                                                    <th>No.</th>
+                                                    <th>Attribute</th>
+                                                    <th>Attribute Value</th>
+                                                    <th>Action</th>
+                                                </tr>
+
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let rowid of tableLength; let i=index">
+                                                    <td>{{rowid+1}}</td>
+                                                    <td><input type="text" class="form-control" placeholder="Attribute"
+                                                        aria-label="First name" formControlName="attribute" (change)="attribute($event)"></td>
+                                                    <td><input type="text" class="form-control" placeholder="Attribute Value"
+                                                        aria-label="First name" formControlName="attribute_value"  (change)="attribute_value($event)"></td>
+                                                    <td>
+                                                        <div class="d-flex">
+                                                            <div *ngIf="rowid==0">
+                                                                <button class="btn btn-light addrow" (click)="add_row(i)"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+                                                            </div>
+                                                            <div *ngIf="rowid>0">
+                                                                <button class="btn btn-light addrow" (click)="delete_row(i)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+                                       
+                                            
+
+
+
+                                        </table>
+                                       
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+
+                </div>
+
+
+                <br>
+
+                <div class="row">
+                    <div class="col">
+
+
+                        <div class="accordion" id="descriptionExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#description " aria-expanded="true" aria-controls="description">
+                                        Description
+                                    </button>
+                                </h2>
+                                <div id="description" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                                    data-bs-parent="#descriptionExample">
+                                    <div class="accordion-body brand">
+                                        <div>
+                                            <input type="text" class="form-control" placeholder="Brand"
+                                                aria-label="First name" >
+                                        </div>
+                                        <br>
+                                        <div>
+                                            <label for="">Description</label><br>
+                                            <textarea id="w3review" name="w3review" rows="4"
+                                                cols="50">At w3schools.com you will learn how to make a website. They offer free tutorials in all web development technologies.</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+
+                </div>
+
+                <br>
+
+                <div class="row">
+                    <div class="col">
+
+
+                        <div class="accordion" id="itemsupplierExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#itemsupplier" aria-expanded="true"
+                                        aria-controls="itemsupplier">
+                                        Item Supplier
+                                    </button>
+                                </h2>
+                                <div id="itemsupplier" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                                    data-bs-parent="#itemsupplierExample">
+                                    <div class="accordion-body ">
+                                        <div class="row">
+                                            <div class="col">
+                                                <input type="text" class="form-control" placeholder="Supplier"
+                                                    aria-label="First name" formControlName="supplier">
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" class="form-control" placeholder="Supplier Location"
+                                                    aria-label="First name" >
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col">
+                                                <label for="">Supplier Description</label><br>
+                                                <textarea id="w3review" name="w3review" rows="4"
+                                                    cols="50">At w3schools.com you will learn how to make a website. They offer free tutorials in all web development technologies.</textarea>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+
+                </div>
+
+
+
+
+                <br>
+
+                <div class="row">
+                    <div class="col">
+
+
+                        <div class="accordion" id="itembarcodeExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#itembarcode" aria-expanded="true" aria-controls="itembarcode">
+                                        Item Barcode
+                                    </button>
+                                </h2>
+                                <div id="itembarcode" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                                    data-bs-parent="#itembarcodeExample">
+                                    <div class="accordion-body ">
+                                        <div class="row">
+                                            <div class="col">
+                                                <input type="text" class="form-control" placeholder="Barcode"
+                                                    aria-label="First name" f>
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" class="form-control" placeholder="Barcode Type"
+                                                    aria-label="First name" >
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+
+                </div>
+
+
+
+              
+
+               
+
+
+                <br>
+
+                <div class="row">
+                    <div class="col">
+
+
+                        <div class="accordion" id="itemdefaultExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#itemdefault" aria-expanded="true" aria-controls="itemdefault">
+                                        Item Default
+                                    </button>
+                                </h2>
+                                <div id="itemdefault" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                                    data-bs-parent="#itemdefaultExample">
+                                    <div class="accordion-body ">
+                                        <div class="row">
+                                            <div class="col">
+                                                <input type="text" class="form-control" placeholder="Default Warehouse"
+                                                    aria-label="First name" >
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" class="form-control" placeholder="Default Pricelist"
+                                                    aria-label="First name" >
+                                            </div>
+                                        </div>
+                                        <!-- <br> -->
+                                        <!-- <div class="row">
+                                            <div class="col">
+                                                <input type="text" class="form-control" placeholder="Default Price_Lsit"
+                                                    aria-label="First name" formControlName="">
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" class="form-control" placeholder="Attribute Value"
+                                                    aria-label="First name" formControlName="">
+                                            </div>
+                                        </div> -->
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+
+                </div>
+
+
+
+
+
+                <br>
+
+                <div class="row">
+                    <div class="col">
+
+
+                        <div class="accordion" id="itemtaxExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#itemtax" aria-expanded="true" aria-controls="itemtax">
+                                        Item Tax
+                                    </button>
+                                </h2>
+                                <div id="itemtax" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                                    data-bs-parent="#itemtaxExample">
+                                    <div class="accordion-body ">
+                                        <div class="row">
+                                            <div class="col-5">
+                                                <input type="text" class="form-control" placeholder="Taxi id"
+                                                    aria-label="First name" >
+                                            </div>
+                                            <!-- <div class="col">
+                                                <input type="text" class="form-control" placeholder="Attribute Value"
+                                                    aria-label="First name" formControlName="">
+                                            </div> -->
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+
+                </div>
+
+
+
+
+
+
+
+            </div>
+
+        </form>
+
+    </div>
+</div>

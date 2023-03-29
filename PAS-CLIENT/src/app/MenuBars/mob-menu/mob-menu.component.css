@@ -1,0 +1,21 @@
+
+.navbar {
+    width: 100%;
+    padding: 1rem;
+    /* position: sticky; */
+    z-index: 1;
+    margin-bottom: 1rem;
+   
+    /* margin: 0%; */
+    /* background-color: aqua; */
+    /* position: fixed; */
+    /* z-index: 1000; */
+}
+.logo{
+    /* width:25%;
+    margin: 0%;
+    justify-content: center; */
+    /* margin-left: 1rem; */
+    
+}
+

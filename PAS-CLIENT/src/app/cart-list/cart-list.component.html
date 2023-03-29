@@ -1,0 +1,81 @@
+<div class="globalcss_container">
+    <!-- <app-header></app-header> -->
+<!-- <div *ngIf="cartProductList.length!=0; else emptycart;"> -->
+    <div>
+    <div class="container">
+        <div class="cart-title d-flex">
+            <h1>Your Cart</h1>
+            <a routerLink="/items" style="color:black; margin-top: 15px;">continue shopping</a>
+        </div>
+        <form>
+            <table class="table">
+                <thead>
+                    <tr class="table-header">
+
+                        <th scope="col">product</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- <tr *ngFor="let item of cartProductList;">
+
+                        <td>
+                            <div class="product d-flex">
+                                <div *ngIf="item.image!=null; else noImage">
+                                    <img src="{{item.image.src}}" alt="">
+                                </div>
+                                <ng-template #noImage>
+                                    <img src="" alt="No Image">
+                                </ng-template>
+                                <div class="title">
+                                    <p>{{item.title}}</p>
+                                    <p> Rs.{{item.variants[0].price}}</p>
+                                </div>
+                            </div>
+
+
+                        </td>
+                        <td>
+                            <div class="d-flex">
+                                <div class="box d-flex">
+                                    <button class="minus sign" (click)="Decrement(item.id)">-</button>
+                                    <span class="">{{item.quantity}}</span>
+                                    <button class="plus sign" (click)="Increment(item.id)">+</button>
+                                </div>
+                                <button class="remove" (click)="RemoveFromCart(item.id)"><i class="fa fa-trash-o"
+                                        aria-hidden="true"></i></button>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="total">{{item.total}}</div>
+                        </td>
+                    </tr> -->
+                    <!-- <tr>
+                        <td colspan="10" class="">
+                       
+                             <h3>Sub-Total: Rs.<strong>{{grandTotal}}</strong></h3>
+                            <button class="btn btn-danger" (click)="create_order(cartProductList)"> CheckOut</button>
+                
+                     </td>
+                    </tr> -->
+                    <!-- <tr> <button class="btn btn-danger" (click)="create_order(cartProductList)"> CheckOut</button></tr> -->
+
+                </tbody>
+            </table>
+            <div class="checkout">
+                <h4>Sub-Total: Rs.<strong>{{grandTotal}}</strong></h4>
+                <!-- <button class="btn btn-danger" (click)="checkout()"> CheckOut</button> -->
+            </div>
+
+
+        </form>
+    </div>
+</div>
+<!-- <ng-template #emptycart>
+    <div class="empty container">
+        <img src="https://th.bing.com/th/id/R.afa6a28d0ee0b5e7d55b7a5aecdfedec?rik=eOl3Z%2bU0XvmYlw&riu=http%3a%2f%2fiticsystem.com%2fimg%2fempty-cart.png&ehk=0omil1zRH7T3Pb5iTzvueamUQLSSb55vgY7dLFF8Bl8%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1"
+            alt="">
+    </div>
+</ng-template> -->
+</div>

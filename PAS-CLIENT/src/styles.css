@@ -1,0 +1,48 @@
+/* You can add global styles to this file, and also import other style files */
+@font-face {
+    font-family: "Poppin";
+    src: url(./assets/Poppins/Poppins-Medium.ttf);
+    
+}
+
+* {
+    font-family: "Poppin";
+
+}
+.globalcss_container{
+    /* margin: 0%; */
+    /* position: fixed; */
+    /* position: absolute; */
+    /* margin-top: 1rem; */
+    margin-left: 16%;
+    /* padding-top: 6rem; */
+    width:84%;
+    height: 100%;
+    
+}
+body {
+    /* position: fixed; */
+    /* overflow-y: scroll; */
+    /* background: #f7f8fa; */
+}
+
+
+
+td {
+    font-size: small;
+    padding: .5rem;
+}
+.title {
+    font-size: 18px;
+  }
+  
+  
+ 
+  
+@media screen and (max-width:960px) {
+    .globalcss_container{
+        margin-left: 0;
+        padding-top: 0;
+        
+    }
+}

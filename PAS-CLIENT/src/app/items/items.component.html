@@ -1,0 +1,148 @@
+<div class="globalcss_container">
+    <!-- <h5>Welcome to Product Dashboard</h5> -->
+
+    <div class="container">
+
+        <div class="row productview">
+
+            <div>
+
+                <h5 class="title">Total Items in Stock({{itemList.length}})</h5>
+
+            </div>
+            <div class="order-items-btns">
+                <div class="additembtn">
+                    <button class="newitembtn btn" routerLink="/addnewitem"><i class="fa fa-plus"
+                            aria-hidden="true"></i>  &nbsp;Item Stock Entry</button>
+                </div>
+                <div class="ordernowbtn">
+                    <button class="order btn" routerLink="/addnewitem"><i class="fa fa-plus"
+                            aria-hidden="true"></i> &nbsp;Add New Product</button>
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+        <div class="row productList">
+            <div class="col-md-3"
+                *ngFor="let prod of itemList |  paginate: { itemsPerPage: 8, currentPage: p, totalItems: itemLength } ">
+                <div class="card card-default">
+
+
+
+                    <div class="card-body">
+                        <div class="cardImg">
+                            <img src="https://m.media-amazon.com/images/I/718ETwvLVOL._SL1500_.jpg">
+                            <button type="button" class="quickviewbtn" (click)="viewProduct(prod)"
+                                data-bs-toggle="modal" data-bs-target="#myModal">Quick View</button>
+                        </div>
+                        <div class="productName">
+                            <h6 class="prodname">{{prod.item_name}}</h6>
+                        </div>
+                        <div class="productPrice">
+                            <h6 class="prodprice"> {{prod.selling_price | currency : 'INR' }}</h6>
+                        </div>
+                        <div class="desc">
+                            <p [innerHtml]="prod.description" class="proddesc"></p>
+                        </div>
+
+                        <!-- <p>Supplier Details</p> -->
+
+                        <div class="row" *ngIf="prod.supplier_icon && prod.supplier_location; else noImage">
+                            <div class="suppliericon suppliericondiv">
+                                <img [src]="prod.supplier_icon ">
+                            </div>
+                            <div class="supplierDesc">
+                                <p class="supplierName">{{prod.supplier}}</p>
+                                <a [href]="prod.supplier_location" target="blank" style="font-size: 1rem;">
+                                    <i class="fa fa-map-marker"
+                                        aria-hidden="true"></i>{{prod.supplier_location_name}}</a>
+                            </div>
+                        </div>
+                        <ng-template #noImage>
+                            <img src="" alt="No supplier Iocn">
+                            <div class="supplierDesc">
+                                <p class="supplierName">{{prod.supplier}}</p>
+                                <a [href]="prod.supplier_location" target="blank" style="font-size: 1rem;">
+                                    <i class="fa fa-map-marker"
+                                        aria-hidden="true"></i>&nbsp;{{prod.supplier_location_name}}</a>
+                            </div>
+                        </ng-template>
+                    </div>
+                    <!-- <div class="card-footer">
+                        <div *ngIf="prod.parent_group === 'Fuel' || prod.item_group === 'FasTag'">
+                            <button class="btn addBtn"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp; View
+                                Details</button>
+                        </div>
+                        <div *ngIf="prod.parent_group != 'Fuel' && prod.item_group != 'FasTag'"
+                            class="btn-block text-center">
+                            <button class="btn addprodBtn"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp; Add
+                                Product</button>
+                        </div>
+                    </div> -->
+                </div>
+                <br>
+            </div>
+        </div>
+        <div class="text-center">
+            <pagination-controls class="my-pagination" previousLabel="" nextLabel=""
+                (pageChange)="p = $event"></pagination-controls>
+        </div>
+
+
+
+    </div>
+</div>
+
+
+<div class="modal fade" id="myModal" *ngIf="view_product">
+    <div class="modal-dialog modal-md">
+
+        <div class="modal-content">
+            <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+            <div class="viewproduct_container">
+                <!-- <div class="row"> -->
+                    <!-- <div class="col"> -->
+                        <img class="quickviewimg" src="https://m.media-amazon.com/images/I/718ETwvLVOL._SL1500_.jpg" alt="">
+                        <hr>
+                        <h4 class="text">{{view_product.item_name}}</h4>
+                        <p class="price text">{{view_product.selling_price | currency : 'INR'}}</p>
+                        <!-- <small class="text">Tax included. Shipping calculated at checkout.</small> -->
+
+                        <p class="description text">{{view_product.description}}</p>
+                        <p class="text">Supplier Details</p>
+
+                        <div class="row text"
+                            *ngIf="view_product.supplier_icon && view_product.supplier_location; else noImage">
+                            <div class="suppliericon suppliericondiv">
+                                <img [src]="view_product.supplier_icon ">
+                            </div>
+
+                            <div class="supplierDesc text">
+                                <p class="supplierName">{{view_product.supplier}}</p>
+                                <a [href]="view_product.supplier_location" target="blank" style="font-size: 1rem;">
+                                    <i class="fa fa-map-marker"
+                                        aria-hidden="true"></i>&nbsp;{{view_product.supplier_location_name}}</a>
+                            </div>
+                        </div>
+                        <ng-template #noImage class="text">
+                            <img src="" alt="No supplier Details">
+                            <div class="supplierDesc">
+                                <p class="supplierName">{{view_product.supplier}}</p>
+                                <a [href]="view_product.supplier_location" target="blank" style="font-size: 1rem;">
+                                    <i class="fa fa-map-marker"
+                                        aria-hidden="true"></i>{{view_product.supplier_location_name}}</a>
+                            </div>
+                        </ng-template>
+
+                        <!-- <button class="addcart" (click)="addcart(view_product)"> Add to Cart</button> -->
+                    </div>
+                <!-- </div> -->
+            <!-- </div> -->
+
+        </div>
+    </div>
+</div>

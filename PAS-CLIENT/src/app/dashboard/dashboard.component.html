@@ -1,0 +1,271 @@
+<div class="globalcss_container">
+    <div class="container">
+
+    <h5 class="title">Welcome to Dashboard</h5>
+
+    <div class="row row-cards">
+
+        <div class="col-md-4 sub-cards">
+
+            <div class="balance">
+
+
+                <div class="amount-card d-flex">
+                    <!-- <div class="Available-Credit d-flex"> -->
+                    <div class="text-amount">
+                        <p class="font">Total Sales</p>
+
+                        <h5 class="font"><span class="font"><i class="fa fa-inr" aria-hidden="true"></i> </span>
+                            {{1000000 | number}}</h5>
+
+                        <!-- <h5 class="font"><span class="font"><i class="fa fa-inr" aria-hidden="true"></i> </span>
+                                4521.0</h5> -->
+                    </div>
+                    <div class="iccon">
+                        <span><i class="fa fa-inr" aria-hidden="true"></i></span>
+                    </div>
+                    <!-- </div> -->
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4 sub-cards">
+
+            <div class="balance">
+                <div class="amount-card d-flex">
+                    <div class="text-amount ">
+                        <div>
+                            <p class="font">Total Profit</p>
+
+                            <h5 class="font"><span class="font"><i class="fa fa-inr" aria-hidden="true"></i> </span>
+                                {{100000 | number}}
+                            </h5>
+                        </div>
+                        <div>
+
+                        </div>
+
+                    </div>
+                    <div class="iccon">
+                        <span><i class="fa fa-inr" aria-hidden="true"></i></span>
+                    </div>
+                    <!-- <div class="line weekly-line">
+                        <span></span>
+                    </div>
+
+                    <div class="cashbalance">
+                        <p class="font">Cashbacks</p>
+
+                        <h5>  100000</h5>
+                    </div> -->
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4 sub-cards">
+            <div class="balance">
+                <div class="amount-card d-flex">
+                    <div class="text-amount">
+                        <p class="font">Total Purchase</p>
+
+                        <h5 class="font"><span class="font"><i class="fa fa-inr" aria-hidden="true"></i> </span>
+                            {{100000 | number}}
+                        </h5>
+                    </div>
+                    <div class="iccon">
+                        <span><i class="fa fa-inr" aria-hidden="true"></i></span>
+                    </div>
+
+                    <!-- <div class="line monthly-line">
+                        <span></span>
+                    </div>
+                    <div class="cashbalance">
+                        <p class="font">Cashbacks </p>
+
+                        <h5 class="font"><span class="font"><i class="fa fa-inr" aria-hidden="true"></i> </span>
+                            100000</h5>
+                    </div> -->
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <div>
+        <h5 class="title">Recent Orders</h5>
+        <div class="table-responsive  ">
+            <!-- <div *ngIf="( recentordersData ) as result"> -->
+            <div>
+                <div *ngIf="!noRecentOrderTxnData">
+
+
+                    <table class="table table-striped">
+
+                        <thead>
+                            <tr style="text-align:center">
+                                <th>Category</th>
+                                <th>Customer Name</th>
+                                <th>Order ID</th>
+                                <th>Total Amount</th>
+                                <th>Order Date</th>
+                                <th>Type</th>
+
+
+                            </tr>
+                        </thead>
+
+                        <!-- <tr style="text-align:center"
+                            *ngFor="let data of recentordersData | paginate: {id:'pagination1', itemsPerPage:10, currentPage:p1, totalItems:recentordersDatalength}">
+                            <td scope="row">Category 1</td>
+                            <td>{{data.item_name}}</td>
+
+                            <td>{{data.item_group}}</td>
+                            <td>{{data.image}}</td>
+                            <td>{{data.item_code}}</td>
+                            <td>{{data.stock_uom}}</td>
+
+                        </tr> -->
+                        <tr style="text-align:center">
+                            <td scope="row">Category 1</td>
+                            <td>Item 1</td>
+
+                            <td>Desktops</td>
+                            <td><img src="" alt="No Image"></td>
+                            <td>1234</td>
+                            <td>Nos</td>
+
+                        </tr>
+
+                        <tr style="text-align:center">
+                            <td scope="row">Category 1</td>
+                            <td>Item 1</td>
+
+                            <td>Desktops</td>
+                            <td><img src="" alt="No Image"></td>
+                            <td>1234</td>
+                            <td>Nos</td>
+
+                        </tr>
+                        <tr style="text-align:center">
+                            <td scope="row">Category 1</td>
+                            <td>Item 1</td>
+
+                            <td>Desktops</td>
+                            <td><img src="" alt="No Image"></td>
+                            <td>1234</td>
+                            <td>Nos</td>
+
+                        </tr>
+
+                        <tr style="text-align:center">
+                            <td scope="row">Category 1</td>
+                            <td>Item 1</td>
+
+                            <td>Desktops</td>
+                            <td><img src="" alt="No Image"></td>
+                            <td>1234</td>
+                            <td>Nos</td>
+
+                        </tr>
+                        <tr style="text-align:center">
+                            <td scope="row">Category 1</td>
+                            <td>Item 1</td>
+
+                            <td>Desktops</td>
+                            <td><img src="" alt="No Image"></td>
+                            <td>1234</td>
+                            <td>Nos</td>
+
+                        </tr>
+
+                        <tr style="text-align:center">
+                            <td scope="row">Category 1</td>
+                            <td>Item 1</td>
+
+                            <td>Desktops</td>
+                            <td><img src="" alt="No Image"></td>
+                            <td>1234</td>
+                            <td>Nos</td>
+
+                        </tr>
+                        <tr style="text-align:center">
+                            <td scope="row">Category 1</td>
+                            <td>Item 1</td>
+
+                            <td>Desktops</td>
+                            <td><img src="" alt="No Image"></td>
+                            <td>1234</td>
+                            <td>Nos</td>
+
+                        </tr>
+
+                        <tr style="text-align:center">
+                            <td scope="row">Category 1</td>
+                            <td>Item 1</td>
+
+                            <td>Desktops</td>
+                            <td><img src="" alt="No Image"></td>
+                            <td>1234</td>
+                            <td>Nos</td>
+
+                        </tr>
+                        <tr style="text-align:center">
+                            <td scope="row">Category 1</td>
+                            <td>Item 1</td>
+
+                            <td>Desktops</td>
+                            <td><img src="" alt="No Image"></td>
+                            <td>1234</td>
+                            <td>Nos</td>
+
+                        </tr>
+
+                        <tr style="text-align:center">
+                            <td scope="row">Category 1</td>
+                            <td>Item 1</td>
+
+                            <td>Desktops</td>
+                            <td><img src="" alt="No Image"></td>
+                            <td>1234</td>
+                            <td>Nos</td>
+
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- <div *ngIf=" !isRecentOrderTxn && !noRecentOrderTxnData">
+                    <h5 class="noTxn"> Data Not Found</h5>
+                </div> -->
+            </div>
+
+            <!-- <div class="text-center" *ngIf="isRecentOrderTxn" style="padding-top:50px; padding-bottom:50px;">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div> -->
+            <div *ngIf="noRecentOrderTxnData">
+                <!-- <app-loader style="padding-left: 50%;" *ngIf="dataLoading"></app-loader> -->
+                <h5 class="noTxn">No Transaction
+                    History
+                </h5>
+
+            </div>
+
+
+
+        </div>
+        <div class="text-center" *ngIf="recentordersDatalength>0 && searchString==''">
+            <pagination-controls style="font-size: 13px;" id="pagination1" class="my-pagination" previousLabel=""
+                nextLabel="" (pageChange)="p1 = $event"></pagination-controls>
+        </div>
+    </div>
+</div>
+</div>
