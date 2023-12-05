@@ -1,0 +1,96 @@
+rules_version = '2';
+service cloud.firestore {
+ match /databases/{database}/documents {
+  match /AppointmentManagements/{document=**}{
+  allow read, write : if appUser();
+  }
+  match /AppointmentItemsManagement/{document=**}{
+    allow read : if guestUser() || appUser();
+    allow write : if appUser();
+  }
+  match /TagManagement/{document=**}{
+    allow read : if guestUser() || appUser();
+    allow write : if appUser();
+  }
+  match /BannerManagement/{document=**}{
+    allow read : if guestUser() || appUser();
+    allow write : if appUser();
+  }
+  match /Blog/{document=**}{
+    allow read : if guestUser() || appUser();
+    allow write : if appUser();
+  }
+  match /CarouselManagement/{document=**}{
+    allow read : if guestUser() || appUser();
+    allow write : if appUser();
+  }
+  match /Cart/{document=**}{
+    allow read, write : if appUser();
+  }
+  match /CompanyInfo/{document=**}{
+    allow read : if guestUser() || appUser();
+    allow write : if appUser();
+  }
+  match /ConfigInfo/{document=**}{
+    allow read : if guestUser() || appUser();
+    allow write : if appUser();
+  }
+  match /Contact/{document=**}{
+    allow read : if guestUser() || appUser();
+    allow write : if appUser();
+  }
+  match /CheckOutAddress/{document=**}{
+    allow read, write : if appUser();
+  }
+  match /CouponManagement/{document=**}{
+    allow read, write : if appUser();
+  }
+  match /Dealersdata/{document=**}{
+    allow read, write : if appUser();
+  }
+  match /ManageBusinessStandards/{document=**}{
+    allow read : if guestUser() || appUser();
+    allow write : if appUser();
+  }
+  match /ManageSide/{document=**}{
+    allow read : if guestUser() || appUser();
+    allow write : if appUser();
+  }
+  match /NavbarManagement/{document=**}{
+    allow read : if guestUser() || appUser();
+    allow write : if appUser();
+  }
+  match /Order/{document=**}{
+    allow read, write : if appUser();
+  }
+  match /ProductManagement/{document=**}{
+    allow read : if guestUser() || appUser();
+    allow write : if appUser();
+  }
+  match /Review/{document=**}{
+    allow read : if guestUser() || appUser();
+    allow write : if appUser();
+  }
+  match /ShippingrateManagement/{document=**}{
+    allow read, write : if appUser();
+  }
+  match /TestimonialManagement/{document=**}{
+    allow read : if guestUser() || appUser();
+    allow write : if appUser();
+  }
+  match /User/{document=**}{
+    allow read : if guestUser() || appUser();
+    allow write : if appUser();
+  }
+   match /AlertManagement/{document=**}{
+    allow read : if guestUser() || appUser();
+    allow write : if appUser();
+  }
+  function appUser(){
+  return request.auth != null && request.auth.token != null && request.auth.uid != null;
+  }
+  function guestUser(){
+  return request.auth != null && request.auth.token != null && request.auth.uid != null && request.auth.token.email == "guest@asbgoodfoods.com";
+  }
+ }
+}

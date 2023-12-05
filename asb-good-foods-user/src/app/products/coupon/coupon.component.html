@@ -1,0 +1,36 @@
+<mat-expansion-panel class="mat-elevation-z1">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <span class="custom-font">Apply Coupon</span>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="alert alert-warning" role="alert" *ngIf="warnMsg != ''">
+        {{warnMsg | titlecase }}
+    </div>
+  <mat-form-field class="example-chip-list">
+    <mat-label>Search Coupon</mat-label>
+    <mat-chip-list #chipList aria-label="Coupon selection">
+      <mat-chip
+        *ngFor="let coupon of appliedCoupon"
+        [selectable]="selectable"
+        [removable]="removable"
+        (removed)="remove(coupon)">
+        {{coupon.couponCode}}
+        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+      </mat-chip>
+      <input (input)="clearMsg()"
+        placeholder="Search Coupon..."
+        #couponInput
+        [formControl]="couponCtrl"
+        [matChipInputFor]="chipList"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        (matChipInputTokenEnd)="add($event)">
+    </mat-chip-list>
+    <!-- <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+      <mat-option *ngFor="let coupon of filteredCoupons | async" [value]="coupon">
+        {{coupon}}
+      </mat-option>
+    </mat-autocomplete> -->
+  </mat-form-field>
+</mat-expansion-panel> 
+<br/>

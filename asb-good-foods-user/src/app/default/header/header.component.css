@@ -1,0 +1,298 @@
+  * {
+	outline: none;
+}
+@font-face {
+    font-family:"samarkan";
+    src: url("../../../assets/font/SamarkanNormal-Gg5D.ttf");
+    }
+.tagLine{
+    font-family:"samarkan" ;
+    width: 100%;
+    background-color: #2A8168;
+    height: 50px;
+    color: white;
+    font-size: 30px;
+    vertical-align: middle;
+    margin-top: -30px;
+}
+.sticky-container{
+    position: fixed;
+    top : 0;
+    width: 100%;
+    z-index: 99999;
+    background-color: white;
+}
+  /* .container{
+    position: relative;
+  } */
+.nav-item{
+    font-size: 16px;
+    /* padding-left: 20px; */
+    margin-bottom: 0px;
+    font-weight: bold;
+}
+    .login{
+        margin-top: -5px;
+    }
+.navText{
+    margin-top: 100px;
+}
+.brandlogo{
+    width: 180px;
+    height: 180px;
+    margin-left: 28px;
+    /* margin-left: 10%; */
+}
+/* .halftext{
+    margin-left: -60px;
+    padding-left: 40px;
+} */
+i{
+    transform: rotate(0deg) 
+}
+.login{
+    text-align: end;
+}
+.webview{
+    display: contents;
+}
+.mobileview{
+    display: none;
+}
+.imagesSrc{
+    width: 130px;
+    height: 130px;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    outline: none;
+}
+.container{
+    margin-top: 0;
+}
+.social{
+    cursor: pointer;
+    vertical-align: middle;
+    width: 30px;
+    height: 30px;
+    background-color: #2A8168;
+    border-radius: 50%;
+    padding: 7px;
+    margin-left: 10px;
+    /* margin-top: 20px; */
+    text-align: center;
+    color: white;
+}
+.social:hover{
+    cursor: pointer;
+    vertical-align: middle;
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    border-radius: 50%;
+    padding: 7px;
+    margin-left: 10px;
+    /* margin-top: 20px; */
+    text-align: center;
+    color: #2A8168;
+}
+
+@media screen and (max-width:960px)and (orientation:portrait){ 
+    .fa{
+        color: #2A8168;  
+      }
+    .webview{
+        display: none;
+    }
+    .mobileview{
+        display: contents;
+    }
+    a.active{
+        width: 30%;
+        margin-left: 35%;
+    }
+    .nav-item{
+        font-size: 16px;
+        text-align: center;
+        padding-left: 0px;
+    }
+    .navbg{
+        margin-bottom: 0;
+    }
+    /* .brandlogo{
+        margin-left: 30%;
+        width: 130px;
+        height: 130px;
+    }
+    .imagesSrc{
+        width: 100px;
+        height: 100px;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+        outline: none;
+    } */
+    .moblogin{
+    margin-left: 20%;    
+    }
+    .flex-row{
+        width: 80px;
+    }
+    .imagesSrc1{
+        width: 100px;
+        height: 100px;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+        outline: none;
+        margin-left: 20%;
+        /* margin-left: 24px; */
+        /* margin-left: 24px; */
+    }
+        /* .login{
+            text-align: center;
+        } */
+    .mobcart{
+        margin-left: 10px;
+    }
+    .fa-bars{
+        color: white;
+    }
+    .navbar-toggler{
+        background-color: #2A8168;
+    }
+    .tagLine{
+        font-family:"samarkan" ;
+        width: 100%;
+        background-color: #2A8168;
+        height: 50px;
+        color: white;
+        font-size: 24px;
+        vertical-align: middle;
+        margin-top: -10px;
+    }
+    .social{
+        cursor: pointer;
+        vertical-align: middle;
+        width: 25px;
+        height: 25px;
+        background-color: #2A8168;
+        border-radius: 50%;
+        padding: 6px;
+        margin-left: 4px;
+        /* margin-top: 20px; */
+        text-align: center;
+        color: white;
+        font-size: small;
+    }
+    .social:hover{
+        cursor: pointer;
+        vertical-align: middle;
+        width: 25px;
+        height: 25px;
+        background-color: white;
+        border-radius: 50%;
+        padding: 6px;
+        margin-left: 4px;
+        /* margin-top: 20px; */
+        text-align: center;
+        color: #2A8168;
+    }
+}
+@media screen and (max-width:960px) and (orientation:landscape){
+    .fa{
+        color: #2A8168;  
+      }
+    .webview{
+        display:none ;
+    }
+    .mobileview{
+        display: contents;
+    }
+    a.active{
+        width: 30%;
+        margin-left: 35%;
+    }
+    .nav-item{
+        font-size: 14px;
+        text-align: center;
+        padding-left: 0px;
+    }
+    .flex-row{
+        width: 100px;
+    }
+    .imagesSrc1{
+        width: 120px;
+        height: 120px;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+        outline: none;
+        margin-left: 24%;
+        /* margin-left: 34px; */
+    }
+        .login{
+            text-align: center;
+        }
+        .moblogin{
+            margin-left: 20%;
+        }
+    .brandlogo{
+        width: 130px;
+        height: 130px;
+    }
+    .mobcart{
+        margin-left: 10px;
+    }
+    .fa-bars{
+        color: white;
+    }
+    .navbar-toggler{
+        background-color: #2A8168;
+    }
+    .tagLine{
+        font-family:"samarkan" ;
+        width: 100%;
+        background-color: #2A8168;
+        height: 50px;
+        color: white;
+        font-size: 26px;
+        vertical-align: middle;
+        margin-top: -10px;
+    }
+    .sticky-container{
+        position: absolute;
+        top : 0;
+        width: 100%;
+        z-index: 1;
+        /* background-color: white; */
+        margin-bottom: 0;
+    }
+    .social{
+        cursor: pointer;
+        vertical-align: middle;
+        width: 30px;
+        height: 30px;
+        background-color: #2A8168;
+        border-radius: 50%;
+        padding: 6px;
+        margin-left: 4px;
+        /* margin-top: 20px; */
+        text-align: center;
+        color: white;
+        font-size: small;
+    }
+    .social:hover{
+        cursor: pointer;
+        vertical-align: middle;
+        width: 30px;
+        height: 30px;
+        background-color: white;
+        border-radius: 50%;
+        padding: 6px;
+        margin-left: 4px;
+        /* margin-top: 20px; */
+        text-align: center;
+        color: #2A8168;
+    }
+}

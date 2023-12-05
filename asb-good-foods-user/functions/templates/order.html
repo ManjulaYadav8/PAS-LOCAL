@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order</title>
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Montserrat" as="style">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+    <style>
+        @font-face {
+            font-family: "Montserrat";
+            src: url("../fonts/Montserrat-Regular.ttf");
+        }
+    </style>
+    <style>
+        *, body{
+            font-family: "Montserrat";    
+        }
+        .temp-container{
+            text-align: center;
+            border-radius: 2px;
+            background-color: #e5e5e5; 
+            box-shadow : inset 0px 11px 8px -10px #e5e5e5,
+                          0px -11px 8px -10px #e5e5e5; 
+        }
+        .logo-container{
+            background-color: #ffffff; 
+            border-top: 1px solid #cccccc; 
+            border-bottom: 1px solid #cccccc;
+            box-shadow : inset 0px 11px 8px -10px #fff,
+                          0px -11px 8px -10px #fff; 
+        }
+        .header{
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .sub-text{
+            font-size: 15px;
+            font-weight: bold;
+        }
+        table { 
+            empty-cells: show; 
+        }
+        .empty-col{
+            width: 33%;
+        } 
+        .text-col{
+            width: 33%;
+            font-size: 10px;
+            background-color: #F5F4F4;
+            border-radius: 5px;
+            box-shadow: inset 2px 2px -5px #e5e5e5;
+            border: 1px solid #cccccc;
+        }
+        .empty-col-2{
+            width: 25%;
+        } 
+        .text-col-2{
+            width: 25%;
+            font-size: 10px;
+            background-color: #F5F4F4;
+            border-radius: 5px;
+            box-shadow: inset 2px 2px -5px #e5e5e5;
+            border: 1px solid #cccccc;
+        }
+        .text-col-3{
+            width: 50%;
+            font-size: 10px;
+            background-color: #F5F4F4;
+            border-radius: 5px;
+            box-shadow: inset 2px 2px -5px #e5e5e5;
+            border: 1px solid #cccccc;
+        }
+        button{
+            background-color: #a2f4db;
+            padding: 10px 30px;
+            border-radius: 5px;
+            border: none;
+            color: #fff;
+            box-shadow: inset 2px 1px #a2f4db,
+                              2px 0px #a2f4db;
+            cursor: pointer;
+            outline: none;
+            transition: 0.2s all;
+        }
+        button:active {
+            transform: scale(0.99);
+            box-shadow: 2px 2px 3px 1px rgba(0, 0, 0, 0.24);
+        }
+        .footer{
+            font-size: 12px;
+            border: 1px solid #cccccc;
+            background-color: #F5F4F4;
+        }
+        .text-center{
+            text-align: center;
+        }
+        a {
+            text-decoration: none;
+            color: black;
+            cursor: pointer;
+        }
+        hr{
+            border: 1px solid #cccccc;
+            opacity: 0.9;
+        }
+        .head-cell{
+            padding-top: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #cccccc;
+            font-size: 12px;
+        }
+        .data-cell{
+            padding-top: 10px;
+            padding-bottom: 10px;
+            font-size: 12px;
+        }
+        .footer-cell{
+            padding-top: 10px;
+            font-size: 12px;
+        }
+        .header-font{
+            font-size: 12px;
+        }
+        .total{
+            margin-top: 20px;
+            font-weight: bold;
+            border-top: 2px solid #cccccc;
+            padding-top: 10px;
+            padding-bottom: 20px;
+        }
+        .show-field{
+            display: contents;
+        }
+        .hide-field{
+            display: none;
+        }
+        @media screen and (max-width:960px) {
+            .empty-col{
+               width: 0%;
+            } 
+            .text-col{
+                width: 100%;
+             }
+             .empty-col-2{
+               width: 0%;
+            } 
+            .text-col-2{
+                width: 50%;
+             }
+             .text-col-3{
+                width: 100%;
+             }
+             .header-font{
+              font-size: 10px;
+             }
+        }
+    </style>
+</head>
+<body>
+    <div class="temp-container">
+        <div class="logo-container">
+            <img src={{logo}} height="100px" width="100px"> 
+        </div>
+        <br/>
+        <div class="header">
+            {{heading}}
+        </div>
+        <br/>
+        <div class="sub-text">
+            {{subHeading}}
+        </div>
+        <br/>
+        <div class="sub-text">
+            <br/>
+            <button>
+                <a href="{{pdfUrl}}" target="_blank">Download PDF</a>
+            </button>
+            <br/>
+            <br/>
+            <table border="0" style="width: 100%;">
+                <tbody>
+                    <tr style="height: 100px;">
+                        <td class="empty-col-2"></td>
+                        <td class="text-col-2">
+                            <br/>
+                                <div>
+                                    <div class="text-left" style="font-size: 15px;text-align: center;">Billing Address </div><hr><br/>
+                                    <div>
+                                        <table style="width: 100%;">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="width: 30%;text-align: center;"><span class="header-font">Name</span></b></td>
+                                                    <td style="width: 70%;text-align: start;"><span class="header-font">{{fullName}}</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 30%;text-align: center;"><span class="header-font">Address</span></td>
+                                                    <td style="width: 70%;text-align: start;"><span class="header-font">{{addressLine1}}</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 30%;text-align: center;"></td>
+                                                    <td style="width: 70%;text-align: start;"><span class="header-font">{{addressLine2}}</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 30%;text-align: center;"><span class="header-font">City</span></td>
+                                                    <td style="width: 70%;text-align: start;"><span class="header-font">{{city}} - {{pincode}}</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 30%;text-align: center;"><span class="header-font">State</span></td>
+                                                    <td style="width: 70%;text-align: start;"><span class="header-font">{{state}}</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 30%;text-align: center;"><span class="header-font">Mobile</span></td>
+                                                    <td style="width: 70%;text-align: start;"><span class="header-font">{{mobile}}</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 30%;text-align: center;"><span class="header-font">Email</span></td>
+                                                    <td style="width: 70%;text-align: start;"><span class="header-font">{{email}}</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <br/>
+                        </td>
+                        &nbsp;
+                        <td class="text-col-2">
+                            <br/>
+                                <div >
+                                    <div class="text-left" style="font-size: 15px;text-align: center;">Order Information </div><hr><br/>
+                                    <div>
+                                        
+                                        <table style="width: 100%;">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="width: 40%;text-align: start;padding-left: 20px;"><span class="header-font">Order Date</span></td>
+                                                    <td style="width: 60%;text-align: start;padding-left: 10px;"><span class="header-font">{{orderReqDate}}</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 40%;text-align: start;padding-left: 20px;"><span class="header-font">Estimated Delivery</span></td>
+                                                    <td style="width: 60%;text-align: start;padding-left: 10px;"><span class="header-font">{{estimatedDeliveryDate}}</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 40%;text-align: start;padding-left: 20px;"><span class="header-font">Delivery Time</span></td>
+                                                    <td style="width: 60%;text-align: start;padding-left: 10px;"><span class="header-font">Between 10:00 AM to 1:30 PM</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 40%;text-align: start;padding-left: 20px;"><span class="header-font">Order Id</span></td>
+                                                    <td style="width: 60%;text-align: start;padding-left: 10px;"><span class="header-font">{{orderId}}</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 40%;text-align: start;padding-left: 20px;"><span class="header-font">Order Status</span></td>
+                                                    <td style="width: 60%;text-align: start;padding-left: 10px;"><span class="header-font">{{orderStatusName}}</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 40%;text-align: start;padding-left: 20px;"><span class="header-font">Delivery Mode</span></td>
+                                                    <td style="width: 60%;text-align: start;padding-left: 10px;"><span class="header-font">{{mode}}</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 40%;text-align: start;padding-left: 20px;"><span class="header-font">Payment Mode</span></td>
+                                                    <td style="width: 60%;text-align: start;padding-left: 10px;"><span class="header-font">{{paymentMode}}</span></td>
+                                                </tr>               
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <br/>
+                        </td>
+                        <td class="empty-col-2"></td>
+                    </tr>
+               </tbody>
+            </table>
+            <br/>
+            <table border="0" style="width: 100%;">
+                <tbody>
+                    <tr style="min-height: 150px;">
+                        <td class="empty-col-2"></td>
+                        <td class="text-col-3">
+                            <table border="0" style="width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 60%;" class="head-cell">Products</th>
+                                        <th style="width: 10%;" class="head-cell">Quantity</th>
+                                        <th style="width: 30%;" class="head-cell">Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        {{#each orderItems}}
+                                            <tr>
+                                                <td class="data-cell" style="text-align: center;">{{productName}}<br/>
+                                                   <div style="font-size: 10px;"> {{#check productWeight}}
+                                                        <b>Weight : </b>{{this}}&nbsp;
+                                                    {{/check}}
+                                                    {{#check productWeightUom}}
+                                                        {{this}}&nbsp;&nbsp;
+                                                    {{/check}} -
+                                                    {{#check productSize}}
+                                                        <b>Size : </b>{{this}}&nbsp;
+                                                    {{/check}}
+                                                    {{#check productSizeUom}}
+                                                        {{this}}&nbsp;&nbsp;
+                                                    {{/check}} -
+                                                    {{#check productColor}}
+                                                        <b>Color : </b>{{this}}&nbsp;&nbsp;
+                                                    {{/check}} -
+                                                    {{#check itemCount}}
+                                                        <b>Count : </b>{{this}}&nbsp;&nbsp;
+                                                    {{/check}}</div> 
+                                                </td>
+                                                <td class="data-cell" style="text-align: center;">{{quantity}}</td>
+                                                <td class="data-cell" style="text-align: center;">{{currencySymbol}} {{productPrice}}</td>
+                                            </tr>
+                                        {{/each}}
+                                </tbody>
+                                <tfoot>
+                                    <tr >
+                                        <td colspan="2" class="footer-cell" style="border-top: 2px solid #cccccc; margin-top: 20px;text-align: center;">Subtotal </td>
+                                        <td class="footer-cell" style="border-top: 2px solid #cccccc; margin-top: 20px;text-align: center;">{{currencySymbol}} {{subtotal}}</td>
+                                    </tr>
+                                    <tr >
+                                        <td colspan="2" class="footer-cell" style="margin-top: 20px;text-align: center;">Shipping </td>
+                                        <td class="footer-cell" style="margin-top: 20px;text-align: center;">{{currencySymbol}} {{shippingCharges}}</td>
+                                    </tr>
+                                    {{#if oneTaxSystemShow}}
+                                    <tr>
+                                        <td colspan="2" class="footer-cell" style="margin-top: 20px;text-align: center;">Tax </td>
+                                        <td class="footer-cell" style="margin-top: 20px;text-align: center;">{{currencySymbol}} {{tax}}</td>
+                                    </tr>
+                                    {{/if}}
+                                    {{#if federalTaxAmtShow}}
+                                    <tr>
+                                        <td colspan="2" class="footer-cell" style="margin-top: 20px;text-align: center;">Federal Tax </td>
+                                        <td class="footer-cell" style="margin-top: 20px;text-align: center;">{{currencySymbol}} {{federalTaxAmt}}</td>
+                                    </tr>
+                                    {{/if}}
+                                    {{#if stateTaxAmtShow}}
+                                    <tr>
+                                        <td colspan="2" class="footer-cell" style="margin-top: 20px;text-align: center;">State Tax </td>
+                                        <td class="footer-cell" style="margin-top: 20px;text-align: center;">{{currencySymbol}} {{stateTaxAmt}}</td>
+                                    </tr>
+                                    {{/if}}
+                                    {{#if salesTaxAmtShow}}
+                                    <tr>
+                                        <td colspan="2" class="footer-cell" style="margin-top: 20px;text-align: center;">Sales Tax </td>
+                                        <td class="footer-cell" style="margin-top: 20px;text-align: center;">{{currencySymbol}} {{salesTaxAmt}}</td>
+                                    </tr>
+                                    {{/if}}
+                                    {{#if vatShow}}
+                                    <tr>
+                                        <td colspan="2" class="footer-cell" style="margin-top: 20px;text-align: center;">VAT </td>
+                                        <td class="footer-cell" style="margin-top: 20px;text-align: center;">{{currencySymbol}} {{vat}}</td>
+                                    </tr>
+                                    {{/if}}
+                                    {{#if couponDiscountShow}}
+                                    <tr>
+                                        <td colspan="2" class="footer-cell" style="margin-top: 20px;padding-bottom: 20px;text-align: center;">Coupon Discount </td>
+                                        <td class="footer-cell" style="margin-top: 20px;padding-bottom: 20px;text-align: center;">{{currencySymbol}} {{couponDiscount}}</td>
+                                    </tr>
+                                    {{/if}}
+                                    <tr>
+                                        <td colspan="2" class="footer-cell total" style="text-align: center;">Total </td>
+                                        <td class="footer-cell total" style="text-align: center;">{{currencySymbol}} {{total}}</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </td>
+                        <td class="empty-col-2"></td>
+                    </tr>
+               </tbody>
+            </table>
+        </div>
+        <br/>
+        <br/>
+        <div class="footer">
+            <br/>
+            Thanks and Regards, <br/><br/>
+            {{companyName}} Team <br/>
+            Mobile - {{companyMobile}} <br/>
+            Email  - {{companyMail}} <br/>
+            <br/>
+        </div>
+    </div>
+</body>
+</html>

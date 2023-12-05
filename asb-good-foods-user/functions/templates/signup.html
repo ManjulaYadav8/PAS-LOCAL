@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <style>
+        *{
+            font-family: 'Montserrat';    
+        }
+        .temp-container{
+            text-align: center;
+            border-radius: 2px;
+            background-color: #e5e5e5; 
+            box-shadow : inset 0px 11px 8px -10px #e5e5e5,
+                          0px -11px 8px -10px #e5e5e5; 
+        }
+        .logo-container{
+            background-color: #ffffff; 
+            border-top: 1px solid #cccccc; 
+            border-bottom: 1px solid #cccccc;
+            box-shadow : inset 0px 11px 8px -10px #fff,
+                          0px -11px 8px -10px #fff; 
+        }
+        .header{
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .sub-text{
+            font-size: 15px;
+            font-weight: bold;
+        }
+        table { 
+            empty-cells: show; 
+        }
+        .empty-col{
+            width: 33%;
+        } 
+        .text-col{
+            width: 33%;
+            background-color: #F5F4F4;
+            border-radius: 5px;
+            box-shadow: inset 2px 2px -5px #e5e5e5;
+            border: 1px solid #cccccc;
+        }
+        button{
+            background-color: #a2f4db;
+            padding: 10px 30px;
+            border-radius: 5px;
+            border: none;
+            color: #fff;
+            box-shadow: inset 2px 1px #a2f4db,
+                              2px 0px #a2f4db;
+            cursor: pointer;
+            outline: none;
+            transition: 0.2s all;
+        }
+        button:active {
+            transform: scale(0.99);
+            box-shadow: 2px 2px 3px 1px rgba(0, 0, 0, 0.24);
+        }
+        .footer{
+            font-size: 12px;
+            border: 1px solid #cccccc;
+            background-color: #F5F4F4;
+        }
+        .text-center{
+            text-align: center;
+        }
+        a {
+            text-decoration: none;
+            color: black;
+            cursor: pointer;
+        }
+        @media screen and (max-width:960px) {
+            .empty-col{
+               width: 0%;
+            } 
+            .text-col{
+                width: 100%;
+             }
+        }
+    </style>
+</head>
+<body>
+    <div class="temp-container">
+        <div class="logo-container">
+            <img src={{logo}} height="100px" width="100px"> 
+        </div>
+        <br/>
+        <br/>
+        <div class="header">
+            You Have Received A Verification Mail !
+        </div>
+        <br/>
+        <div class="sub-text">
+            Dear {{name}} <br/><br/>
+            Thank You For Your Interest In {{companyName}}.
+        </div>
+        <br/>
+        <div class="sub-text">
+            <table border="0" style="width: 100%;">
+                <tbody>
+                    <tr style="height: 200px;">
+                        <td class="empty-col"></td>
+                        <td class="text-col">
+                                <div class="text-center">
+                                    Verify Your E-mail To Get The Best Offers
+                                </div>
+                                <br>
+                                <br>
+                                <div class="text-center">
+                                    <button>
+                                        <a href="{{url}}" target="_blank">Verify</a>
+                                    </button>
+                                </div>
+                        </td>
+                        <td class="empty-col"></td>
+                    </tr>
+               </tbody>
+            </table>
+        </div>
+        <br/>
+        <br/>
+        <div class="footer">
+            <br/>
+            Thanks and Regards, <br/><br/>
+            {{companyName}} Team <br/>
+            Mobile - {{mobile}} <br/>
+            Email  - {{companyMail}} <br/>
+            <br/>
+        </div>
+    </div>
+</body>
+</html>

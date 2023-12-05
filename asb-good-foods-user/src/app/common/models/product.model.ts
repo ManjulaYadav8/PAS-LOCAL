@@ -1,0 +1,53 @@
+export class Product {
+    productName?: string;
+    subcategoryId?: string;
+    productId?:number;
+    productdocId?:string;
+    description?: string;
+    summary?: string;
+    warrantyYear?:number;
+    specifications?:number;
+    productCost?: number;
+    productPrice?: number;
+    priority?:number;
+    couponCode?: string;
+    imageUrl?: string;
+    primaryUrl?: string;
+    quantity? : number;
+    total?: number;
+    categoryId?: number;
+    initialStock?: number;
+    categoryName?:string;
+    productStatus?: string;
+    subcategoryName?: string;
+    currentAvailable? : number;
+    displayAs? : string;
+    variantType? : string;
+    variantValue? : string;
+    currentStock?: number;
+    orderStatus?: string;
+    ratings?: number;
+    copyProducts? : [];
+    inheritType ? : string;
+    images? :[{
+        url: string;
+        display: string;
+        productImageId: number;
+    }];
+    notAvailable? : [{
+        notAvailableName: string;
+        notAvailableQuantity: number;
+    }];
+    unAvailable? : number;
+    reservedTotal?: number;
+    productWeight?: string;
+    productSize?:string;
+    notAvailableName?: string;
+    notAvailableQuantity?:number;
+    shippedTotal:  number;
+    display: string;
+    preOrder:string;
+    nonPreOrderDays: number;
+    stockImpact:string;
+    tradeType: string;
+}

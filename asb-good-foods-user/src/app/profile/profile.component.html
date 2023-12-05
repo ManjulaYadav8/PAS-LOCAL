@@ -1,0 +1,597 @@
+<div class="container">
+    <div class="card webview"><br>
+        <div class="row">
+            <div class="col-md-5">
+                <h5 class="text-center">{{userList?.name}}</h5>
+            </div>
+            <div class="col-md-3" style="margin-left: -1%;">
+                <button class="btn " data-toggle="modal" data-target="#exampleModalLong" (click)="clearFiles();">Edit Profile</button>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-2" style="margin-left: -3%;">
+                <button class="btn " (click)="logout()">Logout</button>
+            </div>
+        </div>
+        <hr>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <ul>
+                        <div *ngIf="userList?.profileUrl == null; else profile">
+                            <img class="avatar " src="../../assets/avatar.png" alt="">
+                        </div>
+                        <ng-template #profile>
+                            <img class="avatar img-thumbnail" src="{{userList?.profileUrl}}" alt="...">
+                        </ng-template>
+                        <br><br><br>
+                        <li *ngFor="let profile of allSelectingValue; let i=index"
+                            [ngClass]="{'selected-color' : i==selectedIndex}">
+                            <a (click)="selectedValue(profile.name,i)" style="font-size: 14px;">{{profile.name}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-8">
+                    <div class="text-center" *ngIf="selectedVal == 'Profile'"><br><br>
+                        <div class="card">
+                            <div class="card-header">Profile</div>
+                            <div class="card-body">
+                                <p class="userName">Name : {{userList?.name}}</p>
+                                <p class="contact">Contact : {{userList?.mobile}}</p>
+                                <p class="email">Email : {{userList?.email}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center" *ngIf="selectedVal == 'Address'">
+                        <div class="address">
+                        <button class="btn " data-toggle="modal" data-target="#addAddressModal">Add
+                            Address</button>
+                        </div><br>
+                        <div class="orderscroll">
+                        <div *ngFor="let address of addressList">
+                        <div class="card" >
+                            <div class="card-header">
+                                <div class="row">
+                                        <div class="col-md-8 text-center">
+                                            <h5 class="adlabel">{{address.addresslabel}}</h5> 
+                                        </div>
+                                        <div class="col-md-2 text-center">
+                                            <i class="fa fa-pencil" data-toggle="modal" data-target="#editModalLong"
+                                            aria-hidden="true" (click)="editAddress(address)"></i>
+                                        </div>
+                                       <div class="col-md-2 text-center">
+                                        <i class="fa fa-trash" aria-hidden="true" (click)="deleteAddress(address)" data-toggle="modal"
+                                        data-target="#deleteModalLong"></i>
+                                       </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <address class="text-center">
+                                    <i class="fa fa-map-marker" aria-hidden="true"></i> &nbsp;&nbsp; {{address.addressLine1}} <br>
+                                    <i class="fa fa-map-marker" aria-hidden="true"></i> &nbsp;&nbsp;{{address.addressLine2}}<br>
+                                    <i class="fa fa-map-signs" aria-hidden="true"></i>&nbsp;&nbsp; {{address.city}}<br>
+                                    <i class="fa fa-map" aria-hidden="true"></i> &nbsp;&nbsp;{{address.state}}<br>
+                                    <i class="fa fa-map-pin" aria-hidden="true"></i>&nbsp;&nbsp;{{address.pincode}} <br>
+                                </address>
+                            </div>
+                        </div><br>
+                    </div>
+                </div>
+                    </div>
+                    <div *ngIf="selectedVal == 'Orders'">
+                        <!-- <mat-form-field class="search-form-field" floatLabel="never">
+                            <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()">
+                            <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+                              <mat-icon>close</mat-icon>
+                            </button>
+                          </mat-form-field> -->
+                          
+                        <div *ngIf="orderId != 0; else noorder">
+                            <div class="row" >
+                                <div class="col-md-5" style="margin-left: 25px;">
+                                    <div class="continueshopping">
+                                        <button class="btn " (click)="continueShopping()">Continue Shopping</button>
+                                        </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="sorting">
+                                        <div class="dropdown sort"> Sort Order By: 
+                                          <button type="button" class="btn  dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false"> {{sortVariable}} </button>
+                                          <div class="dropdown-menu text-center">
+                                            <button class="dropdown-item" (click)="orderIdselect(orderItems)">Order Id</button>
+                                            <button class="dropdown-item" (click)="date(orderItems)">Date</button>
+                                            <button class="dropdown-item" (click)="hightolow(orderItems)">Price: High To Low</button>
+                                            <button class="dropdown-item" (click)="lowtohigh(orderItems)">Price: Low To High</button>
+                                          </div>
+                                        </div>
+                                      </div>  
+                                </div>
+                            </div>
+                            <br>
+                            <!-- <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search by name"
+                                style="width: 300px;" [(ngModel)]="searchTerm" >
+                            </div> -->
+                            <div class="orderscroll">
+                                <div class="form-group">
+                                    <input type="text" style="width: 80%; margin-left: 10%;" class="form-control" name="searchString" placeholder="Search...." [(ngModel)]="searchString">
+                                </div>
+                            <div *ngFor="let order of orderItems | fresh: searchString;">
+                                <div class="card lightbg" style="cursor: pointer;">
+                                    <!-- <div class="card-header"> -->
+                                        <div class="row">
+                                            <div class="col-md-5 text-center" style="margin-top: 10px; margin-bottom: 10px;">
+                                                <img src="../../assets/logo.jpg" class="companylogo img-thumbnail" alt="" (click)="viewOrderDetails(order)"><br>
+                                                <!-- <h6 (click)="viewOrderDetails(order)">ASB FOOD</h6> -->
+                                                <p (click)="viewOrderDetails(order)"><b>Status :</b>
+                                                    <span [ngStyle]="{'color':order?.orderStatusName === 'Cancelled' ? '#CD113B' : '#2A8168' }" >
+                                                        {{order.orderStatusName}}
+                                                    </span></p>
+                                                <button class="btn" (click)="reorder(order.orderItems)" 
+                                                data-toggle="modal" data-target="#confirmModalLong">Reorder</button>
+                                            </div>
+                                            <div class="col-md-7" (click)="viewOrderDetails(order)" style="margin-top: 10px; margin-bottom: 10px;">
+                                                <p style="margin-bottom:0;"> <b>Order Id :</b> # {{order.orderId}}</p>
+                                                <p style="margin : 0; padding-top:0;"> <b>Order On : </b>{{order.date | date: 'dd-MMM-yyyy'}} </p>
+                                                <div><b>Items : </b>
+                                                    <p style="margin : 0; padding-top:0;"
+                                                        *ngFor="let orderItem of order.orderItems">
+                                                        {{orderItem.quantity}} x {{orderItem.productName}},
+                                                    </p>
+                                                </div>
+                                                <p style="margin : 0; padding-top:0;"><b>Total Amount :</b>
+                                                    {{companyConfig?.currencySymbol}} {{order.total | number:'1.2-3' }}</p>
+                                            </div>
+                                            <br>
+                                        </div>
+                                    <!-- </div> -->
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <ng-template #noorder>
+                            <div class="text-ceter">
+                            <h2>You don't have any active orders</h2><br>
+                            <button class="btn " (click)="continueShopping()">Place your first
+                                Order</button>
+                            </div>
+                        </ng-template>
+                    </div>
+                    <div *ngIf="selectedVal == 'Events'">
+                        <!-- <mat-form-field class="search-form-field" floatLabel="never">
+                            <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()">
+                            <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+                              <mat-icon>close</mat-icon>
+                            </button>
+                          </mat-form-field> -->
+                          
+                        <div *ngIf="eventId != 0; else noevent">
+                            <div class="orderscroll">
+                            <div *ngFor="let event of eventList">
+                                <div class="card lightbg" style="cursor: pointer;">
+                                        <div class="row">
+                                            <div class="col-md-5 text-center" style="margin-top: 10px; margin-bottom: 10px;">
+                                                <img src="../../assets/logo.jpg" class="companylogo img-thumbnail" alt="" (click)="viewEventDetails(event)"><br>
+                                                <h6 (click)="viewEventDetails(event)">ASB FOOD</h6>
+                                            </div>
+                                            <div class="col-md-7" (click)="viewEventDetails(event)" style="margin-top: 10px; margin-bottom: 10px;">
+                                                <p style="margin-bottom:0;"> <b>Event Id :</b> # {{event.eventId}}</p>
+                                                <p style="margin : 0; padding-top:0;"> <b>Event Date : </b>{{event.eventDate | date: 'dd-MMM-yyyy'}} </p>
+                                                <p style="margin: 0;padding-top: 0;"><b>Event Type : </b>{{event.eventType}} </p>
+                                            </div>
+                                            <br>
+                                        </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <ng-template #noevent>
+                            <div class="text-ceter">
+                            <h2>You don't have any active Events</h2><br>
+                            <button class="btn " (click)="continueShopping()">Book your first Slot</button>
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><br><br>
+    <div class="mobview">
+        <div class="card mobcard"><br>
+            <div class="row">
+                <div class="mobname">
+                    <h5 class="text-center mobname" style="font-family: CustomFont" >{{userList?.name}}</h5>
+                </div>
+                <div class="mobname">
+                    <button class="btn  mobname" data-toggle="modal"
+                        data-target="#exampleModalLong" style="font-family: CustomFont" >Edit
+                        Profile</button>
+                </div>
+                <div class="mobname">
+                    <button class="btn  mobname" (click)="logout()" style="font-family: CustomFont" >Logout</button>
+                </div>
+            </div>
+            <hr>
+            <br>
+            <div class="text-center">
+                <ul>
+                    <li *ngFor="let profile of allSelectingValue">
+                        <a (click)="selectedValue(profile.name)" class="profname"
+                            routerLink="{{profile.name}}" style="font-family: CustomFont">{{profile.name}}</a><br>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModalLong" role="dialog" aria-labelledby="exampleModalLongTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <mat-toolbar>
+                        <span class="fill-remaining-space">
+                          <h5 class="text-center text-light"><span class="CustomFont">Edit Profile</span></h5>
+                        </span>
+                        <button mat-icon-button class="close text-light" data-dismiss="modal">
+                          <mat-icon>clear</mat-icon>
+                        </button>
+                      </mat-toolbar><br>
+                    <form #userForm="ngForm" autocomplete="off">
+                        <div class="text-center">
+                            <div *ngIf="userList?.profileUrl; else defaultUrl">
+                            <img [src]="userList?.profileUrl" style="width: 100px; height: 100px; cursor: pointer;" class="img-thumbnail"
+                                (click)="fileUploader.click()">
+                            </div>
+                            <ng-template #defaultUrl>
+                                <img src="../../assets/avatar.png" style="width: 100px; height: 100px;cursor: pointer;" class="img-thumbnail"
+                                (click)="fileUploader.click()"> 
+                            </ng-template>
+                            <div class="form-group">
+                                <label>Select Image to upload</label>
+                                <input type="file" class="form-control" #fileUploader accept="image/*" name="profileUrl"
+                                    style="overflow: hidden;" (change)="showPreview($event,'PROFILE')">
+                            </div>
+                        </div>
+                        <div class="input-group row">
+                            <label for="name" class="col-md-4">Full Name</label>
+                             <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-user" aria-hidden="true"></i></span>
+      </div>
+                            <input name="name" #name="ngModel" [ngModel]="userList?.name" class="form-control col-md-7"
+                                placeholder="profile Name" required>
+                            <div *ngIf="name.invalid && name.touched" class="validation-error">This field is required.
+                            </div>
+                        </div><br>
+                        <div class="input-group row">
+                            <label for="mobile" class="col-md-4">Mobile Number</label>
+                             <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-mobile" aria-hidden="true"></i></span>
+      </div>
+                            <input name="mobile" #mobile="ngModel" [ngModel]="userList?.mobile"
+                                class="form-control col-md-7" placeholder="Mobile Number" required>
+                            <div *ngIf="mobile.invalid && mobile.touched" class="validation-error">This field is
+                                required.</div>
+                        </div><br>
+                        <div class="input-group row">
+                            <label for="userType" class="col-md-4">User Type</label>
+                             <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-user" aria-hidden="true"></i></span>
+      </div>
+                            <mat-button-toggle-group appearance="legacy" #group="matButtonToggleGroup" 
+                                       [value]="selectedUserType" (change)="changeUserType(group.value)" >
+                                <mat-button-toggle *ngFor="let type of userTypeToggle;" [value]="type" 
+                                [ngStyle]="{'background-color':selectedUserType === type ? '#cfcfcf' : '#ffffff','color':'black' }">
+                                    {{type}}
+                                </mat-button-toggle>
+                              </mat-button-toggle-group>                  
+                        </div><br>
+                        <div *ngIf="selectedUserType === 'BUSINESS'">
+                            <div class="input-group row">
+                                <label for="userCompanyName" class="col-md-4">Company Name</label>
+                                 <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-building-o" aria-hidden="true"></i></span>
+      </div>
+                                <input name="userCompanyName" #userCompanyName="ngModel" [ngModel]="userList?.userCompanyName" class="form-control col-md-7"
+                                    placeholder="Company Name" required>
+                                <div *ngIf="userCompanyName.invalid && userCompanyName.touched" class="validation-error">This field is required.
+                                </div>                 
+                            </div><br>
+                            <div class="input-group row">
+                                <label for="companyGst" class="col-md-4">Company Gst</label>
+                                 <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-gavel" aria-hidden="true"></i></span>
+      </div>
+                                <input name="companyGst" #companyGst="ngModel" [ngModel]="userList?.companyGst" class="form-control col-md-7"
+                                    placeholder="Company Gst" required>
+                                <div *ngIf="companyGst.invalid && companyGst.touched" class="validation-error">This field is required.
+                                </div>                 
+                            </div><br>
+                            <div class="input-group row">
+                                <label for="companyCin" class="col-md-4">Company Cin</label>
+                                 <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-building" aria-hidden="true"></i></span>
+      </div>
+                                <input name="companyCin" #companyCin="ngModel" [ngModel]="userList?.companyCin" class="form-control col-md-7"
+                                    placeholder="Company Cin" required>
+                                <div *ngIf="companyCin.invalid && companyCin.touched" class="validation-error">This field is required.
+                                </div>                 
+                            </div><br>
+                            <div class="input-group row">
+                                <label for="companyPan" class="col-md-4">Company Pan</label>
+                                 <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-address-card" aria-hidden="true"></i></span>
+      </div>
+                                <input name="companyPan" #companyPan="ngModel" [ngModel]="userList?.companyPan" class="form-control col-md-7"
+                                    placeholder="Company Pan" required>
+                                <div *ngIf="companyPan.invalid && companyPan.touched" class="validation-error">This field is required.
+                                </div>                 
+                            </div><br>
+                            <div class="input-group row">
+                                <label for="businessPanCard" class="col-md-4">Business Pan Card</label>
+                                 <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-address-card-o" aria-hidden="true"></i></span>
+      </div>
+                                <input type="file" class="form-control" #businessPanUpload accept="image/*,.pdf" name="businessPanCard" class="form-control col-md-7"
+                                    style="overflow: hidden;" required (change)="showPreview($event,'BUSINESS PAN')">
+                            </div><br>
+                            <div class="input-group row">
+                                <label for="SupportingDocument" class="col-md-4">Supporting Document</label>
+                                 <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-address-card" aria-hidden="true"></i></span>
+      </div>
+                                <input type="file" class="form-control" #supportingDocUpload accept="image/*,.pdf" name="SupportingDocument" class="form-control col-md-7"
+                                    style="overflow: hidden;" required (change)="showPreview($event,'SUPPORTING DOC')">
+                            </div><br>
+                        </div>  
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-md btn-block " data-dismiss="modal"
+                                (click)="profileSubmit(userForm.value)" >Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="editModalLong" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <!-- <div class="modal-header">
+                    <h5 class="modal-title text-center" id="exampleModalLongTitle">Edit Address</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div> -->
+                <mat-toolbar>
+                    <span class="fill-remaining-space">
+                      <h5 class="text-center text-light"><span class="CustomFont">Edit Address</span></h5>
+                    </span>
+                    <button mat-icon-button class="close text-light" data-dismiss="modal">
+                      <mat-icon>clear</mat-icon>
+                    </button>
+                  </mat-toolbar><br>
+                <div class="modal-body">
+                    <form #editaddressForm="ngForm" autocomplete="off">
+                        <div class="input-group row">
+                            <label for="addressLine1" class="col-md-4">Address Line 1</label>
+                             <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+      </div>
+                            <input name="addressLine1" #addressLine1="ngModel" [(ngModel)]="editAddressLine1"
+                                class="form-control col-md-7" placeholder="address Line1" required>
+                            <div *ngIf="addressLine1.invalid && addressLine1.touched" class="validation-error">This
+                                field is required.
+                            </div>
+                        </div><br>
+                        <div class="input-group row">
+                            <label for="addressLine2" class="col-md-4">Address Line 2</label>
+                             <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+      </div>
+                            <input name="addressLine2" #addressLine2="ngModel" [(ngModel)]="editAddressLine2"
+                                class="form-control col-md-7" placeholder="Address Line2" required>
+                            <div *ngIf="addressLine2.invalid && addressLine2.touched" class="validation-error">This
+                                field is required.
+                            </div>
+                        </div><br>
+                        <div class="input-group row">
+                            <label class="col-md-4" for="state">State *</label>
+                            <mat-form-field class="col-md-7">
+                              <input type="text" placeholder="Choose State" aria-label="State Name" 
+                                matInput [formControl]="myControlState" [matAutocomplete]="autoState" [(ngModel)]="editState">
+                              <mat-autocomplete #autoState="matAutocomplete" (optionSelected)="changeState($event.option.value)">
+                                <mat-option *ngFor="let state of filteredOptionsState | async" [value]="state">
+                                  {{state}}
+                                </mat-option>
+                              </mat-autocomplete>
+                            </mat-form-field>
+                            <div class="form-label-group">
+                                <input type="hidden" name="state" id="state" class="form-control" #state="ngModel" readonly [ngModel]="editState">
+                            </div>
+                          </div> <br>
+                          <div class="input-group row">
+                            <label class="col-md-4" for="city">City *</label>
+                            <mat-form-field class="col-md-7">
+                              <input type="text" placeholder="Choose City" aria-label="City Name" 
+                                matInput [formControl]="myControlCity" [matAutocomplete]="autoCity" [(ngModel)]="editCity">
+                              <mat-autocomplete #autoCity="matAutocomplete" (optionSelected)="changeCity($event.option.value)">
+                                <mat-option *ngFor="let city of filteredOptionsCity | async" [value]="city">
+                                  {{city}}
+                                </mat-option>
+                              </mat-autocomplete>
+                            </mat-form-field>
+                            <div class="form-label-group">
+                              <input type="hidden" name="city" id="city" class="form-control" #city="ngModel" readonly [ngModel]="editCity">
+                              <!-- <div *ngIf="city.invalid && city.touched" class="validation-error">This field is required.</div> -->
+                            </div>
+                          </div>                
+                        <div class="input-group row">
+                            <label for="pincode" class="col-md-4">Zipcode</label>
+                             <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-map-pin" aria-hidden="true"></i></span>
+      </div>
+                            <input name="pincode" type="number" #pincode="ngModel" [(ngModel)]="editPincode"
+                                class="form-control col-md-7" placeholder="pincode Number"
+                                required>
+                            <div *ngIf="pincode.invalid && pincode.touched" class="validation-error">This field is
+                                required.</div>
+                        </div><br>
+                        <div class="form-group ">
+                            <button type="submit" class="btn  btn-md btn-block" data-dismiss="modal"
+                                (click)="addressSubmit(editaddressForm)" 
+                                [disabled]="(editaddressForm.invalid || !myControlState.valid || !myControlCity.valid)">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="addAddressModal" role="dialog" aria-labelledby="addAddressModalLongTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <!-- <div class="modal-header">
+                    <h5 class="modal-title text-center" id="addAddressModalLongTitle">Add Address</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div> -->
+                <mat-toolbar>
+                    <span class="fill-remaining-space">
+                      <h5 class="text-center text-light"><span class="CustomFont">Add Address</span></h5>
+                    </span>
+                    <button mat-icon-button class="close text-light" data-dismiss="modal">
+                      <mat-icon>clear</mat-icon>
+                    </button>
+                  </mat-toolbar><br>
+                <div class="modal-body">
+                    <form #addressForm="ngForm" autocomplete="off">
+                        <div class="input-group row">
+                            <label for="addresslabel" class="col-md-4">Address Label</label>
+                             <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-tag" aria-hidden="true"></i></span>
+      </div>
+                            <select id="addresslabel" name="addresslabel" #addresslabel="ngModel"
+                                [(ngModel)]="profileService.profileData.addresslabel"
+                                class="form-control col-md-7" required>
+                                <option value="home">Home</option>
+                                <option value="office">Office</option>
+                            </select>
+                        </div><br>
+
+                        <div class="input-group row">
+                            <label for="addressLine1" class="col-md-4">Address Line 1</label>
+                             <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+      </div>
+                            <input name="addressLine1" #addressLine1="ngModel"
+                                [ngModel]="profileService.profileData.addressLine1" class="form-control col-md-7"
+                                placeholder="address Line1" required>
+                            <div *ngIf="addressLine1.invalid && addressLine1.touched" class="validation-error">This
+                                field is required.
+                            </div>
+                        </div><br>
+                        <div class="input-group row">
+                            <label for="addressLine2" class="col-md-4">Address Line 2</label>
+                             <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+      </div>
+                            <input name="addressLine2" #addressLine2="ngModel"
+                                [ngModel]="profileService.profileData.addressLine2" class="form-control col-md-7"
+                                placeholder="Address Line2" required>
+                            <div *ngIf="addressLine2.invalid && addressLine2.touched" class="validation-error">This
+                                field is required.
+                            </div>
+                        </div><br>
+                        <div class="input-group row">
+                            <label class="col-md-4" for="state">State *</label>
+                            <mat-form-field class="col-md-7">
+                              <input type="text" placeholder="Choose State" aria-label="State Name" 
+                                matInput [formControl]="myControlState" [matAutocomplete]="autoState" [(ngModel)]="selectedState">
+                              <mat-autocomplete #autoState="matAutocomplete" (optionSelected)="changeState($event.option.value)">
+                                <mat-option *ngFor="let state of filteredOptionsState | async" [value]="state">
+                                  {{state}}
+                                </mat-option>
+                              </mat-autocomplete>
+                            </mat-form-field>
+                            <div class="form-label-group">
+                                <input type="hidden" name="state" id="state" class="form-control" #state="ngModel" readonly [ngModel]="selectedState">
+                            </div>
+                          </div> <br>
+                          <div class="input-group row">
+                            <label class="col-md-4" for="city">City *</label>
+                            <mat-form-field class="col-md-7">
+                              <input type="text" placeholder="Choose City" aria-label="City Name" 
+                                matInput [formControl]="myControlCity" [matAutocomplete]="autoCity" [(ngModel)]="selectedCity">
+                              <mat-autocomplete #autoCity="matAutocomplete" (optionSelected)="changeCity($event.option.value)">
+                                <mat-option *ngFor="let city of filteredOptionsCity | async" [value]="city">
+                                  {{city}}
+                                </mat-option>
+                              </mat-autocomplete>
+                            </mat-form-field>
+                            <div class="form-label-group">
+                              <input type="hidden" name="city" id="city" class="form-control" #city="ngModel" readonly [ngModel]="selectedCity">
+                              <!-- <div *ngIf="city.invalid && city.touched" class="validation-error">This field is required.</div> -->
+                            </div>
+                          </div><br>
+                        <div class="input-group row">
+                            <label for="pincode" class="col-md-4">Zipcode</label>
+                             <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-map-pin" aria-hidden="true"></i></span>
+      </div>
+                            <input name="pincode" type="number" #pincode="ngModel"
+                                [ngModel]="profileService.profileData.pincode" class="form-control col-md-7"
+                                placeholder="pincode Number" required>
+                            <div *ngIf="pincode.invalid && pincode.touched" class="validation-error">This field is
+                                required.</div>
+                        </div><br>
+                        <div class="form-group ">
+                            <button data-dismiss="modal" type="submit" class="btn btn-md btn-block"
+                                (click)="addAddressSubmit(addressForm)" 
+                                [disabled]="(addressForm.invalid || !myControlState.valid || !myControlCity.valid)">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="deleteModalLong" role="dialog" aria-labelledby="deleteModalLongLongTitle"
+aria-hidden="true">
+<div class="modal-dialog  modal-dialog-centered" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="deleteModalLongLongTitle">Delete Address</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <h4>Are you sure want to delete</h4>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+      <button type="button" class="btn" data-dismiss="modal" (click)="cartDelete()">Delete</button>
+    </div>
+  </div>
+</div>
+</div>
+<div class="modal fade" id="confirmModalLong" role="dialog" aria-labelledby="confirmModalLongLongTitle"
+aria-hidden="true">
+<div class="modal-dialog  modal-dialog-centered" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="confirmModalLongLongTitle">Add Product to Cart</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>Are You Sure Want to add this Products to Cart</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+      <button type="button" class="btn" data-dismiss="modal" (click)="cartUpdate()">Confirm</button>
+    </div>
+  </div>
+</div>
+</div>

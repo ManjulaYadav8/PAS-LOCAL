@@ -1,0 +1,462 @@
+.image{
+  padding:0;
+  margin:0;
+}
+.badge{
+color: red;
+margin-top: -20px;
+
+}
+.container{
+  font-family: "CustomFont";
+}
+.bannerbody{
+  margin-top: 75px;
+  width: 100%;
+  height: 440px;
+  color: #2A8168;
+  margin-bottom: 0;
+}
+.imageSrc{
+  height: 370px;
+  width: 100%;
+}
+.banner{
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover;
+}
+.categoryDisplay{
+  border: 2px solid #2A8168;
+  cursor: pointer;
+  padding: 10px;
+  background-color:white;
+  width: 100%;
+  height: 70px;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  color: black;
+}
+.category{
+  width: 90%;
+  font-weight: bold;
+  top: 50%;
+  bottom: 50%;  
+}
+.custom-font{ 
+  margin: 0; 
+  font-family: 'CustomFont', Arial, sans-serif;
+  font-weight:normal;
+  font-style:normal;
+  font-size: 20px;
+  /* background-color: rgb(248, 244, 244); */
+} 
+.dept-icon{
+  height: 70px;
+  width: 70px;
+}
+.dept-card{
+  width: 30%;
+  margin-right: 5%;
+  height: 180px
+}
+.fa-chevron-right{
+  width: 10%;
+  margin-top: 18px; 
+  
+}
+.selected-color{
+background-color: #2A8168;
+  color: white;
+}
+.selectedsub-color{
+background-color: #2A8168;
+color: black;
+}
+
+ .pagination{
+  margin-left: 500px;
+ }
+.mobileview{
+  display: none;
+}
+.imagecartBox{
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 20px;
+  object-fit: cover;
+  height: 150px;
+  width: 150px;
+  cursor: pointer;
+  /* margin-left: 10%; */
+}
+.textCategory{
+margin-top: 15px;
+height: 70px;
+overflow: hidden;
+}
+.pretext{
+  height: 20px;
+  font-size: 12px;
+  color: grey;
+}
+.invecat{
+margin-left: 50px;
+font-family: "CustomFont";
+}
+.subimg{
+margin-left: 20px;
+height: 50px;
+border-radius: 50%;
+}
+.imageNormalBox{
+width: 100%;
+height: 200px;
+object-fit: cover;
+cursor: pointer;
+}
+.itemCategory{
+height: 200px;
+}
+.imageBox{
+width: 100%;
+height: 100px;
+}
+.pricebg{
+  background-color: rgb(211, 249, 250);
+}
+.card-body{
+  background-color: white;
+}
+li{
+  color: #2A8168;
+}
+.custom-pagination .page-number{
+  display: inline-block;
+ /* padding: 5px 12px; */
+  background: #fff;
+  border: 2px solid #2A8168;
+  margin: 0px 4px;
+ border-radius: 25px;
+ text-align: center;
+}
+            
+.page-number.current{
+ background: #2A8168!important;
+ border: 2px solid #fff;
+ color: white;
+ text-align: center;
+}
+.page-number span{
+ display: block;
+ width: 28px;
+ height: 28px;
+ font-size: 18px;
+ cursor: pointer;
+ text-align: center;
+}
+.pagination-previous,.pagination-next{
+ display: inline-block;
+ font-weight: bold;
+ border-radius: 50%;
+ background-color: white;
+ border: 2px solid #2A8168;
+ /* color: white; */
+ width: 32px;
+ height: 32px;
+ font-size: 18px;
+ text-align: center;
+ cursor: pointer;
+ }
+ .alignbtn{
+  width: 70%; 
+  text-align: end;
+ }
+ .featuredCard-1{
+  margin-top: 15px;
+  width: 35%;
+  margin-left: 6%;
+  /* margin-left: 37%; */
+}
+.featuredCard-2{
+  margin-top: 15px;
+  width: 75%;
+  margin-left: 12%;
+}
+.featuredCard-3{
+  margin-top: 15px;
+  width: 75%;
+  margin-left: 12%;
+}
+.featuredCard-1:hover{
+  border: none;
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.featuredCard-2:hover{
+  border: none;
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.featuredCard-3:hover{
+  border: none;
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.priceDisplay{
+  width: 44%;
+  margin-left: 80px; 
+}
+.wishlistdisplay{
+  width: 10%;
+}
+.example-chip-list {
+  width: 100%;
+}
+
+@media screen and (max-width:960px) and (orientation:portrait){
+  .custom-font{ 
+    font-size: 12px;
+    /* background-color: rgb(248, 244, 244); */
+  }
+  /* .wideletter{
+    font-size: 12px;
+  } */
+  .dept-icon{
+    height: 50px;
+    width: 50px;
+  }
+  .dept-card{
+    width: 32%;
+    margin-right: 3%;
+    height: 130px
+  }
+.imagecartBox{
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 20px;
+  object-fit: cover;
+  height: 150px;
+  width: 150px;
+  cursor: pointer;
+  /* margin-left: 10%; */
+}
+.featuredCard{
+  margin-top: 15px;
+  width: 80%;
+  margin-left: 10%;
+}
+  .categoryDisplay{
+      padding: 0px;
+      background-color: #2A8168;
+      width: 100%;
+      height: 80px;
+      margin-bottom: 20px;
+  }
+  .col-md-3{
+      margin-left: 5%;
+    align-items: center;
+  }
+  .col-md-5{
+      margin-left: 10px;
+   align-items: center;
+  }
+  .category{
+      width: 90%;
+      font-weight: bold;
+      font-size: 20px;
+  }
+  .fa-chevron-right{
+      width: 10%;
+      margin-top: 25px; 
+  }
+  .webview{
+      display: none;
+  }
+  .mobileview{
+      display: contents;
+      font-family: "CustomFont";
+  }
+  .sort{
+      text-align: left;
+      margin-left: 10px;
+      
+  }
+  #dropdownMenuButton{
+      width: 120px;
+      border: 2px solid #2A8168;
+  }
+  .sorting{
+      margin-left: -20px;
+  }
+.moblabel{
+  margin-top: 5px;
+}
+
+ .pagination{
+  margin-left: 500px;
+ }
+ .custom-pagination .page-number{
+  display: inline-block;
+ border: 2px solid #2A8168;
+  background: white;
+  margin: 0px 4px;
+ border-radius: 25px;
+ text-align: center;
+}
+            
+.page-number.current{
+ background: #2A8168!important;
+ color: white;
+ text-align: center;
+}
+.page-number span{
+  text-align: center;
+ display: block;
+ width: 28px;
+ height: 22px;
+ font-size: 18px;
+ cursor: pointer;
+ text-align: center;
+}
+.pagination-previous,.pagination-next{
+ display: inline-block;
+ font-weight: bold;
+ border-radius: 50%;
+ background-color: #2A8168;
+ width: 28px;
+ height: 30px;
+ font-size: 20px;
+ text-align: center;
+ cursor: pointer;
+ }
+ .alignbtn{
+  width: 66%; 
+  text-align: end;
+ }
+ .priceDisplay{
+  width: 44%;
+  margin-left: 70px; 
+}
+.wishlistdisplay{
+  width: 10%;
+}
+}
+@media screen and (max-width:960px) and (orientation:landscape){
+  .alignbtn{
+    width: 58%; 
+    text-align: end;
+   }
+  .custom-font{ 
+    font-size: 15px;
+    /* background-color: rgb(248, 244, 244); */
+  }
+  .webview{
+      display: none;
+  }
+  .mobileview{
+      display: contents;
+     
+  }
+  .category{
+      /* padding: 10px; */
+      width: 90%;
+      text-align: center;
+      font-weight: bold;
+      font-size: 20px;
+     
+  }
+  .fa-chevron-right{
+      width: 10%;
+      margin-top: 38px; 
+  }
+  .container-about{
+      margin-top: 80px;
+  }
+   .categoryDisplay{
+       padding: 0px;
+       background-color: #2A8168;
+       width: 100%;
+       height: 100px;
+       margin-bottom: 20px;
+   }
+   .rightArrow{
+      text-align: center; 
+      margin-top: 10px; 
+  }
+  .adspace{
+      display: none;
+  }
+ .col-md-3{
+     margin-left: 10%;
+   align-items: center;
+ }
+ .col-md-5{
+     margin-left: 100px;
+     /* margin-left: 40%; */
+  align-items: center;
+ }
+  .pagination{
+      margin-left: 10px;
+  }
+  .sort{
+      text-align: left;
+      margin-left: 10px;
+    
+  }
+  #dropdownMenuButton{
+      width: 120px;
+      border: 2px solid #2A8168;
+  }
+  .sorting{
+      margin-left: -20px;
+  }
+  .imagecartBox{
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 20px;
+    object-fit: cover;
+    height: 150px;
+    width: 150px;
+    cursor: pointer;
+    /* margin-left: 32%; */
+  }
+  .pagination{
+    margin-left: 500px;
+   }
+   .custom-pagination .page-number{
+    display: inline-block;
+   border: 2px solid #2A8168;
+    background: white;
+    margin: 0px 4px;
+   border-radius: 25px;
+   text-align: center;
+  }
+              
+  .page-number.current{
+   background: #2A8168!important;
+   color: white;
+   text-align: center;
+  }
+  .page-number span{
+    text-align: center;
+   display: block;
+   width: 26px;
+   height: 26px;
+   font-size: 18px;
+   cursor: pointer;
+   text-align: center;
+  }
+  .pagination-previous,.pagination-next{
+   display: inline-block;
+   font-weight: bold;
+   border-radius: 50%;
+   background-color: #2A8168;
+   width: 32px;
+   height: 32px;
+   font-size: 20px;
+   text-align: center;
+   cursor: pointer;
+   }
+   .priceDisplay{
+    width: 40%;
+    margin-left: 50px; 
+  }
+  .wishlistdisplay{
+    width: 10%;
+  }
+}

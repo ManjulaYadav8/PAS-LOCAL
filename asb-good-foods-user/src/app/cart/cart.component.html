@@ -1,0 +1,297 @@
+<!-- <ul class="container text-center">
+  <li> <a routerLink="/cart/wishlist">Wishlist</a>
+  </li>
+  <li> <a class="btn" routerLink="/cart" >Cart</a> </li>
+</ul> -->
+<div class="container" style="display: flex; align-items: center;justify-content: center;">
+  <mat-card class="mat-elevation-z3" style="border-radius: 10px;">
+      <nav mat-tab-nav-bar mat-stretch-tabs class="container mat-elevation-z3">
+          <a mat-tab-link class="secondaryNav CustomFont" routerLinkActive="active" routerLink="/wishlist">
+            <i class="fa fa-heart fa-2x"></i> &nbsp;&nbsp;&nbsp; Wishlist</a>
+          <a mat-tab-link class="secondaryNav CustomFont" routerLinkActive="active" routerLink="/cart" >
+            <i class="fa fa-shopping-cart fa-2x text-light" style="margin-top: -4px;"></i> &nbsp;&nbsp;&nbsp; Cart</a>
+      </nav>
+  </mat-card>
+  </div>
+<div class="container" style="margin-top: 20px;">
+    <mat-card class="mat-elevation-z3" style="border-radius: 10px;" *ngIf="cartItemsList && cartItemsList.length">
+      <div style="display: flex;align-items: center;justify-content: center;">
+        <h4 class="custom-font">Cart Total</h4>
+      </div>
+      <hr style="border : 1px solid black; opacity: 0.3;">
+      <div class="row custom-font">
+        <div class="col-md-1"></div>
+        <div class="col-md-5 cartText">
+        </div>
+        <div class="col-md-5 total">
+          <div *ngIf="companyConfig.taxSetting == 'exclusive'">
+          Grand Total: {{companyConfig?.currencySymbol}} {{subTotal | number:'1.2-3' }}<br/>
+          </div>
+          <span *ngIf="companyConfig.taxSetting == 'inclusive'">
+          Grand Total : {{companyConfig?.currencySymbol}} {{(subTotal - taxAmount  - couponAmt - businessDiscount ) | number:'1.2-3'}}
+          </span>
+          <div *ngIf="userProfile?.userType === 'INDIVIDUAL' && couponAmt !== 0.00">
+            Coupon: <span style="color: rgb(52, 173, 52);">{{companyConfig?.currencySymbol}} {{couponAmt | number:'1.2-3' }}</span><br/>
+          </div>
+          <div *ngIf="userProfile?.userType === 'BUSINESS' && businessDiscount !== 0.00">
+            Discount: <span style="color: rgb(52, 173, 52);">{{companyConfig?.currencySymbol}} {{ businessDiscount | number:'1.2-3' }}</span><br/>
+          </div>
+          <!-- <div *ngIf="companyConfig.taxSetting == 'inclusive'">
+            Tax : {{companyConfig?.taxSetting}}
+          </div> -->
+          <div *ngIf="companyConfig.country === 'INDIA' && taxAmount !== 0.00">
+               Tax: <span style="color: rgb(226, 76, 43);">{{companyConfig?.currencySymbol}} {{taxAmount | number:'1.2-3' }}</span><br/>
+          </div>
+          <div *ngIf="companyConfig.country !== 'INDIA'">
+            <span *ngIf="variousTax.federalTaxAmt !== 0.00">Federal Tax : 
+              <span style="color: rgb(226, 76, 43);">{{companyConfig?.currencySymbol}} {{variousTax.federalTaxAmt | number:'1.2-3' }}</span><br/>
+            </span>
+            <span *ngIf="variousTax.stateTaxAmt !== 0.00">State Tax : 
+              <span style="color: rgb(226, 76, 43);">{{companyConfig?.currencySymbol}} {{variousTax.stateTaxAmt | number:'1.2-3' }}</span><br/>
+            </span>
+            <span *ngIf="variousTax.salesTaxAmt !== 0.00">Sales Tax : 
+              <span style="color: rgb(226, 76, 43);">{{companyConfig?.currencySymbol}} {{variousTax.salesTaxAmt | number:'1.2-3' }}</span><br/>
+            </span>
+            <span *ngIf="variousTax.vat !== 0.00">VAT : 
+              <span style="color: rgb(226, 76, 43);">{{companyConfig?.currencySymbol}} {{variousTax.vat | number:'1.2-3' }}</span><br/>
+            </span>
+          </div>
+          <!-- <div *ngIf="companyConfig.country !== 'INDIA' && companyConfig.taxSetting == 'inclusive'">
+            <span *ngIf="companyConfig.taxSetting == 'inclusive'">Tax :
+              <span>  {{companyConfig?.currencySymbol}}{{taxAmount | number:'1.2-3'}}
+              </span>
+            </span> 
+          </div> -->
+          <hr>
+          <span *ngIf="companyConfig.taxSetting == 'exclusive'"> 
+          Total: {{companyConfig?.currencySymbol}} {{(subTotal + taxAmount  - couponAmt - businessDiscount ) | number:'1.2-3' }}
+        </span>
+        <span *ngIf="companyConfig.taxSetting == 'inclusive'">
+            Total : {{companyConfig?.currencySymbol}}{{(subTotal  - couponAmt - businessDiscount ) | number:'1.2-3'}}
+          <!-- Total: {{companyConfig?.currencySymbol}} {{(subTotal - couponAmt - businessDiscount ) | number:'1.2-3' }}  -->
+        </span>
+        </div>
+      </div>
+    </mat-card ><br>
+    <app-coupon *ngIf="cartItemsList && cartItemsList.length && userProfile?.userType === 'INDIVIDUAL'" 
+                [cart]="cartItemsList"(addCoupon)="addCartCoupon($event,'ADD')" (removeCoupon)="addCartCoupon($event,'REMOVE')"></app-coupon>
+
+    <div>
+      <ng-container *ngFor="let product of cartItemsList;let i = index;">
+        <mat-card class="mat-elevation-z3" style="border-radius: 10px;" *ngIf="product.currentStock > 0; else notAvailable">
+          <div style="display: flex;flex-direction: row;">
+            <!-- img -->
+            <div style="flex: 1;">
+              <img class="imageSrc img-thumbnail" (click)="getMoreProducts(product)" [src]="product.primaryUrl" alt="...">
+            </div>
+            <!-- product info -->
+            <div style="flex: 1;" class="second-flex">
+              <div style="display: flex;justify-content: center;">
+                <h4 class="custom-font" style="color: black;">{{product.productName}}</h4>
+              </div>
+              &nbsp;
+              <div style="display: flex;justify-content: center; margin-top: -10px;">
+                <div>
+                  <button class="btn btn-sm" (click)="decrease(product.quantity, product.CartDocId,i)">-</button>
+                </div>
+                <div>
+                  <input class="qty-textbox" type="text" value={{product.quantity}} style="width: 50px; text-align: center; font-size: 15px; border: 1px solid #2A8168;"
+                  (blur)="blurEvent(product,$event, i)">
+                </div>
+                <div>
+                  <button class="btn btn-sm" (click)="increase(product, i)">+</button>
+                </div>
+              </div> 
+              <div class="blink custom-font" style="display: flex;justify-content: center; margin-top: 10px;" *ngIf="product.preOrder === 'yes';">
+                <i class="fa fa-clock-o blink" aria-hidden="true"></i> &nbsp;&nbsp; <span class="preorder">Pre Order</span> 
+              </div>          
+            </div>
+            <!-- price -->
+            <div style="flex: 1;flex-wrap: wrap;">
+              <div style="display: flex; justify-content: flex-end;flex-wrap: wrap;">
+                <button mat-icon-button  (click)="cartDel(product)" data-toggle="modal" data-target="#exampleModalLong">
+                  <mat-icon style="transform: scale(0.75);">clear</mat-icon>
+                </button>
+              </div>
+              <div  style="display: flex; justify-content: center;flex-wrap: wrap;">
+                <small class="custom-font small-font" style="color: black;">{{companyConfig?.currencySymbol}}{{product.productPrice | number:'1.2-3'}} x {{product.quantity}} </small>
+              </div>
+              <div  style="display: flex; justify-content: center;flex-wrap: wrap;">
+                <h4 class="custom-font" style="color: black;">{{companyConfig?.currencySymbol}}{{product.productPrice * product.quantity | number:'1.2-3'}}</h4>
+              </div>
+            </div>
+
+          </div>
+          <div style="display: flex;flex-direction: row;justify-content: space-evenly;font-family: 'CustomFont';flex-wrap: wrap;font-size: 10px;">
+              <div  *ngIf="product?.productWeight && product.productWeight != null && product.productWeight != '' &&
+              product?.productWeightUom && product.productWeightUom != null && product.productWeightUom != ''">
+                <div class="prodDetail"><b>Weight</b> : {{product?.productWeight}} {{product?.productWeightUom}}</div>
+              </div>
+              <div  *ngIf="product?.productSize && product.productSize != null && product.productSize != '' &&
+              product?.productSizeUom && product.productSizeUom != null && product.productSizeUom != ''">
+                <div class="prodDetail"><b>Size</b> : {{product?.productSize}} {{product?.productSizeUom}}</div>
+              </div>
+              <div  *ngIf="product?.productColor && product.productColor != null && product.productColor != ''">
+                <div class="prodDetail"><b>Color</b> : {{product?.productColor}}</div>
+              </div>
+              <div  *ngIf="product?.itemCount && product.itemCount != null && product.itemCount != ''">
+                <div class="prodDetail"><b>Count</b> : {{product?.itemCount}}</div>
+              </div>
+          </div>
+        </mat-card>
+
+        <ng-template #notAvailable>
+          <div class="col-md-6">
+            <img class="imageSrc img-thumbnail" [src]="product.primaryUrl" alt="...">
+          </div>
+          <div class="col-md-6">
+            <p class="name">{{product.productName}}</p>
+            <p>This product is out of stock</p>
+            <div class="row">
+              <div class="col-md-6 quantity">
+                <button class="btn btn-sm" (click)="decrease(product.quantity, product.CartDocId,i)" disabled>-</button>
+                <input type="text" value=0 style="width: 50px; text-align: center;">
+                <button class="btn btn-sm"
+                  (click)="increase(product.quantity, product.CartDocId, product.currentStock,i)" disabled>+</button>
+                <a class="btn btn-sm" (click)="cartDel(product.CartDocId, product.wishDocId)" data-toggle="modal"
+                  data-target="#exampleModalLong">
+                  <i class="fa fa-trash" aria-hidden="true"></i>
+                </a>
+              </div>
+             
+              <div class="col-md-5 priceTag">
+                <p class="price">{{companyConfig?.currencySymbol}}{{product.productPrice | number:'1.2-3'}}  </p>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+        <!-- delete modal -->
+        <div class="modal fade mtop" id="exampleModalLong" role="dialog" aria-labelledby="exampleModalLongTitle"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Cart Items</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <h4>Are you sure want to delete</h4>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn" data-dismiss="modal" (click)="cartDelete(product)">Delete</button>
+            </div>
+          </div>
+        </div>
+        </div>
+        <br/>
+      </ng-container>
+    </div>
+    <div class="relatedProducts" *ngIf="selectedProductList && selectedProductList.length;">
+      <h5 class="text-center">Other Delicacies</h5>
+      <div class="card mat-elevation-z4" style="z-index: 0;">
+      <owl-carousel-o [options]="featuredOptions" (translated)="getFeaturedData($event)">
+        <ng-template class="slideImg" carouselSlide *ngFor="let featured of selectedProductList">
+          <div class="card mb-3 featuredCard" [ngClass]="{
+            'featuredCard-1' : selectedProductList.length === 1,
+            'featuredCard-2' : selectedProductList.length === 2,
+            'featuredCard-3' : selectedProductList.length > 2
+          }">
+          <div class="card-body text-center">
+            <div class="relatedprodName" (click)="productOverview(featured, categoryList)">
+          <p class="text-center mobfont selectedItem">{{featured.productName}}</p>
+        </div>
+          <div class="text-center relatedImg cartAlignment" (click)="productOverview(featured, categoryList)">
+          <img [src]="featured.primaryUrl" class="cartImg img-thumbnail">
+        </div>
+        <p class="mobprice text-center mobfont selectedItem">{{companyConfig?.currencySymbol}} {{featured.productPrice | number:'1.2-3'}} </p>
+        <div class="addToButton" *ngIf="featured.currentStock > 0; else addToCartDisable">
+         <div class="text-center"> <i class="fa fa-shopping-cart social selectedItem" aria-hidden="true" (click)="addToCart(featured)"></i></div>
+        </div>
+        <ng-template #addToCartDisable>
+          <div class="addToButton">
+              <button disabled class="btn-warning">Out of Stock</button>
+          </div>
+        </ng-template>
+      </div>
+          </div>
+        </ng-template>
+      </owl-carousel-o>
+    </div>
+    </div><br>
+    <div class="row" *ngIf="cartItemsList && cartItemsList.length;">
+      <div class="col-md-12">
+        <button class="btn confirm" style="width:100%" (click)="checkOut()">Place Order</button>
+      </div>
+    </div>
+    <div class="row" *ngIf="cartItemsList && cartItemsList.length;">
+      <div class="col-md-12">
+        <button class="btn shopping" style="width:100%" (click)="continueShopping()">Continue Shopping</button>
+      </div>
+    </div><br><br>
+    <div class="row" *ngIf="cartItemsList && cartItemsList.length == 0;">
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+        <i class="fa fa-shopping-cart fa-5x" aria-hidden="true"></i><br>
+        <h5 class="text-dark">Your Cart is waiting to be filled</h5><br>
+        <button class="btn shopping" style="width:100%" (click)="continueShopping()">Continue Shopping</button>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+  <!-- </div> -->
+   <!-- <ng-template #emptyCart>
+     <div class="text-center">
+     <div class="row">
+       <div class="col-md-4"></div>
+       <div class="col-md-4"> 
+        <i class="fa fa-shopping-cart fa-5x" aria-hidden="true"></i><br>
+        <h5 class="text-white">Your Cart is waiting to be filled</h5><br>
+         <div class="continue" (click)="continueShopping()">Continue Shopping</div>
+        </div>
+       <div class="col-md-4"></div>
+     </div>
+    </div>
+   </ng-template> -->
+  </div>
+  <!-- <h4 class="text-center">Cart Items</h4>
+  <div class="container">
+      <div class="top">
+          <div class="row">
+              <div class="col-md-4" *ngFor="let product of cartItemsList">
+                  <img (click)="getMoreProducts(product)" class="imageSrc" [src]="product.primaryUrl" alt="..."><br><br>
+                  <h5 class="text-center">{{product.productName}}</h5>
+                  <h5 class="price">? {{product.productPrice}}  </h5>
+                  <div class="quantity">
+                  <button class="btn btn-sm  " (click)="decrease(product.quantity, product.CartDocId )">-</button>
+                    <input type="text" value={{product.quantity}} style="width: 30px; text-align: center;">
+                    <button class="btn btn-sm  "  (click)="increase(product.quantity, product.CartDocId)">+</button>
+                  </div>
+                <a (click)="getMoreProducts(product)" class="moreItems">More Items</a>
+                  <div class="delete"> <i class="fa fa-trash" aria-hidden="true"
+                      data-toggle="modal" data-target="#exampleModalLong" (click)="cartDel(product.CartDocId)"></i></div>
+                  <br><br>
+                  <div class="modal fade" id="exampleModalLong" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                      <div class="modal-dialog" role="document">d
+                        <div class="modal-content">
+                          <div class="modal-header">                          <h5 class="modal-title" id="exampleModalLongTitle">Cart Items</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <h4>Are you sure want to delete</h4>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="  " data-dismiss="modal">Cancel</button>
+                            <button type="button" class="  " data-dismiss="modal" (click)="cartDelete()">Delete</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+              </div>
+          </div>
+          <button class="btn btn-lg  " (click)="checkOut()">Checkout</button>
+      </div>
+  </div> -->

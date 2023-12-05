@@ -1,0 +1,463 @@
+ .carousel-inner{
+    width: 100%;
+    height: 500px;
+    /* max-height: 400px; */
+}
+.carousel-item{
+    text-align: center;
+    width: 100%;
+    height: 500px;
+    background-color: black;
+    /* max-height: 400px; */
+}
+
+.videodisplay{
+    text-align: center;
+    margin: 0px;
+    padding: 0px;
+    height: 500px;
+    /* max-height: 400px; */
+    width: 100%;
+}
+.img-fluid{
+    height: 100%;
+}
+.img-responsive{
+    width: 100%;
+}
+.pretext{
+    height: 20px;
+    font-size: 12px;
+    color: grey;
+  }
+.testiImg{
+    margin-top: 40px;
+    width: 100px;
+    height: 150px;
+}
+.testimonialSlide{
+    height: 100px;
+    border-radius: 50%;
+    margin-top: 5%;
+    object-fit: cover;
+}
+
+.testCard{
+    height: 250px;
+    border-right: 7px solid #2A8168;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+}
+.fluid{
+    margin-top: 200px;
+}
+.cardbackground{
+    margin-left: 5%;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 20px;
+  width: 90%;
+  background-color: #2A8168;
+}
+.testimonialData{
+    margin-top: 7%;
+    height: 150px;
+    overflow: hidden;
+}
+.testiname{
+    color: #2A8168;
+}
+.imagecartBox{
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 20px;
+    object-fit: cover;
+    height: 150px;
+    width: 150px;
+    cursor: pointer;
+}
+.textCategory{
+    height: 70px;
+    overflow: hidden;
+}
+.featuredCard-1{
+    margin-top: 15px;
+    width: 25%;
+    margin-left: 37%;
+}
+.featuredCard-2{
+    margin-top: 15px;
+    width: 50%;
+    margin-left: 25%;
+}
+.featuredCard-3{
+    margin-top: 15px;
+    width: 80%;
+    margin-left: 10%;
+}
+.featuredCard-1:hover{
+    border: none;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.featuredCard-2:hover{
+    border: none;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.featuredCard-3:hover{
+    border: none;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.cardImg{
+    width: 90%;
+    margin-left: 5%;
+}
+mat-grid-tile {
+    background: #2A8168;
+  }
+.categoryImage{
+    object-fit: cover;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+.headCategory{
+    margin-top: 15px;
+}
+.latestblog{
+    margin-left: 4%;
+    width: 90%;
+    height: 300px;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
+}
+.latestblogbody{
+    margin-left: 5%;
+    cursor: pointer;
+}
+.blogBody{
+   height: 150px;
+overflow: hidden;
+  }
+.sideimg{
+    margin-left: 3%;
+    border-radius: 20px;
+    padding: 20px;
+    background-color: white;
+    width: 90%;
+    height: 300px;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
+}
+.blogImgbody{
+    width: 90%;
+    height: 260px;
+}
+.blogsideImg, .blogImg{
+    border-radius: 20px;
+}
+h2{
+    margin-top: 50px;
+    /* margin-bottom: 50px; */
+}
+.textLine{
+    background-color: #2A8168;
+  height: 4px;
+  width: 6%;
+  margin-left: 47%;
+  margin-bottom: 50px;
+}
+.priceDisplay{
+    width: 46%;
+    margin-left: 80px; 
+}
+.wishlistdisplay{
+    width: 10%;
+}
+.tagTile2{
+    margin-top: -100px;
+    margin-bottom: 10px;
+}
+
+  .modal{
+    z-index: 9999999;
+    overflow-y:auto;
+  }
+  .fill-remaining-space {
+    flex: 1 1 auto;
+  }
+  /* .top1 {
+    height:390px;
+    background-color:#FFFFFF;
+    margin-top:10px;
+    overflow: hidden;
+}
+
+.top1 img {
+    height:100%;
+} */
+  .bannerImageBg{
+    width: auto; 
+    height: 430px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .textBg {
+    width: 100%; 
+    height: 500px;
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  } 
+  .cuisineValue{
+      margin-left: 10%;
+      border: 5px solid #2A8168;
+      border-radius: 5%;
+      padding: 10px;
+      width: 80%;
+      /* box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+  }
+  .cuisineValue:hover{
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+@media screen and (max-width:960px) and (orientation:portrait){
+    .tagTile2{
+        margin-top: 0px;
+        margin-bottom: 10px;
+    }
+    .textLine{
+        background-color: #2A8168;
+      height: 4px;
+      width: 20%;
+      margin-left: 40%;
+      margin-bottom: 50px;
+    }
+    .featuredCard{
+        margin-top: 15px;
+        width: 80%;
+        margin-left: 10%;
+    }
+    .fluid{
+        margin-top: 172px;
+    }
+    .sideimg{
+        display: none;
+    }
+    .carousel-inner{
+        width: 100%;
+        height: 180px;
+        /* max-height: 200px; */
+    }
+    .carousel-item{
+        text-align: center;
+        width: 100%;
+        height: 180px;
+        background-color: black;
+        /* max-height: 400px; */
+    }
+    .videodisplay{
+        text-align: center;
+        margin: 0px;
+        padding: 0px;
+        height: 180px;
+        /* max-height: 400px; */
+        width: 100%;
+    }
+    .img-responsive{
+        width: 100%;
+    }
+    .testimonialSlide{
+        height: 80px;
+        border-radius: 50%;
+        margin-top: 15%;
+    }
+.testiImg{
+    width: 100px;
+    height: 120px;
+}
+    .imagecartBox{
+        margin-left: 0px;
+        object-fit: cover;
+        width: 150px;
+        height: 150px;
+        cursor: pointer;
+        border: 2px solid #d4d6d8;
+    }
+    .categoryImage{
+        object-fit: cover;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .cardbackground{
+        margin-left: 0%;
+        box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        border-radius: 20px;
+      width: 100%;
+      background-color: #2A8168;
+    }
+    .latestblog{
+        margin-left: 4%;
+        width: 92%;
+        height: 100%;
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
+    }
+    .latestblogbody{
+        margin-left: -3%;
+    }
+    .blogImgbody{
+        width: 100%;
+        height: 260px;
+    }
+    .blogsideImg, .blogImg{
+        border-radius: 20px;
+    }
+    .logoName{
+        width: 100%;
+        height: 40px;
+    }
+    h6{
+        font-size: 12px;
+    }
+    .priceDisplay{
+        width: 44%;
+        margin-left: 84px; 
+      }
+      .wishlistdisplay{
+        width: 10%;
+      }
+      .bannerImageBg{
+        width: auto; 
+    height: 195px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+      }
+    .popupImg{
+        width: auto;
+        height: 195px;
+    } 
+    .textBg {
+        width: 100%; 
+        height: 300px;
+        display: flex;
+      justify-content: center;
+      align-items: center;
+      } 
+      .cuisineValue{
+        margin-left: 5%;
+        border: 2px solid #2A8168;
+        border-radius: 5%;
+        padding: 0px;
+        width: 90%;
+        /* box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+    }
+}
+@media screen and (max-width:960px) and (orientation:landscape){
+    .bannerImageBg{
+        width: auto; 
+        height: 300px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .textBg {
+        width: 100%; 
+        height: 300px;
+        display: flex;
+      justify-content: center;
+      align-items: center;
+      } 
+    .tagTile2{
+        margin-top: -20px;
+        margin-bottom: 10px;
+    }
+    .sideimg{
+        display: none;
+    }
+    .fluid{
+        margin-top: 186px;
+    }
+    .carousel-inner{
+        width: 100%;
+        height: 380px;
+        /* max-height: 300px; */
+    }
+    .carousel-item{
+        text-align: center;
+        width: 100%;
+        height: 380px;
+        background-color: black;
+        /* max-height: 300px; */
+    }
+    .videodisplay{
+        text-align: center;
+        margin: 0px;
+        padding: 0px;
+        height: 380px;
+        /* max-height: 300px; */
+        width: 100%;
+    }
+    .img-responsive{
+        width: 100%;
+    }
+    .testimonialSlide{
+        height: 100px;
+        border-radius: 50%;
+        margin-top: 10%;
+    }
+    .imagecartBox{
+        margin-left: 0px;
+        object-fit: cover;
+        width: 150px;
+        height: 150px;
+        cursor: pointer;
+        border: 2px solid #d4d6d8;
+    }
+    .categoryImage{
+        object-fit: cover;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .cardbackground{
+        margin-left: 0%;
+        box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        border-radius: 20px;
+      width: 100%;
+      background-color: #2A8168;
+    }
+    .latestblog{
+        margin-left: 4%;
+        width: 92%;
+        height: 100%;
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
+    }
+    .latestblogbody{
+        margin-left: -3%;
+    }
+    .blogImgbody{
+        width: 100%;
+        height: 260px;
+    }
+    .blogsideImg, .blogImg{
+        border-radius: 20px;
+    }
+    h6{
+        font-size: 18px;
+    }
+    .priceDisplay{
+        width: 40%;
+        margin-left: 130px; 
+      }
+      .wishlistdisplay{
+        width: 20%;
+      }
+}

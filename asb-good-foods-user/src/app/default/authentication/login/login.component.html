@@ -1,0 +1,47 @@
+<div class="container" style="display: flex; align-items: center;justify-content: center;">
+    <mat-card class="mat-elevation-z3" style="border-radius: 10px;margin-left: 10px;margin-right: 10px;">
+        <nav mat-tab-nav-bar mat-stretch-tabs class="container mat-elevation-z3">
+            <a mat-tab-link class="secondaryNav CustomFont" routerLinkActive="active" routerLink="/login">Login</a>
+            <a mat-tab-link class="secondaryNav CustomFont" routerLinkActive="active" routerLink="/signup" >Signup</a>
+        </nav>
+        <br/>
+        <br/>
+        <form #userLogForm="ngForm" (ngSubmit)="login(userLogForm)">
+        <div class="row" *ngIf="authError" style="margin-right: 10px;margin-left: 10px;">
+            <small class="alert alert-danger CustomFont">{{authError?. message}}</small>
+            <br/>
+        </div>
+            <div class="form-group" style="display: flex;flex-direction: row;">
+                <div style="flex: 1;padding-left: 10px;">
+                    <label for="email" class="CustomFont">Email</label>
+                </div>
+                <div style="flex: 2;">
+                    <input ngModel type="email" #email="ngModel" name="email" placeholder="Enter Email" [pattern]="emailpattern" required>
+                </div>
+            </div>
+              <small style="padding-left: 10px;" class="text-danger CustomFont" *ngIf="email.invalid && (email.dirty || email.touched) && !email.errors['pattern']" >
+                Email is required<br/></small>
+                <small style="padding-left: 10px;" class="text-danger CustomFont" *ngIf="email.invalid && (email.dirty || email.touched) && email.errors['pattern']" >
+                Enter A Valid Email<br/></small>
+              <br/>
+              <div class="form-group" style="display: flex;flex-direction: row;">
+                <div style="flex: 1;padding-left: 10px;">
+                    <label for="password" class="CustomFont">Password</label>
+                </div>
+                <div style="flex: 2;">
+                    <input ngModel type="password" #password="ngModel" name="password" placeholder="Enter Password" required>
+                </div>
+              </div>
+              <small style="padding-left: 10px;" class="text-danger CustomFont" *ngIf="password.invalid && (password.dirty || password.touched)">
+                Password is required<br/></small>
+              <br/>
+              <div class="form-group" style="text-align: center;">
+                    <button class="btn CustomFont" type="submit" [disabled]="userLogForm.invalid">Login</button>
+              </div>
+              <div style="border: 1px solid black;" style="text-align: center;">
+                <a class="CustomFont" routerLink='/forgotPass'>Forgot Password</a> 
+              </div>
+
+        </form>
+    </mat-card>
+</div>

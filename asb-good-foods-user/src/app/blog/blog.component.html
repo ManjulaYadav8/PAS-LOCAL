@@ -1,0 +1,65 @@
+<div class="container">
+    <div *ngFor="let blog of blogList | paginate: config;index as i;">
+      <div *ngIf="i%2 == 0; else left">
+    <div class="row">
+      <div class="col-md-2 sideimg">
+        <img class="img-responsive blogsideImg img-thumbnail" style="width: 100%;height: 100%;" [src]="blogSide" alt="" >
+      </div>
+      <div class="col-md-9 latestblog selectedItem">
+        <div class="row latestblogbody" (click)="blogView(blog.blogId)">
+          <div class="col-md-6" style="padding: 10px;">
+            <p [innerHtml]='blog.blogBody' class="blogBody"></p>
+            <h5>{{blog.blogTitle}}</h5>
+            <div class="blogDate">{{blog.date | date : 'dd-MMM-yyyy' }}</div>
+          </div>
+          <div class="col-md-6 blogImgbody">
+            <img [src]="blog.blogUrl" class="img-responsive blogImg img-thumbnail" style="width: 100%;height: 100%;" >
+          </div>
+        </div>
+      </div>
+    </div><br><br>
+  </div>
+      <ng-template #left>
+      <div class="row">
+        <div class="col-md-9 latestblog selectedItem">
+          <div class="row latestblogbody" (click)="blogView(blog.blogId)">
+            <div class="col-md-6" style="padding: 10px;">
+              <p [innerHtml]='blog.blogBody' class="blogBody"></p>
+              <h5>{{blog.blogTitle}}</h5>
+              <div class="blogDate">{{blog.date | date : 'dd-MMM-yyyy' }}</div>
+            </div>
+            <div class="col-md-6 blogImgbody">
+              <img [src]="blog.blogUrl" class="img-responsive blogImg img-thumbnail" style="width: 100%;height: 100%;" >
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2 sideimg">
+          <img class="img-responsive blogsideImg img-thumbnail" style="width: 100%;height: 100%;" [src]="blogSide" alt="" >
+        </div>
+      </div>
+      </ng-template>
+    
+  </div>
+<br><br>
+<pagination-template #p="paginationApi" [id]="config.id" (pageChange)="config.currentPage = $event"
+class="text-center">
+<div class="custom-pagination">
+  <div class="pagination-previous" [class.disabled]="p.isFirstPage()">
+    <span (click)="p.previous()" class="text-center">
+      <i class="fa fa-angle-double-left" style="margin-left: -3px; margin-top: -3px;"></i>
+    </span>
+  </div>
+  <div class="page-number" *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
+    <span (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">{{ page.label }}</span>
+    <div *ngIf="p.getCurrent() === page.value">
+      <span>{{ page.label }}</span>
+    </div>
+  </div>
+  <div class="pagination-next" [class.disabled]="p.isLastPage()">
+    <span (click)="p.next()" class="text-center"> 
+      <i class="fa fa-angle-double-right" style="margin-left: 3px; margin-top: -5px;"></i>
+     </span>
+  </div>
+</div>
+</pagination-template>
+</div> 

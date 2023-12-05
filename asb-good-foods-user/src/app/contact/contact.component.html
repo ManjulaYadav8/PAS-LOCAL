@@ -1,0 +1,78 @@
+<div class="container">
+  <h4 class="text-center">Contact Us</h4>
+  <div class="row contactmap">
+    <div class="col-md-7">
+      <div class="location" *ngIf="mapLocation">
+        <iframe [src]="mapLocation" 
+         style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        <!-- <iframe src={maplocation}} style="border:0;" allowfullscreen="" loading="lazy"></iframe> -->
+       </div><br>
+    </div>
+    <div class="col-md-5">
+      <h6>
+        <address> {{companyList?.addressLine1}} <br>
+            {{companyList?.addressLine2}} <br>
+            {{companyList?.street}} <br>
+            {{companyList?.city}} <br>
+            {{companyList?.state}} - {{companyList?.pincode}} <br>
+            </address><br>
+    
+    <p> <i class="fa fa-envelope" aria-hidden="true"></i> {{companyList?.email}}</p>
+    <p> <i class="fa fa-phone" aria-hidden="true"></i> {{companyList?.mobile}}</p>
+  </h6><br>
+    </div>
+  </div>
+ <br><br>
+  <div class="row">
+    <div class="col-md-3"></div>
+      <div class="col-md-6 contactmap">
+        <h4 class="text-center">Send Us A Note</h4>
+          <form #contactForm="ngForm" autocomplete="off" (submit)="contactSubmit(contactForm)">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-user" aria-hidden="true"></i></span>
+      </div>
+                  <input name="fullName" #fullName="ngModel" [(ngModel)]="contactService.contactData.fullName" class="form-control" placeholder="Full Name" required>
+                  <div *ngIf="fullName.invalid && fullName.touched" class="validation-error">This field is required.</div>
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+      </div>
+                  <input name="email" #email="ngModel" [(ngModel)]="contactService.contactData.email" class="form-control"
+                  [pattern]="emailpattern" placeholder="Email" required>
+                  <div *ngIf="email.invalid && email.touched" class="validation-error">This field is required.</div>
+              </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-mobile" aria-hidden="true"></i></span>
+      </div>
+                  <input name="phone" #phone="ngModel" [(ngModel)]="contactService.contactData.phone" class="form-control"
+                    placeholder="Phone" [pattern]="mobNumberPattern" required>
+                  <div *ngIf="phone.invalid && phone.touched" class="validation-error">This field is required.</div>
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-tag" aria-hidden="true"></i></span>
+      </div>
+                  <input name="subject" #subject="ngModel" [(ngModel)]="contactService.contactData.subject" class="form-control"
+                    placeholder="Subject" required>
+                  <div *ngIf="subject.invalid && subject.touched" class="validation-error">This field is required.</div>
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-comments" aria-hidden="true"></i></span>
+                  </div>
+                  <textarea name="message" #message="ngModel" [(ngModel)]="contactService.contactData.message" class="form-control"
+                    placeholder="Message" required></textarea>
+                  <div *ngIf="message.invalid && message.touched" class="validation-error">This field is required.</div>
+                </div>
+                <div class="form-group">
+                  <button type="submit" [disabled]="contactForm.invalid" class="btn btn-md btn-block">SUBMIT</button>
+                </div>
+              </form>
+              <br><br>
+      </div>
+      <div class="col-md-3"></div>
+  </div>
+</div>

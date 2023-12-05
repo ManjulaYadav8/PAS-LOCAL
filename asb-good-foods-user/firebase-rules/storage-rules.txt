@@ -1,0 +1,63 @@
+rules_version = '2';
+service firebase.storage {
+ match /b/{bucket}/o {
+   match /About/{document=**} {
+    allow read : if guestUser() || appUser();
+    allow write : if appUser();
+   }
+   match /Banner/{document=**} {
+    allow read : if guestUser() || appUser();
+    allow write : if appUser();
+   }
+   match /Blog/{document=**} {
+    allow read : if guestUser() || appUser();
+    allow write : if appUser();
+   }
+   match /Carousel/{document=**} {
+    allow read : if guestUser() || appUser();
+    allow write : if appUser();
+   }
+   match /Category/{document=**} {
+    allow read : if guestUser() || appUser();
+    allow write : if appUser();
+   }
+   match /Dept/{document=**} {
+    allow read : if guestUser() || appUser();
+    allow write : if appUser();
+   }   
+   match /Invoice/{document=**} {
+    allow read : if appUser();
+    allow write : if appUser();
+   } 
+   match /ProductImages/{document=**} {
+    allow read : if guestUser() || appUser();
+    allow write : if appUser();
+   }
+   match /Profile/{document=**} {
+    allow read : if appUser();
+    allow write : if appUser();
+   }
+   match /Review/{document=**} {
+    allow read : if guestUser() || appUser();
+    allow write : if appUser();
+   }   
+   match /Side/{document=**} {
+    allow read : if guestUser() || appUser();
+    allow write : if appUser();
+   } 
+   match /SubCategory/{document=**} {
+    allow read : if guestUser() || appUser();
+    allow write : if appUser();
+   }
+ match /TagManagement/{document=**}{
+   allow read : if guestUser() || appUser();
+    allow write : if appUser();
+  }
+   function appUser(){
+    return request.auth != null && request.auth.token != null && request.auth.uid != null;
+   }
+   function guestUser(){
+    return request.auth != null && request.auth.token != null && request.auth.uid != null && request.auth.token.email == "guest@asbgoodfoods.com";
+   }
+  }
+}

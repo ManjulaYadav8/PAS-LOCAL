@@ -1,0 +1,381 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <ul class="breadcrumb">
+        <li><a routerLink="/home" (click)="topFunction()">Home</a></li>
+        <!-- <li><a routerLink="/products" (click)="topFunction()">Products</a></li> -->
+        <li>{{activeDept}}</li>
+      </ul>
+    </div>
+    <div class="col-md-4">
+      <div class="dropdown sort" >
+        Sort : <a type="button" class="btn dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false" style="color: white;"> {{sortVariable}} </a>
+        <div class="dropdown-menu sorting">
+          <button class="dropdown-item" (click)="highToLow()">Price: High to Low</button>
+          <button class="dropdown-item" (click)="lowToHigh()">Price: Low to High</button>
+          <button class="dropdown-item" (click)="popularity()">Popularity</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br/>
+  <div style="display:flex; flex-direction: row;">
+    <ng-container *ngFor="let dept of deptList; let i= index;">
+      &nbsp;
+      <mat-card (click)="getIntoDept(dept)" class="mat-elevation-z2 dept-card selectedItem"
+      [ngStyle]="{'background-color':activeDept === dept.deptName ? '#2A8168' : '#ffffff' }">
+        <div style="display: flex;align-items: center;justify-content: center;">
+          <img [src]="dept.deptUrl" class="dept-icon">
+        </div>
+        <br/>
+        <div class="custom-font" style="text-align: center;" 
+        [ngStyle]="{'color':activeDept === dept.deptName ? 'white' : 'black' }">{{dept.deptName}}</div>
+      </mat-card>
+      &nbsp;
+    </ng-container>
+  </div>
+  <br/>
+  <div class="container webview" style="margin-top: 100px;">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="row categoryDisplay" [ngClass]="{'selected-color' : i==selectedIndex}"
+          *ngFor="let delicacies of selectedSubcat; let i= index" (click)="changeColor(i)">
+          <div class="category text-center" (click)="categorySelect(delicacies)">
+            <div class="row subimgbody">
+              <img class="subimg img-thumbnail" [src]="delicacies.categoryUrl" alt="..." loading="lazy" style="width: 50px;">
+              <p class="invecat vertical-center">{{delicacies.categoryName}} <br>
+              {{delicacies.availability}}</p>
+            </div>
+          </div>
+          <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </div><br><br>
+      </div>
+      <div class="col-md-8" style="margin-top:-100px">
+        <mat-form-field class="example-chip-list" appearance="outline">
+          <mat-label>Cuisines</mat-label>
+          <mat-chip-list #chipList aria-label="Tag selection">
+            <mat-chip style="height: 50px; width: 20%;"
+              *ngFor="let tag of selectedTags"
+              [selectable]="selectable"
+              [removable]="removable"
+              (removed)="remove(tag)">
+              <mat-chip-avatar style="height: 40px; width: 40px;"><img src="{{tag.tagUrl}}" style="width: 40px; height:40px;"/></mat-chip-avatar>
+               {{tag.tagName}}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input
+              placeholder=""
+              #tagInput
+              [formControl]="tagCtrl"
+              [matAutocomplete]="auto"
+              [matChipInputFor]="chipList"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              (matChipInputTokenEnd)="add($event)">
+          </mat-chip-list>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let tag of localTagItems" [value]="tag">
+              {{tag.tagName}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <app-loader style="display: flex;align-items: center; justify-content: center;" *ngIf="dataLoading"></app-loader>
+        <div class="row products">
+
+          <div class="col-md-12">
+            <owl-carousel-o [options]="featuredOptions" (translated)="getFeaturedData($event)">
+              <ng-template class="slideImg" carouselSlide *ngFor="let featured of selectedFInalData; let i=index">
+                <div class="card mb-3 featuredCard" [ngClass]="{
+                  'featuredCard-1' : selectedFInalData.length === 1,
+                  'featuredCard-2' : selectedFInalData.length === 2,
+                  'featuredCard-3' : selectedFInalData.length > 2
+                }">
+                  <h5 class="card-text text-center headCategory selectedItem custom-font">{{featured.productName}}</h5>
+                  <div class="card-body selectedItem" (click)="productOverview(featured)">
+                    <div class="cardImg">
+                    <img class="imagecartBox img-thumbnail" [src]="featured.primaryUrl" alt="...">
+                  </div><br>
+                    <!-- <p class="card-text text-center textCategory custom-font" [innerHtml]=featured.summary></p> -->
+                    <div class="pretext">
+                      <p class="text-center" *ngIf="featured.preOrder === 'yes'" style="font-family: CustomFont" >Order before {{companyConfig?.preOrderTime}} PST for Next Day Delivery</p>
+                    </div>
+                  </div>
+                  <hr style="border-top: 1px solid rgb(21, 21, 21);opacity: 0.3;">
+                  <!-- <i class="fa fa-heart selectedItem" style="margin-left:85%;" (click)="addtoWishlist(featured)"></i> -->
+                    <div class="text-center">
+                      <div class="row">
+                        <div class="priceDisplay">
+                          <!-- <h5 class="price custom-font">{{companyConfig?.currencySymbol}} {{featured.productPrice | number:'1.2-3'}} </h5> -->
+                          <button class="btn custom-font" style="font-size: 12px;" (click)="productOverview(featured)">View Product</button>
+                       </div>
+                        <div class="wishlistdisplay">
+                          <div  *ngIf='featured.wishlist === true'>
+                            <i class="fa fa-heart fa-2x selectedItem" (click)="addtoWishlist(featured,i)" style="margin-left:85%;"></i>
+                          </div>
+                          <div  *ngIf='featured.wishlist === false'>
+                            <i class="fa fa-heart-o fa-2x selectedItem" (click)="addtoWishlist(featured,i)" style="margin-left:85%;"></i>
+                          </div>
+                        </div>
+                        </div>
+                        <!-- <div class="addToButton" *ngIf="featured.currentStock > 0; else addToCartDisable">
+                                <button class="btn custom-font" (click)="addToCart(featured, i)">Add to Cart</button><br>
+                                <div *ngIf="viewCart == true && choosenProductIds.includes(featured.productdocId)">
+                                  <button class="btn custom-font" style="margin-top: 10px;" routerLink="/cart" (click)="topFunction()">View Cart</button>
+                                </div>
+                        </div> -->
+                        <ng-template #addToCartDisable>
+                          <div class="addToButton">
+                              <button disabled class="btn-warning custom-font">Out of Stock</button>
+                          </div>
+                        </ng-template>
+                      
+                      </div><br>
+                </div>
+              </ng-template>
+            </owl-carousel-o> 
+            <!-- <div *ngIf="noProducts">
+             <h2 class="text-center">No Products</h2>
+            </div>   -->
+          </div>
+          
+
+          <!-- <div class="col-md-6" *ngFor="let product of finalData | paginate: config; let i = index">
+            <div *ngIf="product.subcategoryId == null">
+            <div class="card mb-3 cardCategory"><br>
+                <h5 class="card-text text-center headCategory">{{product.productName}}</h5>
+                <div class="card-body selectedItem" (click)="productOverview(product)">
+                  <div class="text-center" >
+                  <img class="imagecartBox img-thumbnail" [src]="product.primaryUrl" alt="..." loading="lazy">
+                </div><br>
+                  <div class="pretext">
+                    <p class="text-center" *ngIf="product.preOrder === 'yes'">Order before {{companyConfig?.preOrderTime}} PST for next day Delivery</p>
+        </div>
+        <hr style="border-top: 1px solid rgb(21, 21, 21);opacity: 0.3;">
+        <div class="card-foter text-center">
+              <h5 class="price">{{companyConfig?.currencySymbol}} {{product.productPrice | number:'1.2-3'}} </h5>
+              <div class="addToButton" *ngIf="product.currentStock > 0; else addToCartDisable">
+                   <button class="btn" (click)="addToCart(product)">Add to Cart</button>
+                      <div *ngIf="viewCart == true && choosenProductIds.includes(product.productdocId)">
+                        <button class="btn" style="margin-top: 10px;" routerLink="/cart" (click)="topFunction()">View Cart</button>
+                      </div>
+              </div>
+              <ng-template #addToCartDisable>
+                <div class="addToButton">
+                    <button disabled class="btn-warning">Out of Stock</button>
+                  </ng-template>
+                </div><br>
+              </div>
+            </div> 
+</div>
+</div> -->
+
+        </div>
+        <div *ngIf="selectedFInalData && !selectedFInalData.length">
+          <mat-card>
+            <div style="display: flex;align-items: center; justify-content: center;">
+                <h4 class="custom-font">No Product Available</h4>
+            </div>
+          </mat-card>
+        </div><br>
+        <!-- <div *ngIf="finalData.length > 2">
+          <pagination-template #p="paginationApi" [id]="config.id" (pageChange)="config.currentPage = $event"
+            class="text-center webview">
+            <div class="custom-pagination">
+              <div class="pagination-previous" [class.disabled]="p.isFirstPage()">
+                <span (click)="p.previous()" class="text-center">
+                  <i class="fa fa-angle-double-left"></i>
+                </span>
+              </div>
+              <div class="page-number" *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
+                <span (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">{{ page.label }}</span>
+                <div *ngIf="p.getCurrent() === page.value">
+                  <span>{{ page.label }}</span>
+                </div>
+              </div>
+              <div class="pagination-next" [class.disabled]="p.isLastPage()">
+                <span (click)="p.next()" class="text-center"> 
+                  <i class="fa fa-angle-double-right"></i>
+                 </span>
+              </div>
+            </div>
+          </pagination-template>
+        </div> -->
+      <!-- </div> -->
+      </div>
+    </div>
+  </div><br>
+  <div class="container mobileview" style="margin-top: 50px;">
+    <mat-form-field class="example-chip-list" appearance="fill">
+      <mat-label>Cuisines</mat-label>
+      <mat-chip-list #chipList aria-label="tag selection">
+        <mat-chip
+          *ngFor="let tag of selectedTags"
+          [selectable]="selectable"
+          [removable]="removable"
+          (removed)="remove(tag)">
+          <mat-chip-avatar><img src="{{tag.tagUrl}}" style="width: 30px; height:30px;"/></mat-chip-avatar>
+          {{tag.tagName}}
+          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+        </mat-chip>
+        <input
+          placeholder="Add New..."
+          #tagInput
+          [formControl]="tagCtrl"
+          [matAutocomplete]="auto"
+          [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          (matChipInputTokenEnd)="add($event)">
+      </mat-chip-list>
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+        <mat-option *ngFor="let tag of localTagItems" [value]="tag">
+          {{tag.tagName}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <mat-accordion #accordion="matAccordion">
+      <mat-expansion-panel [hideToggle]="false" #mapanel="matExpansionPanel" *ngFor="let delicacies of selectedSubcat">
+        <mat-expansion-panel-header [collapsedHeight]="'80px'" [expandedHeight]="'80px'">
+          <mat-panel-title (click)="categorySelect(delicacies)">
+            <div class="row" style="margin-top: 10px; margin-bottom: 10px;">
+            <img class="subimg img-thumbnail" [src]="delicacies.categoryUrl" alt="..." loading="lazy" style="width: 50px;">
+            <p class="invecat">{{delicacies.categoryName}} <br> {{delicacies.availability}} </p>
+          </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <!-- <div *ngIf="finalData.length != 0; else catering"> -->
+        <app-loader style="display: flex;align-items: center; justify-content: center;" *ngIf="dataLoading"></app-loader>
+        <owl-carousel-o [options]="featuredOptions" (translated)="getFeaturedData($event)">
+          <ng-template class="slideImg" carouselSlide *ngFor="let featured of selectedFInalData; let i=index">
+            <div class="card mb-3 featuredCard" [ngClass]="{
+              'featuredCard-1' : selectedFInalData.length === 1,
+              'featuredCard-2' : selectedFInalData.length === 2,
+              'featuredCard-3' : selectedFInalData.length > 2
+            }">
+              <h5 class="card-text text-center headCategory selectedItem custom-font">{{featured.productName}}</h5>
+              <div class="card-body selectedItem" (click)="productOverview(featured)">
+                <div class="cardImg">
+                <img class="imagecartBox img-thumbnail" [src]="featured.primaryUrl" alt="...">
+              </div><br>
+                <!-- <p class="card-text text-center textCategory custom-font" [innerHtml]=featured.summary></p> -->
+                <div class="pretext">
+                  <p class="text-center" *ngIf="featured.preOrder === 'yes'" style="font-family: CustomFont" >Order before {{companyConfig?.preOrderTime}} PST for Next Day Delivery</p>
+                </div>
+              </div>
+   
+              <hr style="border-top: 1px solid rgb(21, 21, 21);opacity: 0.3;">
+              <!-- <i class="fa fa-heart selectedItem" style="margin-left:85%;" (click)="addtoWishlist(featured)"></i> -->
+              
+                <div class="text-center">
+                  <div class="row">
+                    <div class="priceDisplay">
+                      <!-- <h5 class="price custom-font">{{companyConfig?.currencySymbol}} {{featured.productPrice | number:'1.2-3'}} </h5> -->
+                      <button class="btn custom-font" (click)="productOverview(featured)">View Product</button>
+                    </div>
+                    <div class="wishlistdisplay">
+                      <div  *ngIf='featured.wishlist === true'>
+                        <i class="fa fa-heart fa-2x selectedItem" (click)="addtoWishlist(featured,i)" style="margin-left:85%;"></i>
+                      </div>
+                      <div  *ngIf='featured.wishlist === false'>
+                        <i class="fa fa-heart-o fa-2x selectedItem" (click)="addtoWishlist(featured,i)" style="margin-left:85%;"></i>
+                      </div>
+                    </div>
+                    </div>
+                    <!-- <div class="addToButton" *ngIf="featured.currentStock > 0; else addToCartDisable">
+                            <button class="btn custom-font" (click)="addToCart(featured, i)">Add to Cart</button><br>
+                            <div *ngIf="viewCart == true && choosenProductIds.includes(featured.productdocId)">
+                              <button class="btn custom-font" style="margin-top: 10px;" routerLink="/cart" (click)="topFunction()">View Cart</button>
+                            </div>
+                    </div> -->
+                    <ng-template #addToCartDisable>
+                      <div class="addToButton">
+                          <button disabled class="btn-warning custom-font">Out of Stock</button>
+                      </div>
+                    </ng-template>
+                  
+                  </div><br>
+            </div>
+          </ng-template>
+        </owl-carousel-o>  
+        <div *ngIf="selectedFInalData && !selectedFInalData.length">
+          <mat-card>
+            <div style="display: flex;align-items: center; justify-content: center;">
+                <h4 class="custom-font">No Product Available</h4>
+            </div>
+          </mat-card>
+        </div><br>
+        <!-- <div *ngIf="finalData.length > 2">
+        <pagination-template #p="paginationApi" [id]="config.id" (pageChange)="config.currentPage = $event"
+        class="text-center">
+        <div class="custom-pagination">
+          <div class="pagination-previous" [class.disabled]="p.isFirstPage()">
+            <span (click)="p.previous()" class="text-center next" (click)="topFunction()">
+              <i class="fa fa-angle-double-left text-light" style="margin-top: 3px;"></i>
+            </span>
+          </div>
+          <div class="page-number" *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
+            <span class="moblabel" (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value" (click)="topFunction()">{{ page.label }}</span>
+            <div *ngIf="p.getCurrent() === page.value">
+              <span class="moblabel">{{ page.label }}</span>
+            </div>
+          </div>
+          <div class="text-center pagination-next" [class.disabled]="p.isLastPage()">
+            <span (click)="p.next()" (click)="topFunction()"> <i class="fa fa-angle-double-right text-light" style="margin-top: 3px;"></i> </span>
+          </div>
+        </div>
+      </pagination-template>
+    </div> -->
+  <!-- </div> -->
+    <!-- <ng-template #catering>
+      <mat-accordion #accordion="matAccordion">
+        <mat-expansion-panel [hideToggle]="false" #mapanel="matExpansionPanel" *ngFor="let subcat of selectedSubcategory">
+          <mat-expansion-panel-header [collapsedHeight]="'80px'" [expandedHeight]="'80px'">
+            <mat-panel-title (click)="selectedSubcatList(subcat.subcategoryId, subcat.subcategoryName)">
+              <div class="row" style="margin-top: 10px; margin-bottom: 10px;">
+              <p class="invecat"> {{subcat.subcategoryName}} <br> {{subcat.availability}} </p>
+            </div>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+      <owl-carousel-o [options]="customOptions" (translated)="getPassedData($event)">
+        <ng-template class="slideImg"   carouselSlide *ngFor="let item of selectedItemList">
+          <div class="card mb-3 itemCategory">
+            <div class="row text-center">
+                <p class="col-md-8 card-text" style="font-size: small;">{{item.productName}}</p>
+                <input class="col-md-3 card-text" type="checkbox" id="prodName" name="prodName"
+                 (change)="onChange($event)" value="{{item.productName}}" (click)="selectingItem(item.productId, item.categoryId)">
+            </div>
+            <div class="card-body">
+              <img class="imageBox" [src]="item.primaryUrl" alt="..." loading="lazy" style="width: 100%;"><br>
+              <p class="card-text text-center" style="font-size: 9px;">{{item.availability}}</p>
+            </div>
+          </div>
+        </ng-template>
+    </owl-carousel-o>
+  </mat-expansion-panel>
+</mat-accordion>   
+    </ng-template> -->
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+
+</div>
+<!-- <div class="modal fade" id="exampleModalLong" role="dialog" aria-labelledby="exampleModalLongTitle"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLongTitle">Items</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>Are you sure to add all this Items to cart</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class=" btn-success" data-dismiss="modal" (click)="addtoCart()" >Confirm</button>
+      <button type="button" class=" btn-success" data-dismiss="modal">Cancel</button>
+    </div>
+  </div>
+</div>
+</div> -->
+<!-- <full-calendar [options]="calendarOptions" style="width: 500px;height: 500px;" ></full-calendar> -->

@@ -1,0 +1,25 @@
+#myBtn {
+    width: 45px;
+    height: 45px;
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed/sticky position */
+    bottom: 30px; /* Place the button at the bottom of the page */
+    right: 30px; /* Place the button 30px from the right */
+    z-index: 99; /* Make sure it does not overlap */
+    border: none; /* Remove borders */
+    outline: none; /* Remove outline */
+     /* Set a background color */
+    /* color: white; Text color */
+    cursor: pointer; /* Add a mouse pointer on hover */
+    padding: 10px;  /* Some padding */
+    border-radius: 10%; /* Rounded corners */
+    font-size: 20px; /* Increase font size */
+    /* background-color: #2A8168; */
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+     opacity: 50%;
+
+}
+#myBtn:hover {
+    background-color: #41977a /* Add a dark-grey background on hover */
+}
+

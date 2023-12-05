@@ -1,0 +1,64 @@
+<div class="container-fluid"><br>
+<div class="row">
+    <div class="col-md-4 text-center">
+        <h5>ACCOUNT</h5>
+        <a class="nav-link" routerLink="/home" (click)="topFunction()">Home</a> 
+        <a class="nav-link" [routerLink]="['/products', deptId,categoryId]" (click)="topFunction();">Products</a> 
+        <a class="nav-link" routerLink="/blog" (click)="topFunction()">Blog</a> 
+        <a class="nav-link" routerLink="/cart" (click)="topFunction()">Cart </a> 
+        <a class="nav-link" routerLink="/profile" (click)="topFunction()">Orders</a> 
+      </div>
+        <div class="col-md-4 text-center">
+          <h5 class="text-center">COMPANY</h5>
+        <a class="nav-link" routerLink="/about" (click)="topFunction()">About</a> 
+        <a class="nav-link" routerLink="/contact" (click)="topFunction()">Contact</a>
+        <a class="nav-link" routerLink="/terms" (click)="topFunction()">Terms & Conditions</a>
+        <a class="nav-link" routerLink="/privacy" (click)="topFunction()">Privacy Policy </a> 
+        <a class="nav-link" routerLink="/return" (click)="topFunction()">Cancellation & Refunds</a>
+        <!-- <div class="row text-center quickrow">
+          <div class="left">
+            <li class="nav-item">
+              <a class="nav-link" routerLinkActive="active" data-toggle="collapse"
+                   *ngFor="let navbar of navbarList"
+                   data-target=".navbar-collapse.show" routerLink="/{{navbar.navbarName}}"
+                   (click)="selectednavbar(navbar.navbarName);setDocTitle( 'navbar.navbarName')" style="text-transform: capitalize;" >{{navbar.navbarName}}</a>
+         </li><br>
+          </div>
+          <div class="right">
+            <a class="nav-link" routerLink="/privacy" (click)="topFunction()">Privacy Policy </a> 
+            <a class="nav-link" routerLink="/return" (click)="topFunction()">Cancellation & Return</a> 
+            <a class="nav-link" routerLink="/disclaimer" (click)="topFunction()">Disclaimer</a> 
+            <a class="nav-link" routerLink="/terms" (click)="topFunction()">Terms of Service</a> 
+          </div>
+        </div> -->
+    </div>
+    <div class="col-md-4">
+      <h5>CONTACT INFORMATION</h5>
+      <address>
+        Address <i class="fa fa-map-marker" aria-hidden="true"></i> : {{companyAddress?.addressLine1}} {{companyAddress?.addressLine2}}<br>
+       {{companyAddress?.street}} {{companyAddress?.city}} {{companyAddress?.state}}  {{companyAddress?.pincode}}<br>
+        Phone <i class="fa fa-phone-square" aria-hidden="true"></i> : {{companyAddress?.phone}} <br>
+        Mobile <i class="fa fa-mobile" aria-hidden="true"></i> : {{companyAddress?.mobile}} <br>
+        Email <i class="fa fa-envelope-o" aria-hidden="true"></i> : {{companyAddress?.email}}
+      </address>
+    </div>
+    <!-- <div class="col-md-3">
+        <h5>AUTHORIZED DEALERS OF</h5>
+            <a href={{parent.parentLink}} target="_blank" *ngFor="let parent of parentLogos">
+                <img src={{parent.bannerImage}} alt="Parent Company" class="digital">
+            </a>
+    </div> -->
+</div><hr>
+<div class="row copycode">
+  <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <p class="copyright">Copyright &copy; {{presentYear}} All Rights Reserved.</p>
+      <p class="copyright">Powered by &nbsp; &nbsp; <a class="codeswift" href="https://www.codeswift.in/index.html" target="_blank" 
+        style="color: #38BABF;" > CodeSwift Technologies</a> </p>
+    </div>
+    <div class="col-md-4"></div>
+    <!-- <div class="col-md-4">
+        <img src="{{logoImage}}" alt="logo" class="logo">
+    </div> -->
+</div>
+</div>

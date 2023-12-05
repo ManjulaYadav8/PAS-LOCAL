@@ -1,0 +1,45 @@
+<mat-toolbar style="display: flex;flex-direction: row;">
+    <div class="dummy-flex">
+    </div>
+    <div style="flex: 6;">
+        <b>Holidays</b>
+    </div>
+    <!-- <span class="fill-remaining-space">
+      <h5 class="text-center"><span>Holidays</span></h5>
+    </span> -->
+  <button mat-icon-button  (click)="onClose()">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </mat-toolbar>
+  <br>
+    <mat-card-title class="text-center">
+      </mat-card-title>
+      <ng-container *ngFor="let types of data | keyvalue">
+        <mat-expansion-panel *ngIf="data[types.key].length > 0"  [expanded]="true" class="mat-elevation-z1">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <b>{{types.key | uppercase }}</b>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ng-container *ngIf="data[types.key].length > 0">
+            <ng-container *ngFor="let value of data[types.key]">
+              <mat-card style="display: flex;flex-direction: row;" class="font-flex mat-elevation-z0" >
+                  <div *ngIf="types.key === 'Dates'" style="flex: 1;border-right: 1px solid gray;padding-right: 10px;">
+                    {{value.when | date : 'dd-MMM-yyyy'}}
+                  </div>
+                  <div *ngIf="types.key === 'Date Range'" style="flex: 1;border-right: 1px solid gray;padding-right: 10px;">
+                    
+                    {{value.when[0] | date : 'dd-MMM-yyyy'}} To {{value.when[value.when.length - 1] | date : 'dd-MMM-yyyy'}}
+                  </div>
+                  <div *ngIf="types.key === 'Days Of Week' || types.key === 'Months Of Year'" style="flex: 1;border-right: 1px solid gray;padding-right: 10px;">
+                    {{value.when}}
+                  </div>
+                  <div style="flex: 1;padding-left: 10px;">
+                    {{value.why | titlecase }}
+                  </div>
+              </mat-card>
+            </ng-container>
+            </ng-container>
+          </mat-expansion-panel>
+          <br/>
+      </ng-container>

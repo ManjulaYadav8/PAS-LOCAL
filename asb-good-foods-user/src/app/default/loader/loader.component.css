@@ -1,0 +1,58 @@
+.loader-dots{
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    background-color: #2A8168;
+    display: inline-block;
+    margin: 5px;
+    animation: swiftbizdot 2.5s ease-in-out infinite;
+  }
+  
+  @keyframes swiftbizdot {
+    0%,100%{
+      transform: scale(0.4);
+      background-color: #00a1ff;
+    }
+    20%{
+      background-color: #8e5c3b;
+    }
+    40%{
+      transform: translate(0px,5px);
+      background-color: #9c83ce;
+    }
+    50%{
+      transform: scale(1);
+      transform: translate(0px,5px); 
+    }
+    60%{
+      background-color: #00a1ff;
+    }
+    80%{
+      background-color: #ffb342;
+    }
+  }
+  
+  #loader-dots1{
+    animation-delay: 0.2s;
+  }
+  #loader-dots2{
+    animation-delay: 0.4s;
+  }
+  #loader-dots3{
+    animation-delay: 0.6s;
+  }
+  #loader-dots4{
+    animation-delay: 0.8s;
+  }
+  #loader-dots5{
+    animation-delay: 1s;
+  }
+
+  @media screen and (max-width:960px) and (orientation:portrait){
+
+    .loader-dots{
+      height: 10px;
+      width: 10px;
+    }
+
+  }

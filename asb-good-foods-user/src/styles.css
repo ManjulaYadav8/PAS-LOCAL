@@ -1,0 +1,223 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+@font-face {
+  font-family: "CustomFont";
+  src: url("assets/Montserrat/Montserrat-Medium.ttf");
+  /* src: url("assets/trueno/trueno/TruenoRg.otf") format("woff"),
+  url("assets/trueno/trueno/TruenoRg.otf") format("opentype"),
+  url("assets/trueno/trueno/TruenoRg.otf") format("svg"); */
+  }
+  /* @font-face {
+    font-family:"mostfont";
+    src: url("../src/assets/font/MOTSCHCC.TTF");
+    } */
+    .m-card-sub-title{
+      font-family: 'CustomFont';
+      }
+    .CustomFont , input[placeholder]{
+        font-family: 'CustomFont', Arial, sans-serif;
+        font-weight:normal;
+        font-style:normal; 
+    }
+    body {
+        margin: 0; 
+        font-family: 'CustomFont', Arial, sans-serif;
+        font-weight:normal;
+        font-style:normal; 
+        /* background-image: url("assets/backgroundImage.jpeg");  */
+        background-size: cover;
+        height: 100%;
+       }
+.custom-font, .mobfont{ 
+  font-family: "CustomFont";
+}
+.toast {
+  z-index: 9999999;
+}
+.container{
+  margin-top: 250px;
+}
+.line{
+    width: 100%;
+    border-bottom: 1px solid #979999;
+}
+.cdk-global-overlay-wrapper, .cdk-overlay-container {
+    z-index: 99999 !important;
+ }
+ .btn{
+    background-color: #2A8168;
+    color: white;
+}
+.btn:hover{
+    background-color: teal;
+}
+.card{
+    border-radius: 20px;
+  /* cursor: pointer; */
+  }
+  .card:hover{
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  .fa{
+    color: #2A8168;
+  }
+  .fa-chevron-up{
+    color: white;
+  }
+  a{
+      color: #2A8168;
+  }
+  .nav-link{
+    color: #2A8168;
+  }
+  a:hover{
+    color: #2A8168; 
+  }
+  a.active{
+    border-bottom: 3px solid #2A8168; 
+  }
+  h1, h2, h3, h4, h5,h6{
+    /* margin-top: 40px; */
+    color: #2A8168;
+    /* margin-bottom: 40px; */
+  }
+  .breadcrumb{
+    text-align: center;
+    /* margin-left: 25px; */
+  }
+  ul.breadcrumb {
+   /* margin-left: -10px; */
+     /* padding: 10px 16px; */
+     list-style: none;
+     background-color: transparent;
+   }
+   
+   /* Display list items side by side */
+   ul.breadcrumb li {
+     display: inline;
+     font-size: 18px;
+   }
+   
+   /* Add a slash symbol (/) before/behind each list item */
+   ul.breadcrumb li+li:before {
+     padding: 8px;
+     color: #2A8168;
+     content: ">\00a0";
+     /* content: f105; */
+   }
+   
+   /* Add a color to all links inside the list */
+   ul.breadcrumb li a {
+     font-weight: bold;
+     color: #2A8168;
+     text-decoration: none;
+   }
+   
+   /* Add a color on mouse-over */
+   ul.breadcrumb li a:hover {
+     color: #024d37;
+     text-decoration: underline;
+   }
+   .lightbg{
+     margin-top: 10px;
+     border-radius: 20px;
+     box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+     /* background-color: rgb(238, 238, 238); */
+   }
+   .selectedItem{
+     cursor: pointer;
+   }
+   @keyframes blink {
+    50% {
+      opacity: 5.0;
+      color: rgb(245, 60, 60);
+      /* border-color: green; */
+    }
+  }
+  @-webkit-keyframes blink {
+    50% {
+      opacity: 5.0;
+      color: rgb(245, 60, 60);
+      /* border-color: green; */
+    }
+  }
+  .blink {
+    animation: blink 1s step-start 0s infinite;
+    -webkit-animation: blink 1s step-start 0s infinite;
+  }
+  .validation-error{
+    color: red;
+  }
+@media screen and (max-width:960px) and (orientation:portrait){
+    .container{
+      margin-top: 200px;
+    }
+    a{
+        color: #2A8168;
+    }
+    a:hover{
+      color: #2A8168; 
+    }
+    a.active{
+      border-bottom: 3px solid #2A8168; 
+    }
+    mat-panel-title{
+        font-family: 'samarkan';
+      }
+      mat-expansion-panel{
+        font-family: 'samarkan';
+      }
+      .card{
+        font-family: 'samarkan';
+      }
+      ul.breadcrumb li {
+        display: inline;
+        font-size: 14px;
+      }
+      
+      /* Add a slash symbol (/) before/behind each list item */
+      ul.breadcrumb li+li:before {
+        padding: 4px;
+        color: #2A8168;
+        content: ">\00a0";
+        /* content: f105; */
+      }
+      
+      /* Add a color to all links inside the list */
+      ul.breadcrumb li a {
+        font-weight:normal;
+        color: #2A8168;
+        text-decoration: none;
+      }
+}
+@media screen and (max-width:960px) and (orientation:landscape){
+    mat-panel-title{
+        font-family: 'samarkan';
+      }
+      mat-expansion-panel{
+        font-family: 'samarkan';
+      }
+      .card{
+        font-family: 'samarkan';
+      }
+      ul.breadcrumb li {
+        display: inline;
+        font-size: 16px;
+      }
+      
+      /* Add a slash symbol (/) before/behind each list item */
+      ul.breadcrumb li+li:before {
+        padding: 5px;
+        color: #2A8168;
+        content: ">\00a0";
+        /* content: f105; */
+      }
+      
+      /* Add a color to all links inside the list */
+      ul.breadcrumb li a {
+        font-weight:normal;
+        color: #2A8168;
+        text-decoration: none;
+      }
+}

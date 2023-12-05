@@ -1,0 +1,84 @@
+<input type="checkbox" id="check">
+<label class="chat-btn" for="check">
+  <i class="fa fa-commenting-o comment" data-toggle="modal" data-target="#chatBotModal"></i>
+</label>
+<div class="modal left fade" id="chatBotModal" role="dialog" aria-labelledby="chatBotModalLongTitle" aria-hidden="true">
+
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <mat-toolbar>
+        <span class="fill-remaining-space">
+          <h5 class="text-center text-light header"><span class="CustomFont">Get In Touch</span></h5>
+        </span>
+      </mat-toolbar>
+      <div class="modal-body">
+        <div class="container1">
+          <mat-card class="mat-elevation-z3">
+            <nav mat-tab-nav-bar mat-stretch-tabs>
+              <div style="width: 47%;">
+                <button class="btn mat-elevation-z3" (click)="sendMail('email')"
+                  style="border:1px solid #dadddc; width: 100%; background-color: white;"><i class="fa fa-envelope-o"
+                    aria-hidden="true"></i></button>
+              </div>
+              <div style="width: 6%;"></div>
+              <div style="width: 47%;">
+                <a href="https://wa.me/{{companyMobile}}/?text=Hello, I am interested in ASB Good Foods" target="_blank"
+                  class="btn mat-elevation-z3" style="border:1px solid #dadddc; width: 100%; background-color: white;"
+                  (click)="sendWhatapp()" data-dismiss="modal">
+                  <!-- <i class="fa fa-whatsapp" aria-hidden="true"></i> -->
+                  <img src="../../../assets/app.ico" alt="" style="width:20px;height:20px">
+                </a>
+              </div>
+            </nav>
+            <br />
+            <br />
+            <div *ngIf="email == true">
+              <form #contactForm="ngForm" autocomplete="off">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-user"
+                        aria-hidden="true"></i></span>
+                  </div>
+                  <input name="fullName" #fullName="ngModel" [(ngModel)]="contactService.contactData.fullName"
+                    class="form-control" placeholder="Full Name" required>
+                  <div *ngIf="fullName.invalid && fullName.touched" class="validation-error">This field is required.
+                  </div>
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i
+                        class="fa fa-envelope-o" aria-hidden="true"></i></span>
+                  </div>
+                  <input name="email" #email="ngModel" [(ngModel)]="contactService.contactData.email"
+                    class="form-control" [pattern]="emailpattern" placeholder="Email" required>
+                  <div *ngIf="email.invalid && email.touched" class="validation-error">This field is required.</div>
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-mobile"
+                        aria-hidden="true"></i></span>
+                  </div>
+                  <input name="phone" #phone="ngModel" [(ngModel)]="contactService.contactData.phone"
+                    class="form-control" placeholder="Phone">
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i
+                        class="fa fa-comments" aria-hidden="true"></i></span>
+                  </div>
+                  <textarea name="message" #message="ngModel" [(ngModel)]="contactService.contactData.message"
+                    class="form-control" placeholder="Message" required></textarea>
+                  <div *ngIf="message.invalid && message.touched" class="validation-error">This field is required.</div>
+                </div>
+                <div class="form-group">
+                  <button type="submit" [disabled]="contactForm.invalid" (click)="contactSubmit(contactForm)"
+                    class="btn btn-md btn-block" data-dismiss="modal">SUBMIT</button>
+                </div>
+              </form>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

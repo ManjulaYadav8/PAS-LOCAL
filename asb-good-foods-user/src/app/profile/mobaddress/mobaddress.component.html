@@ -1,0 +1,305 @@
+<!-- <agm-map [latitude]="latitude" [longitude]="longitude" (mapClick)="onChoseLocation($event)">
+    <agm-marker [latitude]="latitude" [longitude]="longitude" *ngIf="locationChosen"></agm-marker>
+</agm-map> -->
+<div class="container">
+    <!-- <ul class="breadcrumb">
+        <li><a routerLink="/profile" (click)="topFunction()" style="color: black;">Back</a></li>
+      </ul> -->
+      <i class="fa fa-2x fa-arrow-circle-left" aria-hidden="true" routerLink="/profile" (click)="topFunction()" ></i>
+<div class="address">
+  <button class="btn custom-font" data-toggle="modal" data-target="#addAddressModal">Add
+      Address</button>
+  </div><br>
+  <div class="orderscroll">
+      <div  *ngFor="let address of addressList">
+  <div class="card">
+      <div class="card-header">
+          <div class="row">
+                  <h5 class="tex-center adlabel custom-font" style="margin-left: 80px;">{{address.addresslabel}}</h5> 
+           
+                  <i class="fa fa-pencil" data-toggle="modal" data-target="#editModalLong"
+                  aria-hidden="true" (click)="editAddress(address)" ></i>
+              
+                  <i class="fa fa-trash" aria-hidden="true" (click)="deleteAddress(address)" data-toggle="modal"
+                  data-target="#deleteModalLong"></i>
+          </div>
+      </div>
+      <div class="card-body">
+          <address class="text-center custom-font">
+              <address class="text-center custom-font">
+                <i class="fa fa-map-marker" aria-hidden="true"></i> &nbsp;&nbsp; {{address.addressLine1}} <br>
+                <i class="fa fa-map-marker" aria-hidden="true"></i> &nbsp;&nbsp;{{address.addressLine2}}<br>
+                <i class="fa fa-map-signs" aria-hidden="true"></i>&nbsp;&nbsp; {{address.city}}<br>
+                <i class="fa fa-map" aria-hidden="true"></i>&nbsp;&nbsp; {{address.state}}<br>
+                <i class="fa fa-map-pin" aria-hidden="true"></i>&nbsp;&nbsp;{{address.pincode}} <br>
+            </address>
+          </address>
+      </div>
+  </div><br>
+</div>
+</div>
+</div>
+<div class="modal fade mtop" id="editModalLong" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="margin-top: 15%;">
+  <div class="modal-dialog modal-sm modal-dialog-scrollable modal-dialog-centered" role="document">
+      <div class="modal-content">
+          <!-- <div class="modal-header">
+              <h5 class="modal-title text-center" id="exampleModalLongTitle">Edit Address</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div> -->
+          <mat-toolbar>
+            <span class="fill-remaining-space">
+              <h5 class="text-center text-light"><span class="CustomFont">Edit Address</span></h5>
+            </span>
+            <button mat-icon-button class="close text-light" data-dismiss="modal">
+              <mat-icon>clear</mat-icon>
+            </button>
+          </mat-toolbar>
+          <div class="modal-body">
+            <form #editaddressForm="ngForm" autocomplete="off" style="height: 300px;">
+                <div class="input-group mb-3 row">
+                    <label for="addressLine1" class="col-md-4">Address Line 1</label>
+                    <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+      </div>
+                    <input name="addressLine1" #addressLine1="ngModel" [(ngModel)]="editAddressLine1"
+                        class="form-control col-md-7" placeholder="address Line1" required>
+                    <div *ngIf="addressLine1.invalid && addressLine1.touched" class="validation-error">This
+                        field is required.
+                    </div>
+                </div>
+                <div class="input-group mb-3 row">
+                    <label for="addressLine2" class="col-md-4">Address Line 2</label>
+                    <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+      </div>
+                    <input name="addressLine2" #addressLine2="ngModel" [(ngModel)]="editAddressLine2"
+                        class="form-control col-md-7" placeholder="Address Line2" required>
+                    <div *ngIf="addressLine2.invalid && addressLine2.touched" class="validation-error">This
+                        field is required.
+                    </div>
+                </div>
+                <div class="input-group mb-3 row">
+                    <label class="col-md-4" for="state">State *</label>
+                    <mat-form-field class="col-md-7">
+                      <input type="text" placeholder="Choose State" aria-label="State Name" 
+                        matInput [formControl]="myControlState" [matAutocomplete]="autoState" [(ngModel)]="editState">
+                      <mat-autocomplete #autoState="matAutocomplete" (optionSelected)="changeState($event.option.value)">
+                        <mat-option *ngFor="let state of filteredOptionsState | async" [value]="state">
+                          {{state}}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                    <div class="form-label-group">
+                        <input type="hidden" name="state" id="state" class="form-control" #state="ngModel" readonly [ngModel]="editState">
+                        <!-- <div *ngIf="state.invalid && state.touched" class="validation-error">This field is required.</div> -->
+                    </div>
+                  </div> 
+                  <div class="input-group mb-3 row">
+                    <label class="col-md-4" for="city">City *</label>
+                    <mat-form-field class="col-md-7">
+                      <input type="text" placeholder="Choose City" aria-label="City Name" 
+                        matInput [formControl]="myControlCity" [matAutocomplete]="autoCity" [(ngModel)]="editCity">
+                      <mat-autocomplete #autoCity="matAutocomplete" (optionSelected)="changeCity($event.option.value)">
+                        <mat-option *ngFor="let city of filteredOptionsCity | async" [value]="city">
+                          {{city}}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                    <div class="form-label-group">
+                      <input type="hidden" name="city" id="city" class="form-control" #city="ngModel" readonly [ngModel]="editCity">
+                      <!-- <div *ngIf="city.invalid && city.touched" class="validation-error">This field is required.</div> -->
+                    </div>
+                  </div>
+                <!-- <div class="input-group mb-3 row">
+                    <label for="city" class="col-md-4">City</label>
+                    <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+      </div>
+                    <input name="city" #city="ngModel" [(ngModel)]="editCity" class="form-control col-md-7"
+                        placeholder="City Name" required>
+                    <div *ngIf="city.invalid && city.touched" class="validation-error">This field is required.
+                    </div>
+                </div>
+                <div class="input-group mb-3 row">
+                    <label for="state" class="col-md-4">State</label>
+                    <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+      </div>
+                    <input name="state" #state="ngModel" [(ngModel)]="editState"
+                        class="form-control col-md-7" placeholder="state" required>
+                    <div *ngIf="state.invalid && state.touched" class="validation-error">This field is required.
+                    </div>
+                </div> -->
+                <div class="input-group mb-3 row">
+                    <label for="pincode" class="col-md-4">Zipcode</label>
+                    <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-map-pin" aria-hidden="true"></i></span>
+      </div>
+                    <input name="pincode" type="number" #pincode="ngModel" [(ngModel)]="editPincode"
+                        class="form-control col-md-7" placeholder="pincode Number"
+                        required>
+                    <div *ngIf="pincode.invalid && pincode.touched" class="validation-error">This field is
+                        required.</div>
+                </div>
+                <div class="form-group ">
+                    <button type="submit" class="btn btn-md btn-block"
+                        (click)="addressSubmit(editaddressForm)" data-dismiss="modal"
+                        [disabled]="(editaddressForm.invalid || !myControlState.valid || !myControlCity.valid)">Submit</button>
+                </div><br>
+            </form>
+          </div>
+      </div>
+  </div>
+</div>
+<div class="modal fade mtop" id="addAddressModal" role="dialog" aria-labelledby="addAddressModalLongTitle"
+  aria-hidden="true" style="margin-top: 15%;">
+  <div class="modal-dialog modal-sm modal-dialog-scrollable modal-dialog-centered" role="document">
+      <div class="modal-content">
+          <!-- <div class="modal-header">
+              <h5 class="modal-title text-center" id="addAddressModalLongTitle">Add Address</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div> -->
+          <mat-toolbar>
+            <span class="fill-remaining-space">
+              <h5 class="text-center text-light"><span class="CustomFont">Add Address</span></h5>
+            </span>
+            <button mat-icon-button class="close text-light" data-dismiss="modal">
+              <mat-icon>clear</mat-icon>
+            </button>
+          </mat-toolbar>
+          <div class="modal-body">
+              <form #addressForm="ngForm" autocomplete="off" style="font-size: 12px; height: 300px;">
+                  <div class="input-group mb-3 row">
+                      <label for="addresslabel" class="col-md-4">Address Label</label>
+                      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-tag" aria-hidden="true"></i></span>
+      </div>
+                      <select id="addresslabel" name="addresslabel" #addresslabel="ngModel"
+                          [(ngModel)]="profileService.profileData.addresslabel"
+                          class="form-control col-md-7" required>
+                          <option value="home">Home</option>
+                          <option value="office">Office</option>
+                      </select>
+                  </div>
+
+                  <div class="input-group mb-3 row">
+                      <label for="addressLine1" class="col-md-4">Address Line 1</label>
+                      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+      </div>
+                      <input name="addressLine1" #addressLine1="ngModel"
+                          [ngModel]="profileService.profileData.addressLine1" class="form-control col-md-7"
+                          placeholder="address Line1" required>
+                      <div *ngIf="addressLine1.invalid && addressLine1.touched" class="validation-error">This
+                          field is required.
+                      </div>
+                  </div>
+                  <div class="input-group mb-3 row">
+                      <label for="addressLine2" class="col-md-4">Address Line 2</label>
+                      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+      </div>
+                      <input name="addressLine2" #addressLine2="ngModel"
+                          [ngModel]="profileService.profileData.addressLine2" class="form-control col-md-7"
+                          placeholder="Address Line2" required>
+                      <div *ngIf="addressLine2.invalid && addressLine2.touched" class="validation-error">This
+                          field is required.
+                      </div>
+                  </div>
+                  <div class="input-group mb-3 row">
+                    <label class="col-md-4" for="state">State *</label>
+                    <mat-form-field class="col-md-7">
+                      <input type="text" placeholder="Choose State" aria-label="State Name" 
+                        matInput [formControl]="myControlState" [matAutocomplete]="autoState" [(ngModel)]="selectedState">
+                      <mat-autocomplete #autoState="matAutocomplete" (optionSelected)="changeState($event.option.value)">
+                        <mat-option *ngFor="let state of filteredOptionsState | async" [value]="state">
+                          {{state}}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                    <div class="form-label-group">
+                        <input type="hidden" name="state" id="state" class="form-control" #state="ngModel" readonly [ngModel]="selectedState">
+                        <!-- <div *ngIf="state.invalid && state.touched" class="validation-error">This field is required.</div> -->
+                    </div>
+                  </div> 
+                  <div class="input-group mb-3 row">
+                    <label class="col-md-4" for="city">City *</label>
+                    <mat-form-field class="col-md-7">
+                      <input type="text" placeholder="Choose City" aria-label="City Name" 
+                        matInput [formControl]="myControlCity" [matAutocomplete]="autoCity" [(ngModel)]="selectedCity">
+                      <mat-autocomplete #autoCity="matAutocomplete" (optionSelected)="changeCity($event.option.value)">
+                        <mat-option *ngFor="let city of filteredOptionsCity | async" [value]="city">
+                          {{city}}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                    <div class="form-label-group">
+                      <input type="hidden" name="city" id="city" class="form-control" #city="ngModel" readonly [ngModel]="selectedCity">
+                      <!-- <div *ngIf="city.invalid && city.touched" class="validation-error">This field is required.</div> -->
+                    </div>
+                  </div>
+                  <!-- <div class="input-group mb-3 row">
+                      <label for="city" class="col-md-4">City</label>
+                      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+      </div>
+                      <input name="city" #city="ngModel" [ngModel]="profileService.profileData.city"
+                          class="form-control col-md-7" placeholder="City Name" required>
+                      <div *ngIf="city.invalid && city.touched" class="validation-error">This field is required.
+                      </div>
+                  </div>
+                  <div class="input-group mb-3 row">
+                      <label for="state" class="col-md-4">State</label>
+                      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+      </div>
+                      <input name="state" #state="ngModel" [ngModel]="profileService.profileData.state"
+                          class="form-control col-md-7" placeholder="state" required>
+                      <div *ngIf="state.invalid && state.touched" class="validation-error">This field is required.
+                      </div>
+                  </div> -->
+                  <div class="input-group mb-3 row">
+                      <label for="pincode" class="col-md-4">Zipcode</label>
+                      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-map-pin" aria-hidden="true"></i></span>
+      </div>
+                      <input name="pincode" type="number" #pincode="ngModel"
+                          [ngModel]="profileService.profileData.pincode" class="form-control col-md-7"
+                          placeholder="pincode Number" required>
+                      <div *ngIf="pincode.invalid && pincode.touched" class="validation-error">This field is
+                          required.</div>
+                  </div>
+                  <div class="form-group ">
+                      <button type="submit" class="btn btn-md btn-block"
+                          (click)="addAddressSubmit(addressForm)" data-dismiss="modal" 
+                          [disabled]="(addressForm.invalid || !myControlState.valid || !myControlCity.valid)">Submit</button>
+                  </div><br>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+<div class="modal fade" id="deleteModalLong" role="dialog" aria-labelledby="deleteModalLongLongTitle" style="margin-top: 180px;"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title" id="deleteModalLongLongTitle">Delete Address</h5>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="modal-body">
+<h4>Are you sure want to delete</h4>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn" data-dismiss="modal">Cancel</button>
+<button type="button" class="btn" data-dismiss="modal" (click)="cartDelete()">Delete</button>
+</div>
+</div>
+</div>
+</div>

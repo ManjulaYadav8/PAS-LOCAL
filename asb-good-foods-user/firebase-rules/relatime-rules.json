@@ -1,0 +1,34 @@
+{
+  "rules": {
+    "$date" : {
+        "auth": {
+            ".read" : "auth.token != null && auth.uid != null && auth.token.email != 'guest@asbgoodfoods.com'",
+            ".write" : "auth.token != null && auth.uid != null && auth.token.email != null"
+        },
+        "e-commerce": {
+            ".read" : "auth.token != null && auth.uid != null && auth.token.email != 'guest@asbgoodfoods.com'",
+            ".write" : "auth.token != null && auth.uid != null && auth.token.email != 'guest@asbgoodfoods.com'"
+        },
+        "leads": {
+            ".read" : "auth.token != null && auth.uid != null && auth.token.email != 'guest@asbgoodfoods.com'",
+            ".write" : "auth.token != null && auth.uid != null && auth.token.email != null"
+        },
+        "views": {
+            ".read" : "auth.token != null && auth.uid != null && auth.token.email != 'guest@asbgoodfoods.com'",
+            ".write" : "auth.token != null && auth.uid != null && auth.token.email != null"
+        },
+        "summary": {
+            ".read" : "auth.token != null && auth.uid != null && auth.token.email != 'guest@asbgoodfoods.com'",
+            ".write" : "auth.token != null && auth.uid != null && auth.token.email != null"
+        }
+    },
+    "Metadata": {
+        ".read" : "auth.token != null && auth.uid != null && auth.token.email != 'guest@asbgoodfoods.com'",
+        ".write" : "auth.token != null && auth.uid != null && auth.token.email != 'guest@asbgoodfoods.com'"
+    },  
+    "till-date": {
+        ".read" : "auth.token != null && auth.uid != null && auth.token.email != 'guest@asbgoodfoods.com'",
+        ".write" : "auth.token != null && auth.uid != null && auth.token.email != null"
+    }
+  }
+}

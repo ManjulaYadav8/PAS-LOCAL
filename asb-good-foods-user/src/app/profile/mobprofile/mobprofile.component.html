@@ -1,0 +1,20 @@
+<div class="container">
+  <!-- <ul class="breadcrumb">
+    <li><a routerLink="/profile" (click)="topFunction()" style="color: black;">Back</a></li>
+  </ul> -->
+  <i class="fa fa-2x fa-arrow-circle-left" aria-hidden="true" routerLink="/profile" (click)="topFunction()" ></i>
+    <div class="card text-center">
+        <div class="card-header custom-font">Profile</div>
+        <div class="card-body">
+            <div *ngIf="userList?.profileUrl == null; else profile">
+                <img class="avatar" src="../../assets/avatar.png" alt="">
+              </div>
+              <ng-template #profile>
+                <img class="avatar img-thumbnail" src="{{userList?.profileUrl}}" alt="...">
+              </ng-template><br><br>
+          <p class="userName custom-font">Name : {{userList?.name}}</p>
+          <p class="contact custom-font">Contact : {{userList?.mobile}}</p>
+          <p class="email custom-font">Email : {{userList?.email}}</p>
+        </div>
+      </div>
+</div>

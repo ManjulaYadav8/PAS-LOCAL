@@ -1,0 +1,164 @@
+rules_version = '2';
+service cloud.firestore {
+ match /databases/{database}/documents {
+  match /{document=**} {
+      allow read;
+      allow create;
+      allow update;
+      allow delete;
+    }
+  match /AppointmentManagements/{document=**}{
+  allow read, create, update, delete : if isAdmin();
+  }
+  match /BannerManagement/{document=**}{
+  allow read;
+  allow create, update, delete : if isAdmin();
+  }
+  match /Blog/{document=**}{
+    allow read;
+  allow create, update, delete : if isAdmin() || isBlog();
+  }
+  match /CarouselManagement/{document=**}{
+     allow read;
+  allow create, update, delete : if isAdmin();
+  }
+  match /Cart/{document=**}{
+  allow read,create,update, delete;
+  }
+    match /Cart/{cartDocId}/Cart/{document=**}{
+  allow read,create,update, delete;
+  }
+  match /CheckOutAddress/{document=**}{
+  allow read,create,update, delete;  
+  }
+  match /CompanyInfo/{document=**}{
+   allow read;
+   allow create, update, delete : if isAdmin();
+  }
+  match /ConfigInfo/{document=**}{
+   allow read;
+   allow create, update, delete : if isAdmin();
+  }
+  match /Contact/{document=**}{
+   allow read;
+   allow create, update, delete : if isAdmin();
+  }
+  match /CouponManagement/{document}{
+   allow read;
+   allow create, update, delete : if isAdmin();
+  }
+  match /Dealersdata/{document=**}{
+     allow read;
+   allow create, update, delete : if isAdmin();
+  }
+  match /ManageBusinessStandards/{document=**}{
+   allow read;
+   allow create, update, delete : if isAdmin();
+  }
+  match /ManageSide/{document=**}{
+   allow read;
+   allow create, update, delete : if isAdmin();
+  }
+  match /NavbarManagement/{document=**}{
+   allow read;
+   allow create, update, delete : if isAdmin();
+  }
+  match /Order/{document=**}{
+  allow create, read;
+  allow update,delete:if isAdmin() || isOrder();
+  }
+  match /ProductManagement/Category/CategoryList/{document=**}{
+    allow read;
+  allow update, create, delete : if isAdmin() || isInventory() || isProduct();
+  }
+    match /ProductManagement/Dept/DeptList/{document=**}{
+      allow read;
+  allow update, create, delete : if isAdmin() || isInventory() || isProduct();
+  }
+  match /ProductManagement/Subcategory/SubcategoryList/{document=**}{
+    allow read;
+  allow update, create, delete : if isAdmin() || isInventory() || isProduct();
+  }
+    match /ProductManagement/Product/ProductList/{document=**}{
+    allow read, update;
+  allow create, delete : if isAdmin() || isProduct() || isProduct();
+  }
+    match /ProductManagement/Product/specifications/{document=**}{
+    allow read;
+  allow update, create, delete : if isAdmin() || isProduct();
+  }
+  match /ProductManagement/HsnSacCode/HsnSacCodeList/{document=**}{
+      allow read;
+  allow update, create, delete : if isAdmin() || isProduct();
+  }
+  match /Offers/Offer/OfferList/{document=**}{
+       allow read;
+  allow update, create, delete : if isAdmin() || isProduct();
+  }
+  match /PartnerManagement/{document=**}{
+    allow read;
+  allow update, create, delete : if isAdmin();
+  }
+    match /Review/{document=**}/ReviewComments/{reviewDocId}{
+    allow read ,write;
+    allow update ,delete: if isAdmin();
+    }
+    match /Review/{document=**}{
+      allow read ,write;
+    allow update ,delete: if isAdmin();
+    }
+    match /{prefix=**}/ReviewComments/{id}{
+      allow read ,write;
+     allow update ,delete: if isAdmin();
+    }    
+  match /ShippingrateManagement/GlobalFlatrates/GlobalFlatratesList/{document=**}{
+      allow read;
+  allow update, create, delete : if isAdmin();
+  }
+   match /ShippingrateManagement/ShippingType/ShippingTypeRatesList/{document=**}{
+      allow read;
+  allow update, create, delete : if isAdmin();
+  }
+    match /ShippingrateManagement/DistanceFlatRates/DistanceFlatRatesList/{document=**}{
+      allow read;
+  allow update, create, delete : if isAdmin();
+  }
+   match /ShippingrateManagement/ShippingType/ShippingTypeRatesList/{document=**}{
+      allow read;
+  allow update, create, delete : if isAdmin();
+  }
+  match /ShippingrateManagement/Itemwiserates/ItemwiseratesList/{document=**}{
+        allow read;
+  allow update, create, delete : if isAdmin();
+  }
+  match /TestimonialManagement/{document=**}{
+      allow read;
+  allow update, create, delete : if isAdmin();
+  }
+  match /User/{document=**}{
+    allow read,create,update, delete;
+  }
+  match /WarrantyManagement/{document=**}{
+     allow read;
+  allow update, create, delete : if isAdmin();
+  }
+    //   function isAdmin(){
+    //   return request.auth.uid == "ZHy2IEUN9kaSHgpaC24UasMCf1I3";
+    // }
+     function isAdmin(){
+   return get(/databases/$(database)/documents/User/$(request.auth.uid)).data.roles == 'admin'; 
+   }
+   function isProduct(){
+   return get(/databases/$(database)/documents/User/$(request.auth.uid)).data.roles == 'productmanager'; 
+   }
+      function isInventory(){
+   return get(/databases/$(database)/documents/User/$(request.auth.uid)).data.roles == 'inventorymanager'; 
+   }
+   function isOrder(){
+   return get(/databases/$(database)/documents/User/$(request.auth.uid)).data.roles == 'ordermanager'; 
+   }
+   function isBlog(){
+   return get(/databases/$(database)/documents/User/$(request.auth.uid)).data.roles == 'blogService'; 
+   }
+  }
+}

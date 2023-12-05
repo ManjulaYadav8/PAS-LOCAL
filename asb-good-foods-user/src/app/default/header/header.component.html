@@ -1,0 +1,149 @@
+<div class="sticky-container">
+<nav class="navbar navbar-expand-md webview">
+  <div class="container">
+    <ul class="nav navbar-nav mx-auto">
+      <li class="nav-item navText" style="padding-left: 20px; ">
+        <a class="nav-link" routerLinkActive="active" data-toggle="collapse"   routerLink="/home"
+          (click)="selectednavbar('home')" style="text-transform: uppercase;">Home</a>
+      </li>
+      <li class="nav-item navText"  style="padding-left: 20px; ">
+        <a class="nav-link" routerLinkActive="active" data-toggle="collapse" data-target=".navbar-collapse.show"
+          routerLink="/products"
+          (click)="selectednavbar('products')" style="text-transform: uppercase;">Products</a>
+      </li>
+      <li class="nav-item navText" style="padding-left: 20px; ">
+        <a class="nav-link" routerLinkActive="active" data-toggle="collapse" routerLink="/blog"
+          (click)="selectednavbar('blog')" style="text-transform: uppercase;">Blog</a>
+      </li>
+      <li class="mx-auto">
+          <a class="nav-link brandlogo">
+              <img src="../../../assets/logo.png" class="imagesSrc img-responsive" routerLink="/home" (click)="topFunction()">
+          </a>
+      </li>
+      <li class="nav-item navText" style="padding-right: 20px; ">
+        <a class="nav-link " routerLinkActive="active" data-toggle="collapse" routerLink="/about"
+          (click)="selectednavbar('about')" style="text-transform: uppercase;">About</a>
+      </li>
+      <li class="nav-item navText" style="padding-right: 20px; ">
+        <a class="nav-link " routerLinkActive="active" data-toggle="collapse" routerLink="/contact"
+          (click)="selectednavbar('contact')" style="text-transform: uppercase;">Contact</a>
+      </li>
+      <li class="nav-item navText" *ngIf="userDisplay == null">
+        <a class="nav-link"  routerLinkActive="active" routerLink="/login" 
+        data-toggle="collapse" data-target=".navbar-collapse.show" (click)="login()">LOGIN </a>
+      </li>
+      <li class="nav-item cart navText" *ngIf="userDisplay != null">
+       <a class="nav-link"  routerLink="/cart" data-toggle="collapse"
+        data-target=".navbar-collapse.show" (click)="cart()" >
+        <div *ngIf="cartLength == 0; else notzero">
+          <i class="fa fa-shopping-bag social" aria-hidden="true"></i>
+        </div>
+        <ng-template #notzero>
+        <i class="fa fa-shopping-bag social" aria-hidden="true" matBadge="{{cartLength}}" matBadgeColor="warn"></i>
+      </ng-template>
+        <!-- <mat-icon matBadge="15" matBadgeColor="warn" class="social">shopping_bag</mat-icon> -->
+        <!-- <span class="material-icons-outlined">
+          shopping_bag
+          </span> -->
+      </a>
+      </li>
+      <li class="nav-item profile navText" *ngIf="userDisplay != null">
+        <a class="nav-link" routerLink="/profile" 
+        data-toggle="collapse" data-target=".navbar-collapse.show" (click)="profile()">
+        <i class="fa fa-user social" aria-hidden="true"></i></a>
+       </li>
+    </ul>
+  </div>
+</nav>
+<div class="mobileview">
+<nav class="navbar navbar-expand-lg" id="navbg">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <i class="fa fa-bars" aria-hidden="true"></i>
+  </button>
+  <ul class="nav navbar-nav mx-auto">
+    <li>
+        <a class="nav-link brandlogo1 text-center">
+            <img src="../../../assets/logo.png" class="imagesSrc1 img-responsive" routerLink="/home" (click)="topFunction()">
+        </a>
+    </li>
+  </ul>
+  <ul class="nav navbar-nav flex-row">
+    <li class="nav-item moblogin" *ngIf="userDisplay == null" >
+      <a class="nav-link"  routerLink="/login" 
+      data-toggle="collapse" data-target=".navbar-collapse.show" (click)="login()">LOGIN </a>
+    </li>
+    <li class="nav-item mobcart" *ngIf="userDisplay != null">
+     <a class="nav-link"  routerLink="/cart" data-toggle="collapse"
+      data-target=".navbar-collapse.show" (click)="cart()">
+      <!-- <i class="fa fa-shopping-bag social" aria-hidden="true"></i> -->
+      <!-- <i class="fa fa-shopping-bag social" aria-hidden="true" matBadge="{{cartLength}}" matBadgeColor="warn"></i> -->
+      <div *ngIf="cartLength == 0; else notzero">
+        <i class="fa fa-shopping-bag social" aria-hidden="true"></i>
+      </div>
+      <ng-template #notzero>
+      <i class="fa fa-shopping-bag social" aria-hidden="true" matBadge="{{cartLength}}" matBadgeColor="warn"></i>
+    </ng-template>
+    </a>
+    </li>
+    <li class="nav-item mobcart" *ngIf="userDisplay != null">
+      <a class="nav-link" routerLink="/profile" 
+      data-toggle="collapse" data-target=".navbar-collapse.show" (click)="profile()">
+      <i class="fa fa-user social" aria-hidden="true"></i></a>
+     </li>
+  </ul>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mx-auto mobnav" >
+      <li class="nav-item" *ngFor="let navbar of navbarList">
+        <a class="nav-link" routerLinkActive="active" data-toggle="collapse" data-target=".navbar-collapse.show"
+          routerLink="/{{navbar.navbarName}}" (click)="selectednavbar(navbar.navbarName)" 
+          style="text-transform: uppercase;">{{navbar.navbarName}}</a>
+      </li>
+    </ul>
+  </div>
+ 
+</nav>
+</div>
+<div class="tagLine">
+  <p class="text-center" >Annadaata Sukhi Bhava</p>
+</div>
+</div>
+
+<!-- <nav class="navbar navbar-expand-md webview">
+  <div class="container">
+    <ul class="nav navbar-nav mx-auto">
+      <li class="nav-item navText" *ngFor="let navbar of firstHalfNavbar" style="padding-left: 20px; ">
+        <a class="nav-link" routerLinkActive="active" data-toggle="collapse" data-target=".navbar-collapse.show"
+          routerLink="/{{navbar.navbarName}}"
+          (click)="selectednavbar(navbar.navbarName)" style="text-transform: uppercase;">{{navbar.navbarName}}</a>
+      </li>
+      <li class="mx-auto">
+          <a class="nav-link brandlogo">
+              <img src="../../../assets/logo.png" class="imagesSrc img-responsive" routerLink="/home" (click)="topFunction()">
+          </a>
+      </li>
+      <li class="nav-item navText" *ngFor="let navbar of lastHalfNavbar" style="padding-right: 20px; ">
+        <a class="nav-link " routerLinkActive="active" data-toggle="collapse" data-target=".navbar-collapse.show"
+          routerLink="/{{navbar.navbarName}}"
+          (click)="selectednavbar(navbar.navbarName)" style="text-transform: uppercase;">{{navbar.navbarName}}</a>
+      </li>
+      <li class="nav-item navText" *ngIf="userDisplay == null">
+        <a class="nav-link"  routerLinkActive="active" routerLink="/login" 
+        data-toggle="collapse" data-target=".navbar-collapse.show" (click)="login()">LOGIN </a>
+      </li>
+      <li class="nav-item cart navText" *ngIf="userDisplay != null">
+       <a class="nav-link"  routerLink="/cart" data-toggle="collapse"
+        data-target=".navbar-collapse.show" (click)="cart()" >
+        <i class="fa fa-shopping-bag social" aria-hidden="true"></i>
+      </a>
+      </li>
+      <li class="nav-item profile navText" *ngIf="userDisplay != null">
+        <a class="nav-link" routerLink="/profile" 
+        data-toggle="collapse" data-target=".navbar-collapse.show" (click)="profile()">
+        <i class="fa fa-user social" aria-hidden="true"></i></a>
+       </li>
+    </ul>
+  </div>
+</nav> -->
+
+

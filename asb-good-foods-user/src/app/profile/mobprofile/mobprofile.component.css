@@ -1,0 +1,14 @@
+.avatar {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    color: gray;
+    background-color: white;
+    position: relative;
+  }
+  .container{
+    font-family: "CustomFont";
+  }
+  /* .fa-2x{
+    color: rgb(10, 43, 226);
+  } */

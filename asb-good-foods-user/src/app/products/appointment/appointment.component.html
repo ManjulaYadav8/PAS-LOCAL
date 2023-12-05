@@ -1,0 +1,209 @@
+<div class="container">
+  <h5 class="text-center">Event Details</h5><br>
+  <p class="text-center" style="font-size:smaller">{{startingSubText}} {{endSubText}}</p>
+  <ul class="breadcrumb">
+    <li><a routerLink="/home" (click)="topFunction()">Home</a></li>
+    <li><a routerLink="/products" (click)="topFunction()">Products</a></li>
+    <li>Catering</li>
+  </ul>
+  <p class="blink mat-elevation-z3 estimated" style="text-align: center; border-radius: 10px;">
+    {{startingText}} {{advancebookingDate}} {{endText}}</p>
+
+    
+  <div class="containerform">
+    <app-loader style="display: flex;align-items: center; justify-content: center;" *ngIf="dataLoading"></app-loader>
+    <form #appointmentForm="ngForm" autocomplete="off" (submit)="appointmentSubmit(appointmentForm)" [hidden]="dataLoading">
+    <!-- <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;">@</span>
+      </div>
+      <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+    </div> -->
+    <div class="input-group mb-3 row">
+      <label for="eventType" class="col-md-4">Event Type</label>
+       <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-calendar-o" aria-hidden="true"></i></span>
+      </div>
+      <input name="eventType" #eventType="ngModel" [(ngModel)]="appointmentService.appointmentData.eventType"
+        class="form-control col-md-8" placeholder=""  required>
+      <div *ngIf="eventType.invalid && eventType.touched" class="validation-error">This field is required.</div>
+    </div>
+    <!-- <div class="input-group mb-3 row">
+      <label for="eventName" class="col-md-4">Event Name</label>
+       <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+      </div>
+      <input name="eventName" #eventName="ngModel" [(ngModel)]="appointmentService.appointmentData.eventName"
+        class="form-control col-md-8" placeholder="" required>
+      <div *ngIf="eventName.invalid && eventName.touched" class="validation-error">This field is required.</div>
+    </div> -->
+
+    <div class="form-group row">
+      <label for="eventDate" class="col-md-4">Event Date & Time</label>
+      <mat-form-field class="col-md-3">
+        <input matInput [matDatepicker]="eventDate" [(ngModel)]="appointmentService.appointmentData.eventDate"
+        name="eventDate" id="eventDate" (ngModelChange)="selectDate($event)" [matDatepickerFilter]="disabledFilterDates" required>
+        <div *ngIf="eventDate.invalid && eventDate.touched" class="validation-error">This field is required.</div> 
+        <mat-datepicker-toggle [for]="eventDate"  matSuffix></mat-datepicker-toggle>
+        <mat-datepicker #eventDate></mat-datepicker>
+      </mat-form-field>
+      <div class="col-md-3">
+        <input name="eventTime" type="time" #eventTime="ngModel" [(ngModel)]="appointmentService.appointmentData.eventTime"
+        class="form-control" placeholder="" style="margin-left: -7px;" required>
+      <label for="eventTime" style="font-size: small;">{{timeZone}} Time Zone</label>
+      </div>
+      <div class="col-md-2">
+        <button type="button" class="btn btn-md" (click)="openHolidayList();">
+          <div style="display: flex;flex-direction: row;">
+            <mat-icon style="transform: scale(0.8);">event_busy</mat-icon>&nbsp;&nbsp;
+            <div style="font-size: 12px;vertical-align: middle;padding-top: 4px;">Holidays</div> 
+          </div>
+        </button>
+      </div>
+      <div *ngIf="eventTime.invalid && eventTime.touched" class="validation-error">This field is required.</div>
+    </div>
+    <!-- <div class="input-group mb-3 row">
+      <label for="noOfSlots" class="col-md-4">Number Of People</label>
+       <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-users" aria-hidden="true"></i></span>
+       </div>
+      <input name="noOfSlots" #noOfSlots="ngModel" [(ngModel)]="appointmentService.appointmentData.noOfSlots"
+        class="form-control col-md-8" placeholder="" required>
+      <div *ngIf="noOfSlots.invalid && noOfSlots.touched" class="validation-error">This field is required.</div>
+    </div> -->
+    <!-- <div class="input-group mb-3 row">
+      <label for="items" class="col-md-4">Items</label>
+       <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-cutlery" aria-hidden="true"></i></span>
+      </div>
+      <textarea name="items" #items="ngModel" [(ngModel)]="appointmentService.appointmentData.items"
+        class="form-control col-md-8" placeholder="" required></textarea>
+      <div *ngIf="items.invalid && items.touched" class="validation-error">This field is required.</div>
+    </div> -->
+    <!-- <h5 class="text-center">Venue Details</h5> <br> -->
+    <div class="input-group mb-3 row">
+      <label for="fullName" class="col-md-4 control-label">Name *</label>
+       <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-user" aria-hidden="true"></i></span>
+      </div>
+      <input ngModel #fullName="ngModel" name="fullName" class="form-control col-md-8" type="text"
+        [(ngModel)]="appointmentService.appointmentData.fullName" required>
+      <div *ngIf="fullName.invalid && fullName.touched" class="validation-error">This field is required.</div>
+    </div><br>
+    <div class="input-group mb-3 row">
+      <label class="col-md-4" for="mobile">Mobile 
+        <i class="fa fa-question-circle-o selectedItem" container="body" data-toggle="popover"
+        data-trigger="focus" tabindex="0" data-placement="bottom"
+        title="Mobile Number"
+        data-content="This information is required for company communications and will not be shared with any external entities."
+        data-original-title=""></i> 
+      </label>
+       <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-mobile" aria-hidden="true"></i></span>
+      </div>
+      <input ngModel type="number" #mobile="ngModel" name="mobile"
+        class="form-control col-md-8" [(ngModel)]="appointmentService.appointmentData.mobile">
+    </div><br>
+    <div class="input-group mb-3 row">
+      <label class="col-md-4" for="email">Email * 
+        <i class="fa fa-question-circle-o selectedItem" container="body" data-toggle="popover"
+        data-trigger="focus" tabindex="0" data-placement="bottom" title="Email"
+        data-content="This information is required for company communications and will not be shared with any external entities."
+        data-original-title=""></i>
+      </label>
+       <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;">@</span>
+      </div>
+      <input ngModel type="email" #email="ngModel" [pattern]="emailpattern" name="email" class="form-control col-md-8"
+        [(ngModel)]="appointmentService.appointmentData.email" required>
+      <div *ngIf="email.invalid && email.touched" class="validation-error">Enter a valid Input</div>
+    </div><br>
+    <!-- <div class="input-group mb-3 row">
+      <label class="col-md-4" for="addressLine1">Address Line 1*</label>
+       <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+      </div>
+      <input ngModel type="text" #addressLine1="ngModel" name="addressLine1" class="form-control col-md-8"
+        [(ngModel)]="appointmentService.appointmentData.addressLine1" required>
+      <div *ngIf="addressLine1.invalid && addressLine1.touched" class="validation-error">This field is required.</div>
+    </div><br>
+    <div class="input-group mb-3 row">
+      <label class="col-md-4" for="addressLine2">Address Line 2*</label>
+       <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+      </div>
+      <input ngModel type="text" #addressLine2="ngModel" name="addressLine2" class="form-control col-md-8"
+        [(ngModel)]="appointmentService.appointmentData.addressLine2" required>
+      <div *ngIf="addressLine2.invalid && addressLine2.touched" class="validation-error">This field is required.</div>
+    </div><br> -->
+    <!-- <div class="input-group mb-3 row">
+      <label class="col-md-4" for="state">State *</label>
+      <mat-form-field class="col-md-8">
+        <input type="text" placeholder="" aria-label="State Name" matInput [formControl]="myControlState"
+          [matAutocomplete]="autoState" [(ngModel)]="selectedState">
+        <mat-autocomplete #autoState="matAutocomplete" (optionSelected)="changeState($event.option.value)">
+          <mat-option *ngFor="let state of filteredOptionsState | async" [value]="state">
+            {{state}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <div class="form-label-group">
+        <input type="hidden" name="state" id="state" class="form-control" #state="ngModel" readonly
+          [ngModel]="selectedState">
+      </div>
+    </div>
+    <div class="input-group mb-3 row">
+      <label class="col-md-4" for="city">City *</label>
+      <mat-form-field class="col-md-8">
+        <input type="text" placeholder="" aria-label="City Name" matInput [formControl]="myControlCity"
+          [matAutocomplete]="autoCity" [(ngModel)]="selectedCity">
+        <mat-autocomplete #autoCity="matAutocomplete" (optionSelected)="changeCity($event.option.value)">
+          <mat-option *ngFor="let city of filteredOptionsCity | async" [value]="city">
+            {{city}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <div class="form-label-group">
+        <input type="hidden" name="city" id="city" class="form-control" #city="ngModel" readonly
+          [ngModel]="selectedCity">
+      </div>
+    </div>
+    <div class="input-group mb-3 row">
+      <label class="col-md-4" for="pincode">Zipcode *</label>
+       <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-map-pin" aria-hidden="true"></i></span>
+      </div>
+      <input ngModel type="number" #pincode="ngModel"  name="pincode"
+        class="form-control col-md-8" [(ngModel)]="appointmentService.appointmentData.pincode" required>
+      <div *ngIf="pincode.invalid && pincode.touched" class="validation-error">Enter a valid Input</div>
+    </div> -->
+    <div class="form-group">
+      <button type="submit" [disabled]="appointmentForm.invalid" class="btn btn-md btn-block">SUBMIT</button>
+    </div>
+  </form>
+</div>
+<!-- <br><br><br><br>
+<div class="row">
+  <div class="col-md-4">
+    <div class="row categoryDisplay" [ngClass]="{'selected-color' : i==selectedIndex}"
+      *ngFor="let delicacies of categoryList; let i= index" (click)="changeColor(i)">
+      <div class="category text-center" (click)="categorySelect(delicacies)">
+        <div class="row subimgbody">
+          <img class="subimg img-thumbnail" [src]="delicacies.categoryUrl" alt="..." loading="lazy" style="width: 50px;">
+          <p class="invecat vertical-center">{{delicacies.categoryName}} <br>
+          {{delicacies.availability}}</p>
+        </div>
+      </div>
+      <i class="fa fa-chevron-right" aria-hidden="true"></i>
+    </div><br><br>
+  </div>
+  <div class="col-md-8">
+     <ul class="nav nav-pills nav-fill">
+        <li class="nav-item" *ngFor="let subcat of subcategoryList">
+          <a class="nav-link" (click)="selectedSubcategory(subcat)">{{subcat.subcategoryName}}</a>
+        </li>
+      
+     </ul>
+  </div>
+</div> -->
+</div>

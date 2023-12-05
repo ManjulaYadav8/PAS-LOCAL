@@ -1,0 +1,131 @@
+<!-- <ul class="container text-center">
+    <li> <a class="btn" routerLink="/cart/wishlist">Wishlist</a>
+    </li>
+    <li> <a  routerLink="/cart" >Cart</a> </li>
+  </ul> -->
+  <div class="container" style="display: flex; align-items: center;justify-content: center;">
+    <mat-card class="mat-elevation-z3" style="border-radius: 10px;">
+        <nav mat-tab-nav-bar mat-stretch-tabs class="container mat-elevation-z3">
+            <a mat-tab-link class="secondaryNav CustomFont" routerLinkActive="active" routerLink="/wishlist">
+              <i class="fa fa-heart fa-2x text-light"></i> &nbsp;&nbsp;&nbsp;Wishlist</a>
+            <a mat-tab-link class="secondaryNav CustomFont" routerLinkActive="active" routerLink="/cart">
+              <i class="fa fa-2x fa-shopping-cart" style="margin-top: -4px;"></i> &nbsp;&nbsp;&nbsp;Cart</a>
+        </nav>
+    </mat-card>
+    </div>
+  <div class="container" style="margin-top:20px">
+  <ng-container *ngFor="let product of wishItems;let i = index;">
+    <mat-card class="mat-elevation-z3" style="border-radius: 10px;" *ngIf="product.currentStock > 0; else notAvailable">
+      <div style="display: flex;flex-direction: row;">
+        <!-- img -->
+        <div style="flex: 1;">
+          <img class="imageSrc img-thumbnail" (click)="getMoreProducts(product)" [src]="product.primaryUrl" alt="...">
+        </div>
+        <!-- product info -->
+        <div style="flex: 1;" class="second-flex">
+          <div style="display: flex;justify-content: center;">
+            <h4 class="custom-font" style="color: black;">{{product.productName}}</h4>
+          </div>
+          &nbsp;
+          <div style="display: flex;justify-content:center;">
+            <div class="addToButton" *ngIf="product.currentStock > 0; else addToCartDisable">
+              <button class="btn addCart" (click)="productOverview(product)">View Product</button><br>
+      </div>
+            <!-- <div class="addToButton" *ngIf="product.currentStock > 0; else addToCartDisable">
+              <button class="btn addCart" (click)="addToCart(product)">Add to Cart</button><br>
+      </div> -->
+          </div>
+          <!-- <div style="display: flex;justify-content: center;">
+            <div>
+              <button class="btn btn-sm" (click)="decrease(product.quantity, product.CartDocId,i)">-</button>
+            </div>
+            <div>
+              <input class="qty-textbox" type="text" value={{product.quantity}} style="width: 50px; text-align: center; font-size: 15px; border: 1px solid #2A8168;"
+              (blur)="blurEvent(product,$event, i)">
+            </div>
+            <div>
+              <button class="btn btn-sm" (click)="increase(product, i)">+</button>
+            </div>
+          </div><br> -->
+          <div class="blink custom-font preTime" style="display: flex;justify-content: center;" *ngIf="product.preOrder === 'yes';">
+          <!-- <i class="fa fa-hourglass-half blink" aria-hidden="true"></i> &nbsp;&nbsp; Pre Order -->
+         <i class="fa fa-clock-o blink" aria-hidden="true"></i> &nbsp;&nbsp; <span class="preorder">Pre Order</span> 
+        </div>
+        </div>
+        <!-- price -->
+        <div style="flex: 1;flex-wrap: wrap;">
+          <div style="display: flex; justify-content: flex-end;flex-wrap: wrap;">
+            <button mat-icon-button  (click)="cartDel(product.productdocId)" data-toggle="modal" data-target="#exampleModalLong">
+              <mat-icon style="transform: scale(0.75);">clear</mat-icon>
+            </button>
+          </div>
+          <!-- <div  style="display: flex; justify-content: center;flex-wrap: wrap;">
+            <small class="custom-font small-font" style="color: black;">{{companyConfig?.currencySymbol}}{{product.productPrice | number:'1.2-3'}} x {{product.quantity}} </small>
+          </div> -->
+          <div  style="display: flex; justify-content: center;flex-wrap: wrap;">
+            <h4 class="custom-font" style="color: black; font-size: 20px;">{{companyConfig?.currencySymbol}}{{product.productPrice * product.quantity | number:'1.2-3'}}</h4>
+          </div>
+        </div>
+
+      </div>
+    </mat-card>
+
+    <ng-template #notAvailable>
+      <div class="col-md-6">
+        <img class="imageSrc img-thumbnail" [src]="product.primaryUrl" alt="...">
+      </div>
+      <div class="col-md-6">
+        <p class="name">{{product.productName}}</p>
+        <p>This product is out of stock</p>
+        <!-- <div class="row">
+          <div class="col-md-6 quantity">
+            <button class="btn btn-sm" (click)="decrease(product.quantity, product.wishDocId,i)" disabled>-</button>
+            <input type="text" value=0 style="width: 50px; text-align: center;">
+            <button class="btn btn-sm"
+              (click)="increase(product.quantity, product.wishDocId, product.currentStock,i)" disabled>+</button>
+            <a class="btn btn-sm" (click)="cartDel(product.wishDocId)" data-toggle="modal"
+              data-target="#exampleModalLong">
+              <i class="fa fa-trash" aria-hidden="true"></i>
+            </a>
+          </div>
+         
+          <div class="col-md-5 priceTag">
+            <p class="price">{{companyConfig?.currencySymbol}}{{product.productPrice | number:'1.2-3'}}  </p>
+          </div>
+        </div> -->
+      </div>
+    </ng-template>
+    <!-- delete modal -->
+    
+    <div class="modal fade mtop" id="exampleModalLong" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Wishlist Items</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h4>Are you sure want to delete</h4>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn" data-dismiss="modal" (click)="wishlistDelete(product)">Delete</button>
+        </div>
+      </div>
+    </div>
+    </div>
+    <br/>
+  </ng-container>
+  <div class="row" *ngIf="wishItems && wishItems.length == 0;">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <i class="fa fa-heart fa-5x" aria-hidden="true"></i><br>
+      <h5 class="text-dark">Your Wishlist is waiting to be filled</h5><br>
+      <button class="btn shopping" style="width:100%" (click)="continueShopping()">Continue Shopping</button>
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+</div>

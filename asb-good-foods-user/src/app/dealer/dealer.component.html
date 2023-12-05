@@ -1,0 +1,41 @@
+<!-- <app-header></app-header> -->
+<img src="{{branchImage}}" alt="Branches" class="about img-thumbnail">
+  <div class="container"><br><br>
+  <div class="mat-elevation-z8">
+    <mat-table [dataSource]="dealerMatList"  matSort>
+      <ng-container matColumnDef="dummy">
+        <mat-header-cell *matHeaderCellDef  mat-sort-header></mat-header-cell>
+        <mat-cell *matCellDef="let element" class='m-card-sub-title' data-label=''></mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="state">
+        <mat-header-cell *matHeaderCellDef  mat-sort-header>Name of State / UT</mat-header-cell>
+        <mat-cell *matCellDef="let element" class='m-card-sub-title' data-label='Name of State / UT :' style="margin-left: 20px;">{{element.state}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="city">
+        <mat-header-cell *matHeaderCellDef  mat-sort-header>Town / City</mat-header-cell>
+        <mat-cell *matCellDef="let element" class='m-card-sub-title' data-label='Town / City :' style="margin-left: 20px;">{{element.city}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="address">
+        <mat-header-cell *matHeaderCellDef  mat-sort-header>Address</mat-header-cell>
+        <mat-cell *matCellDef="let element" class='m-card-sub-title' data-label='Address :' style="margin-left: 20px;"><p [innerHTML]='element.address'></p></mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="personName">
+        <mat-header-cell *matHeaderCellDef  mat-sort-header>Contact Person Name</mat-header-cell>
+        <mat-cell *matCellDef="let element" class='m-card-sub-title' data-label='Contact Person Name:' style="margin-left: 20px;">{{element.personName}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="contactNumber">
+        <mat-header-cell *matHeaderCellDef  mat-sort-header>Contact Details</mat-header-cell>
+        <mat-cell *matCellDef="let element" class='m-card-sub-title' data-label='Contact Details :' style="margin-left: 20px;"><p [innerHTML]='element.contactNumber'></p></mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>Manage Data</mat-header-cell>
+        <mat-cell *matCellDef="let row" class='m-card-sub-title' data-label='Manage Data : '>
+          <button mat-icon-button (click)="dealerEdit(row)"><mat-icon>edit</mat-icon></button>
+          <button mat-icon-button color="warn" (click)="onDelete(row.dealerDocId)"><mat-icon>delete_outline</mat-icon></button>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+  </div>
+  </div><br><br>

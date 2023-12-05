@@ -1,0 +1,57 @@
+<!-- <div class="container">
+    <div class="lightbg" *ngFor="let dept of deptList">
+        <div class="row selectedItem">
+            <div class="colltext">
+
+                <h1 class="collectiontext"><b>{{dept.deptName}}</b> </h1>
+            </div>
+            <div class="delicaciesimg">
+                <img [src]="dept.deptUrl" class="img-responsive img-thumbnail" style="width: 100%;height: 100%;" (click)="collectionDeptFun(dept)">
+            </div>
+    </div>
+    </div>
+    </div> -->
+<div class="container">
+  <div *ngFor="let category of categoryList">
+    <h2 class="text-center">{{category.categoryName}}</h2>
+    <div class="textLine"></div>
+  <owl-carousel-o [options]="featuredOptions" (translated)="getFeaturedData($event)" *ngFor="let productList of parentArray">
+    <ng-template class="slideImg" carouselSlide *ngFor="let product of productList">
+      <div >
+      <div class="card mb-3 featuredCard" [ngClass]="{
+        'featuredCard-1' : productList.length === 1,
+        'featuredCard-2' : productList.length === 2,
+        'featuredCard-3' : productList.length > 2
+      }" *ngIf="category.categoryId == product.categoryId">
+        <h5 class="card-text text-center headCategory selectedItem custom-font">{{product.productName}}</h5>
+        <div class="card-body selectedItem" (click)="productOverview(product)">
+          <div class="cardImg">
+          <img class="imagecartBox img-thumbnail" [src]="product.primaryUrl" alt="...">
+        </div><br>
+          <!-- <p class="card-text text-center textCategory custom-font" [innerHtml]=product.summary></p> -->
+          <div class="pretext">
+            <p class="text-center" *ngIf="product.preOrder === 'yes'" style="font-family: CustomFont" >Order before {{companyConfig?.preOrderTime}} PST for Next Day Delivery</p>
+          </div>
+        </div>
+        <hr style="border-top: 1px solid rgb(21, 21, 21);opacity: 0.3;">
+          <div class="text-center">
+            <h5 class="price custom-font">{{companyConfig?.currencySymbol}} {{product.productPrice | number:'1.2-3'}} </h5>
+              <div class="addToButton" *ngIf="product.currentStock > 0; else addToCartDisable">
+                      <button class="btn custom-font" (click)="addToCart(product)">Add to Cart</button><br>
+                      <div *ngIf="viewCart == true && choosenProductIds.includes(product.productdocId)">
+                        <button class="btn custom-font" style="margin-top: 10px;" routerLink="/cart" (click)="topFunction()">View Cart</button>
+                      </div>
+              </div>
+              <ng-template #addToCartDisable>
+                <div class="addToButton">
+                    <button disabled class="btn-warning custom-font">Out of Stock</button>
+                </div>
+              </ng-template>
+            
+            </div><br>
+      </div>
+    </div>
+    </ng-template>
+  </owl-carousel-o>
+</div>
+</div>

@@ -1,0 +1,78 @@
+.container-fluid{
+    margin-top: 50px;
+    background-color:#3f3f3f;
+}
+/* b address{
+    line-height: 0.7;
+    font-size: 10px;
+} */
+li{
+    list-style: none;
+}
+.nav-link{
+    text-align: center;
+    color: white;
+    font-size: 12px;
+}
+address{
+    color: white;
+    text-align: center;
+}
+h5{
+    color: white;
+    text-align: center;
+}
+hr{
+    background-color: white;
+    width: 100%;
+}
+.logo{
+    width: 70px;
+    height: 70px;
+}
+.copyright{
+    font-size: 10px;
+    color: white;
+}
+.codeswift{
+    font-size: 10px;
+}
+.col-md-4{
+    text-align: center;
+}
+.fa{
+    color: #38BABF;
+}
+.fa-mobile{
+    font-size: 22px;
+}
+.digital{
+    width: 130px;
+    height: 50px;
+    margin-left: 5px;
+}
+.copycode{
+    padding-bottom: 0px;
+  }
+  h5{
+  text-decoration: underline;
+      /* border-bottom: 2px solid white; */
+  }
+@media screen and (max-width:960px) and (orientation:portrait){
+.copycode{
+  padding-bottom: 80px;
+}
+}
+@media screen and (max-width:960px) and (orientation:landscape){ 
+.copycode{
+  padding-bottom: 80px;
+}
+address{
+    color: white;
+    text-align: center;
+    font-size: 12px;
+}
+h5{
+    font-size: 15px;
+}
+}

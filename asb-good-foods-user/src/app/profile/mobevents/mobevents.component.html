@@ -1,0 +1,36 @@
+<div class="container custom-font">
+    <i class="fa fa-2x fa-arrow-circle-left" aria-hidden="true" routerLink="/profile" (click)="topFunction()" ></i>
+    <!-- <mat-form-field class="search-form-field" floatLabel="never">
+        <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()">
+        <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field> -->
+      
+    <div *ngIf="eventId != 0; else noevent">
+        <div class="orderscroll">
+        <div *ngFor="let event of eventList">
+            <div class="card lightbg" style="cursor: pointer;">
+                    <div class="row">
+                        <div class="text-center custom-font" style="margin-top: 10px; margin-bottom: 10px; margin-left: 20px;">
+                            <img src="../../assets/logo.jpg" class="companylogo img-thumbnail" alt="" (click)="viewEventDetails(event)"><br>
+                            <h6 (click)="viewEventDetails(event)">ASB FOOD</h6>
+                        </div>
+                        <div class="custom-font" (click)="viewEventDetails(event)" style="margin-top: 10px; margin-bottom: 10px; margin-left: 30px;">
+                            <p style="margin-bottom:0;"> <b>Event Id :</b> # {{event.eventId}}</p>
+                            <p style="margin : 0; padding-top:0;"> <b>Event Date : </b>{{event.eventDate | date: 'dd-MMM-yyyy'}} </p>
+                            <p style="margin: 0;padding-top: 0;"><b>Event Type : </b>{{event.eventType}} </p>
+                        </div>
+                        <br>
+                    </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <ng-template #noevent>
+        <div class="text-ceter">
+        <h2>You don't have any active Events</h2><br>
+        <button class="btn " (click)="continueShopping()">Book your first Slot</button>
+        </div>
+    </ng-template>
+</div>

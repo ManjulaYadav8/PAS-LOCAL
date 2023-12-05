@@ -1,0 +1,518 @@
+<!-- <app-navbar></app-navbar> -->
+
+<!-- <p class="text-center checkout">Checkout</p> -->
+<div class="container">
+  <fieldset class="scheduler-border">
+    <legend class="scheduler-border">Checkout </legend>
+  <div class="row" style="margin-top: 5px;">
+    <div class="col-md-12">
+<form #form="ngForm" (submit)="onSubmit(form)">
+   <div class="row">
+     <div class="col-md-3"><h6>Delivery Mode</h6></div>
+     <div class="col-md-3" *ngFor="let shipping of shippingTypeList">
+      <input id="pickup" type="radio" name="mode"  (change)="shippingTypeMode(shipping)" 
+       [value]="shipping.shippingTypeName" [checked]="selectedMode === shipping.shippingTypeName" required><span style="text-transform: capitalize;">{{shipping.shippingTypeName}}</span> 
+     </div>
+     <div class="col-md-3" *ngIf="mode === null" style="color : red;font-size: 10px;" ><small>Please Choose a Shipping Mode</small></div>
+     <!-- <div class="col-md-3">
+      <input id="pickup" type="radio" value="pickup" name="mode"  (change)="pickupmode($event)" value="quick">Pick Up  
+     </div>
+     <div class="col-md-3">
+       <input id="quick" type="radio" value="quick" name="mode"  (change)="quickmode($event)" value="quick">Quick Delivery 
+     </div>
+     <div class="col-md-3">
+      <input id="normal" type="radio" value="normal" name="mode"  (change)="normalmode($event)" value="normal" checked>Normal Delivery
+     </div> -->
+   </div><br>
+   <div *ngIf="displayAddress == 'no'; else showAddress">
+     <div class="row">
+      <div class="col-md-3">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="row">
+              <div class="col-md-3">
+                <h2><strong>1</strong></h2><b>User Details</b>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <input type="checkbox" id="defaultAddress" name="defaultAddress" (change)="defaultprofileChange($event)" value="default" [(ngModel)]="service.formData.defaultAddress" >Same as Default Information
+      <br>
+      <div *ngIf="defaultProfileAddress === true">
+        <div class="input-group mb-3 row">
+          <label for="fullName" class="col-sm-3">Full Name *</label>
+           <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-user" aria-hidden="true"></i></span>
+          </div>
+          <input ngModel #fullName="ngModel" name="fullName" class="form-control col-sm-8" type="text" value={{profileData?.fullName}} 
+            [(ngModel)]="fullname" readonly>
+          <!-- <div *ngIf="fullName.invalid && fullName.touched" class="validation-error">This field is required.</div> -->
+        </div><br>
+        <div class="input-group mb-3 row">
+          <label for="fullName" class="col-sm-3">Mobile</label>
+           <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-phone" aria-hidden="true"></i></span>
+          </div>
+          <input ngModel #mobile="ngModel" name="mobile" class="form-control col-sm-8" type="text" value={{profile?.mobile}} 
+            [(ngModel)]="mobileNum" readonly>
+          <!-- <div *ngIf="fullName.invalid && fullName.touched" class="validation-error">This field is required.</div> -->
+        </div><br>
+        <div class="input-group mb-3 row">
+          <label for="emailId" class="col-sm-3">Email * </label>
+           <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+          </div>
+          <input ngModel #email="ngModel" name="email"  class="form-control col-sm-8" type="text" value={{profile?.email}} 
+            [(ngModel)]="emailId" readonly>
+          <!-- <div *ngIf="fullName.invalid && fullName.touched" class="validation-error">This field is required.</div> -->
+        </div><br>
+      </div>
+        <div *ngIf="defaultProfileAddress === false">
+          <div class="input-group mb-3 row">
+            <label for="fullName" class="col-sm-3">Full Name *</label>
+             <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-user" aria-hidden="true"></i></span>
+            </div>
+            <input ngModel #fullName="ngModel" name="fullName" class="form-control col-sm-8" type="text" value={{profileData?.fullName}} 
+              [(ngModel)]="service.formData.fullName">
+            <!-- <div *ngIf="fullName.invalid && fullName.touched" class="validation-error">This field is required.</div> -->
+          </div><br>
+          <div class="input-group mb-3 row">
+            <label for="fullName" class="col-sm-3">Mobile</label>
+             <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-phone" aria-hidden="true"></i></span>
+            </div>
+            <input ngModel #mobile="ngModel" name="mobile" class="form-control col-sm-8" type="text" value={{profile?.mobile}} 
+              [(ngModel)]="service.formData.mobile">
+            <!-- <div *ngIf="fullName.invalid && fullName.touched" class="validation-error">This field is required.</div> -->
+          </div><br>
+          <div class="input-group mb-3 row">
+            <label for="emailId" class="col-sm-3">Email *</label>
+             <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+            </div>
+            <input ngModel #email="ngModel" name="email" class="form-control col-sm-8" type="text" value={{profile?.email}} 
+              [(ngModel)]="service.formData.email" required>
+            <div *ngIf="email.invalid && email.touched" class="validation-error">This field is required.</div>
+          </div><br>
+        </div>
+   </div>
+   </div>
+   </div>
+<hr>
+<ng-template #showAddress>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="row">
+            <div class="col-md-3">
+              <h2><strong>1</strong></h2><b>Billing <br> Address</b>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <!-- <input ngModel type="hidden" name="orderItems" #orderItems="ngModel" [(ngModel)]="cartItems"> -->
+      <!-- <input type="hidden" name="sourcepincode" #sourcepincode="ngModel" [(ngModel)]="sourcePincode"> -->
+      <div *ngIf="defaultAddress == false">
+        <div class="input-group mb-3 row">
+          <label for="fullname" class="col-sm-3 control-label">Full Name *</label>
+           <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-user" aria-hidden="true"></i></span>
+          </div>
+        <input ngModel #fullName="ngModel" name="fullName" class="form-control col-sm-8" type="text"
+          [(ngModel)]="service.formData.fullName" required>
+        <div *ngIf="fullName.invalid && fullName.touched" class="validation-error">This field is required.</div>
+      </div><br>
+       <!-- <div class="input-group mb-3 row">
+        <label class="col-sm-3" for="mobile">Mobile *</label>
+         <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-user" aria-hidden="true"></i></span>
+          </div>
+        <input ngModel type="number" #mobile="ngModel" name="mobile" [pattern]="mobNumberPattern" class="form-control col-sm-8"
+          [(ngModel)]="service.formData.mobile" required>
+        <div *ngIf="mobile.invalid && mobile.touched" class="validation-error">Enter a valid Input</div>
+      </div><br> -->
+    <!--  <div class="input-group mb-3 row">
+        <label class="col-sm-3" for="email">Email *</label>
+         <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-user" aria-hidden="true"></i></span>
+          </div>
+        <input ngModel type="email" #email="ngModel" [pattern]="emailpattern" name="email" class="form-control col-sm-8"
+          [(ngModel)]="service.formData.email" required>
+        <div *ngIf="email.invalid && email.touched" class="validation-error">Enter a valid Input</div>
+      </div><br> -->
+      <div class="input-group mb-3 row">
+        <label class="col-sm-3" for="addressLine1">Address Line 1 *</label>
+         <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+          </div>
+        <input ngModel type="text" #addressLine1="ngModel" name="addressLine1" class="form-control col-sm-8"
+          [(ngModel)]="service.formData.addressLine1" required>
+        <div *ngIf="addressLine1.invalid && addressLine1.touched" class="validation-error">This field is required.</div>
+      </div><br>
+      <div class="input-group mb-3 row">
+        <label class="col-sm-3" for="addressLine2">Address Line 2 *</label>
+         <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+          </div>
+        <input ngModel type="text" #addressLine2="ngModel" name="addressLine2" class="form-control col-sm-8"
+          [(ngModel)]="service.formData.addressLine2" required>
+        <div *ngIf="addressLine2.invalid && addressLine2.touched" class="validation-error">This field is required.</div>
+      </div><br>
+      <!-- <div class="input-group mb-3 row">
+        <label class="col-sm-3" for="city">City *</label>
+         <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-user" aria-hidden="true"></i></span>
+          </div>
+        <input ngModel type="text" #city="ngModel" name="city" class="form-control col-sm-8"
+          [(ngModel)]="service.formData.city" required>
+        <div *ngIf="city.invalid && city.touched" class="validation-error">This field is required.</div>
+      </div><br> -->
+      <!-- <div class="input-group mb-3 row">
+        <label class="col-sm-3" for="state">State *</label>
+         <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-user" aria-hidden="true"></i></span>
+          </div>
+        <input ngModel type="text" #state="ngModel" name="state" class="form-control col-sm-8"
+          [(ngModel)]="service.formData.state" required>
+        <div *ngIf="state.invalid && state.touched" class="validation-error">This field is required.</div>
+      </div><br> -->
+      <div class="input-group mb-3 row">
+        <label class="col-sm-3" for="state">State *</label>
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-map-signs" aria-hidden="true"></i></span>
+        </div>
+        <mat-form-field class="col-sm-8">
+          <input type="text" placeholder="Choose State" aria-label="State Name" 
+            matInput [formControl]="myControlState" [matAutocomplete]="autoState" [(ngModel)]="selectedState">
+          <mat-autocomplete #autoState="matAutocomplete" (optionSelected)="changeState($event.option.value)">
+            <mat-option *ngFor="let state of filteredOptionsState | async" [value]="state">
+              {{state}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <div class="form-label-group">
+            <input type="hidden" name="state" id="state" class="form-control" #state="ngModel" readonly [ngModel]="selectedState">
+            <!-- <div *ngIf="state.invalid && state.touched" class="validation-error">This field is required.</div> -->
+        </div>
+      </div> 
+      <div class="input-group mb-3 row">
+        <label class="col-sm-3" for="city">City *</label>
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-map" aria-hidden="true"></i></span>
+        </div>
+        <mat-form-field class="col-sm-8">
+          <input type="text" placeholder="Choose City" aria-label="City Name" 
+            matInput [formControl]="myControlCity" [matAutocomplete]="autoCity" [(ngModel)]="selectedCity">
+          <mat-autocomplete #autoCity="matAutocomplete" (optionSelected)="changeCity($event.option.value)">
+            <mat-option *ngFor="let city of filteredOptionsCity | async" [value]="city">
+              {{city}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <div class="form-label-group">
+          <input type="hidden" name="city" id="city" class="form-control" #city="ngModel" readonly [ngModel]="selectedCity">
+          <!-- <div *ngIf="city.invalid && city.touched" class="validation-error">This field is required.</div> -->
+        </div>
+      </div> 
+      <!-- <div class="input-group mb-3 row">
+        <label class="col-sm-3" for="state">State *</label>
+         <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-user" aria-hidden="true"></i></span>
+          </div>
+        <select ngModel name="state" #state="ngModel" class="form-control col-sm-8" [(ngModel)]="service.formData.state">
+          <option value="Andhra Pradesh">Andhra Pradesh</option>
+          <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+          <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+          <option value="Assam">Assam</option>
+          <option value="Bihar">Bihar</option>
+          <option value="Chandigarh">Chandigarh</option>
+          <option value="Chhattisgarh">Chhattisgarh</option>
+          <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
+          <option value="Daman and Diu">Daman and Diu</option>
+          <option value="Delhi">Delhi</option>
+          <option value="Lakshadweep">Lakshadweep</option>
+          <option value="Puducherry">Puducherry</option>
+          <option value="Goa">Goa</option>
+          <option value="Gujarat">Gujarat</option>
+          <option value="Haryana">Haryana</option>
+          <option value="Himachal Pradesh">Himachal Pradesh</option>
+          <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+          <option value="Jharkhand">Jharkhand</option>
+          <option value="Karnataka" selected>Karnataka</option>
+          <option value="Kerala">Kerala</option>
+          <option value="Madhya Pradesh">Madhya Pradesh</option>
+          <option value="Maharashtra">Maharashtra</option>
+          <option value="Manipur">Manipur</option>
+          <option value="Meghalaya">Meghalaya</option>
+          <option value="Mizoram">Mizoram</option>
+          <option value="Nagaland">Nagaland</option>
+          <option value="Odisha">Odisha</option>
+          <option value="Punjab">Punjab</option>
+          <option value="Rajasthan">Rajasthan</option>
+          <option value="Sikkim">Sikkim</option>
+          <option value="Tamil Nadu">Tamil Nadu</option>
+          <option value="Telangana">Telangana</option>
+          <option value="Tripura">Tripura</option>
+          <option value="Uttar Pradesh">Uttar Pradesh</option>
+          <option value="Uttarakhand">Uttarakhand</option>
+          <option value="West Bengal">West Bengal</option>
+        </select>
+        <div *ngIf="state.invalid && state.touched" class="validation-error">This field is required.</div>
+      </div><br> -->
+      <div class="input-group mb-3 row">
+        <label class="col-sm-3" for="pincode">Zipcode *</label>
+         <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-map-pin" aria-hidden="true"></i></span>
+          </div>
+        <input ngModel type="number" #pincode="ngModel"   name="pincode" class="form-control col-sm-8"
+          [(ngModel)]="service.formData.pinCode" required>
+        <div *ngIf="pincode.invalid && pincode.touched" class="validation-error">Enter a valid Input</div>
+      </div>
+    </div>
+    <div *ngIf="defaultAddress == true">
+      <input type="checkbox" id="defaultAddress" name="defaultAddress" (change)="defaultChange($event)" value="default" [(ngModel)]="service.formData.defaultAddress" >Same as Default Address
+      <br>
+        <!-- <input type="text" value={{emailId}} style="width: 300px; text-align: center;" > -->
+        <div class="input-group mb-3 row">
+          <label for="fullName" class="col-sm-3">Full Name *</label>
+           <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-user" aria-hidden="true"></i></span>
+          </div>
+          <input ngModel #fullName="ngModel" name="fullName" class="form-control col-sm-8" type="text" value={{profileData?.fullName}} 
+            [(ngModel)]="fullname" readonly>
+          <!-- <div *ngIf="fullName.invalid && fullName.touched" class="validation-error">This field is required.</div> -->
+        </div><br>
+      <div class="input-group mb-3 row">
+        <label class="col-sm-3" for="addressLine1">Address Line 1 *</label>
+         <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+          </div>
+        <input ngModel type="text" #addressLine1="ngModel" name="addressLine1" class="form-control col-sm-8" value={{profileData?.addressLine1}}
+          [(ngModel)]="addressline1" readonly>
+        <!-- <div *ngIf="addressLine1.invalid && addressLine1.touched" class="validation-error">This field is required.</div> -->
+      </div><br>
+      <div class="input-group mb-3 row">
+        <label class="col-sm-3" for="addressLine2">Address Line 2 *</label>
+         <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+          </div>
+        <input ngModel type="text" #addressLine2="ngModel" name="addressLine2" class="form-control col-sm-8" value={{profileData?.addressLine2}}
+          [(ngModel)]="addressline2" readonly>
+        <!-- <div *ngIf="addressLine2.invalid && addressLine2.touched" class="validation-error">This field is required.</div> -->
+      </div><br>
+      <div class="input-group mb-3 row">
+        <label class="col-sm-3" for="city">City *</label>
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-map-signs" aria-hidden="true"></i></span>
+        </div>
+        <input ngModel type="text" #city="ngModel" name="city" class="form-control col-sm-8"  value={{profileData?.city}}
+          [(ngModel)]="scity" readonly>
+        <!-- <div *ngIf="city.invalid && city.touched" class="validation-error">This field is required.</div> -->
+      </div><br>
+      <div class="input-group mb-3 row">
+        <label class="col-sm-3" for="state">State *</label>
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-map" aria-hidden="true"></i></span>
+        </div>
+        <input ngModel type="text" #state="ngModel" name="state" class="form-control col-sm-8" value={{profileData?.state}}
+          [(ngModel)]="sstate" readonly>
+      </div><br>
+     
+      <div class="input-group mb-3 row">
+        <label class="col-sm-3" for="pincode">Zipcode *</label>
+         <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-user" aria-hidden="true"></i></span>
+          </div>
+        <input ngModel type="number" #pincode="ngModel"   name="pincode" class="form-control col-sm-8"  value={{profileData?.pincode}}
+          [(ngModel)]="spincode" readonly>
+      </div>
+    </div><hr>
+  </div><hr>
+</div>
+  <div class="row"><hr>
+    <div class="col-md-3">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="row">
+            <div class="col-md-3">
+              <h2><strong>2</strong></h2><b>Shipping <br> Address</b>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <input type="checkbox" id="sameAddress" name="sameAddress" (change)="onChange($event)" value="same" [(ngModel)]="service.formData.sameAddress" >   Same as Billing Address
+      <br>
+      <div *ngIf="sameAddress == false">
+      <div class="input-group mb-3 row">
+        <label for="fullname" class="col-sm-3 control-label">Full Name *</label>
+         <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-user" aria-hidden="true"></i></span>
+          </div>
+        <input ngModel #sfullName="ngModel" name="sfullName" class="form-control col-sm-8" type="text"
+          [(ngModel)]="service.formData.sfullName" required>
+        <div *ngIf="sfullName.invalid && sfullName.touched" class="validation-error">This field is required.</div>
+      </div><br>
+      <div class="input-group mb-3 row">
+        <label class="col-sm-3" for="smobile">Mobile *</label>
+         <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-mobile" aria-hidden="true"></i></span>
+          </div>
+        <input ngModel type="number" #smobile="ngModel" name="smobile" class="form-control col-sm-8"
+          [(ngModel)]="service.formData.smobile" required>
+        <div *ngIf="smobile.invalid && smobile.touched" class="validation-error">Enter a valid Input</div>
+      </div><br>
+      <div class="input-group mb-3 row">
+        <label class="col-sm-3" for="semail">Email *</label>
+         <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+          </div>
+        <input ngModel type="semail" #semail="ngModel" [pattern]="emailpattern" name="semail" class="form-control col-sm-8"
+          [(ngModel)]="service.formData.semail" required>
+        <div *ngIf="semail.invalid && semail.touched" class="validation-error">Enter a valid Input</div>
+      </div><br>
+      <div class="input-group mb-3 row">
+        <label class="col-sm-3" for="saddressLine1">Address Line1 *</label>
+         <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+          </div>
+        <input ngModel type="text" #saddressLine1="ngModel" name="saddressLine1" class="form-control col-sm-8"
+          [(ngModel)]="service.formData.saddressLine1" required>
+        <div *ngIf="saddressLine1.invalid && saddressLine1.touched" class="validation-error">This field is required.</div>
+      </div><br>
+      <div class="input-group mb-3 row">
+        <label class="col-sm-3" for="saddressLine2">Address Line2 *</label>
+         <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+          </div>
+        <input ngModel type="text" #saddressLine2="ngModel" name="saddressLine2" class="form-control col-sm-8" 
+        [(ngModel)]="service.formData.saddressLine2" required>
+        <div *ngIf="saddressLine2.invalid && saddressLine2.touched" class="validation-error">This field is required.</div>
+      </div><br>
+      <div class="input-group mb-3 row">
+        <label class="col-sm-3" for="state">State *</label>
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-map-signs" aria-hidden="true"></i></span>
+        </div>
+        <mat-form-field class="col-sm-8">
+          <input type="text" placeholder="Choose State" aria-label="Shipping State Name" 
+            matInput [formControl]="myControlShippingState" [matAutocomplete]="autoShippingState" [(ngModel)]="selectedshippingState">
+          <mat-autocomplete #autoShippingState="matAutocomplete" (optionSelected)="changeShippingState($event.option.value)">
+            <mat-option *ngFor="let state of filteredOptionsShippingState | async" [value]="state">
+              {{state}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <div class="form-label-group">
+            <input type="hidden" name="sstate" id="sstate" class="form-control" #sstate="ngModel" readonly [ngModel]="selectedshippingState">
+            <!-- <div *ngIf="state.invalid && state.touched" class="validation-error">This field is required.</div> -->
+        </div>
+      </div> 
+      <div class="input-group mb-3 row">
+        <label class="col-sm-3" for="city">City *</label>
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-map" aria-hidden="true"></i></span>
+        </div>
+        <mat-form-field class="col-sm-8">
+          <input type="text" placeholder="Choose City" aria-label="City Name" 
+            matInput [formControl]="myControlShippingCity" [matAutocomplete]="autoShippingCity" [(ngModel)]="selectedShippingCity">
+          <mat-autocomplete #autoShippingCity="matAutocomplete" (optionSelected)="changeShippingCity($event.option.value)">
+            <mat-option *ngFor="let city of filteredOptionsShippingCity | async" [value]="city">
+              {{city}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <div class="form-label-group">
+          <input type="hidden" name="scity" id="scity" class="form-control" #scity="ngModel" readonly [ngModel]="selectedShippingCity">
+          <!-- <div *ngIf="city.invalid && city.touched" class="validation-error">This field is required.</div> -->
+        </div>
+      </div> 
+      <!-- <div class="input-group mb-3 row">
+        <label class="col-sm-3" for="scity">City *</label>
+         <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-user" aria-hidden="true"></i></span>
+          </div>
+        <input ngModel type="text" #scity="ngModel" name="scity" class="form-control col-sm-8"
+          [(ngModel)]="service.formData.scity" required>
+        <div *ngIf="scity.invalid && scity.touched" class="validation-error">This field is required.</div>
+      </div><br>
+      <div class="input-group mb-3 row">
+        <label class="col-sm-3" for="sstate">State *</label>
+         <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-user" aria-hidden="true"></i></span>
+          </div>
+        <select ngModel name="sstate" #sstate="ngModel" class="form-control col-sm-8" [(ngModel)]="service.formData.sstate">
+          <option value="Andhra Pradesh">Andhra Pradesh</option>
+          <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+          <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+          <option value="Assam">Assam</option>
+          <option value="Bihar">Bihar</option>
+          <option value="Chandigarh">Chandigarh</option>
+          <option value="Chhattisgarh">Chhattisgarh</option>
+          <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
+          <option value="Daman and Diu">Daman and Diu</option>
+          <option value="Delhi">Delhi</option>
+          <option value="Lakshadweep">Lakshadweep</option>
+          <option value="Puducherry">Puducherry</option>
+          <option value="Goa">Goa</option>
+          <option value="Gujarat">Gujarat</option>
+          <option value="Haryana">Haryana</option>
+          <option value="Himachal Pradesh">Himachal Pradesh</option>
+          <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+          <option value="Jharkhand">Jharkhand</option>
+          <option value="Karnataka" selected>Karnataka</option>
+          <option value="Kerala">Kerala</option>
+          <option value="Madhya Pradesh">Madhya Pradesh</option>
+          <option value="Maharashtra">Maharashtra</option>
+          <option value="Manipur">Manipur</option>
+          <option value="Meghalaya">Meghalaya</option>
+          <option value="Mizoram">Mizoram</option>
+          <option value="Nagaland">Nagaland</option>
+          <option value="Odisha">Odisha</option>
+          <option value="Punjab">Punjab</option>
+          <option value="Rajasthan">Rajasthan</option>
+          <option value="Sikkim">Sikkim</option>
+          <option value="Tamil Nadu">Tamil Nadu</option>
+          <option value="Telangana">Telangana</option>
+          <option value="Tripura">Tripura</option>
+          <option value="Uttar Pradesh">Uttar Pradesh</option>
+          <option value="Uttarakhand">Uttarakhand</option>
+          <option value="West Bengal">West Bengal</option>
+        </select>
+        <div *ngIf="sstate.invalid && sstate.touched" class="validation-error">This field is required.</div>
+      </div><br> -->
+      <div class="input-group mb-3 row">
+        <label class="col-sm-3" for="spincode">Zipcode *</label>
+         <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1" style="border-radius: 4px;"><i class="fa fa-map-pin" aria-hidden="true"></i></span>
+          </div>
+        <input ngModel type="number" #spincode="ngModel"   name="spincode" class="form-control col-sm-8"
+          [(ngModel)]="service.formData.spincode" required>
+        <div *ngIf="spincode.invalid && spincode.touched" class="validation-error">Enter a valid Input</div>
+      </div>
+    </div>
+    </div>
+    </div>
+  <hr>
+</ng-template>
+  <div class="form-group">
+     <button type="submit" [disabled]="(!defaultAddress && (form.invalid || !myControlState.valid || !myControlCity.valid) && (mode != 'pickup')) ||
+                                      (!defaultProfileAddress && form.invalid && (mode == 'pickup')) ||
+                                      (!sameAddress && (!myControlShippingState.valid || !myControlShippingCity.valid) && (mode != 'pickup')) || 
+                                      (mode == null)" class="btn btn-lg btn-block" >SUBMIT</button>
+    
+                                      <!-- (click)="getDestination(service.formData.pinCode,service.formData.spinCode,spincode)" -->
+  </div>
+
+</form>
+</div>
+</div>
+</fieldset>
+</div>

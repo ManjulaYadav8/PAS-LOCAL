@@ -1,0 +1,85 @@
+<!-- <div style="text-align: end;">
+  <button style="text-decoration: none; background-color: transparent; outline: none; border: none;" (click)="onClose()">x</button>
+</div> -->
+<mat-toolbar>
+  <span class="fill-remaining-space">
+    <h5 class="text-center text-light"><span class="CustomFont">Reviews</span></h5>
+  </span>
+  <button mat-icon-button class="close text-light" (click)="onClose()" style="border: none; outline: none;">
+    <mat-icon>clear</mat-icon>
+  </button>
+</mat-toolbar>
+<div class="container">
+  <div class="row">
+    <!-- <div class="col-md-6">
+      <div class="text-center">
+        <div class="ratingTop">
+          <ng-container *ngFor="let num of starRating">
+            <i class="fa fa-star" aria-hidden="true"></i>
+          </ng-container>
+          <ng-container *ngFor="let num of unpilledStar">
+            <i class="fa fa-star-o" aria-hidden="true"></i>
+          </ng-container>
+        </div>
+      </div>
+    </div> -->
+    <div class="col-md-6">
+      <div class="sorting">
+        <div class="dropdown"> Sort Review By: 
+          <button type="button" class="btn  dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false"> {{sortVariable}} </button>
+          <div class="dropdown-menu text-center" aria-labelledby="dropdownMenuButton">
+            <button class="dropdown-item" (click)="rating(enabledReviewList)">Reviews</button>
+            <button class="dropdown-item" (click)="date(enabledReviewList)">Date</button>
+          </div>
+        </div>
+      </div>  
+    </div>
+  </div>
+<owl-carousel-o [options]="customOptions" (translated)="getPassedData($event)">
+  <ng-template class="slideImg custom-font"   carouselSlide  *ngFor="let review of reviewList">
+    <div class="card">
+      <div class="card-body">
+      <div class="row">
+      <div class="ratestars">
+        <ng-container *ngFor="let num of review.pilled">
+          <i class="fa fa-star" aria-hidden="true"></i>
+        </ng-container>
+        <ng-container *ngFor="let num of review.unpilled" >
+          <i class="fa fa-star-o" aria-hidden="true"></i>
+        </ng-container> 
+       </div>
+       <div class="date custom-font">
+        <p>{{review.date | date: 'dd-MMM-yyyy' }}</p>
+      </div>
+      </div>
+      <div>
+        <h5 class="custom-font" style="text-transform: capitalize;">{{review.title}} </h5>
+      </div>
+      <div class="row" >
+        <div class="imageview" >
+        <div *ngIf="review.imageStatus == 'enable'; else defaultImg">
+          <div class="text-center imgsrc">
+            <a  target="_blank" [href]="review.imageUrl">
+          <img [src]="review.imageUrl" alt="..." class="img-responsive img-thumbnail" >
+        </a>
+        </div><br>
+        </div>
+         <ng-template #defaultImg>
+          <div class="text-center imgsrc">
+            <img src="../../../assets/star.png" alt="..." class="img-responsive img-thumbnail">
+          </div><br>
+         </ng-template>
+        </div>
+        <div class="descriptionview">
+              <p class="custom-font">{{review.description}}</p>
+               <div *ngIf="review.nameStatus == 'enable'">
+                 <p class="custom-font"> <b>Name : </b>{{review.userName}}</p>
+               </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </ng-template>
+</owl-carousel-o>
+</div>

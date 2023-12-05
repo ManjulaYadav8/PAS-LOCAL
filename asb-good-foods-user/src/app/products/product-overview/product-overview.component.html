@@ -1,0 +1,535 @@
+<div class="container">
+    <ul class="breadcrumb text-center">
+      <li><a routerLink="/home" (click)="topFunction()">Home</a></li>
+      <li><a [routerLink]="['/products', deptId,categoryId]" (click)="topFunction()">Products</a></li>
+      <li><a (click)="collectionBack(categoryId)" style="cursor: pointer;">{{categoryName}}</a> </li>
+      <li>{{productName}}</li>
+    </ul>
+    <!-- <h4 class="collectionName">{{categoryName}}</h4><br> -->
+    <h2 class="text-center">{{productName}}</h2> <br> 
+    <div class="row">
+          <div class="col-md-7">
+              <div id="productCarouselIndicator" class="carousel slide" data-ride="carousel">
+                  <ol class="carousel-indicators">
+                    <li data-target="#productCarouselIndicator" data-slide-to="0" class="active"></li>
+                    <li data-target="#productCarouselIndicator" data-slide-to="1"></li>
+                    <li data-target="#productCarouselIndicator" data-slide-to="2"></li>
+                    <li data-target="#productCarouselIndicator" data-slide-to="3"></li>
+                  </ol>
+                  <div class="carousel-inner">
+
+                    <div class="carousel-item" [ngClass]="{active:isFirst}" *ngFor="let carousel of productUrl;
+                    index as i;first as isFirst">
+                        <!-- <img src="{{carousel}}" class="imageSrc img-thumbnail" alt="..."> -->
+                        <div *ngIf="carousel.mediaType === 'Video' else imageTag" >
+                            <video autoplay controls [src]="carousel.url" class="imageSrc"></video>
+                          </div>
+                          <ng-template #imageTag>
+                            <img [src]="carousel.url" class="imageSrc img-responsive img-thumbnail">
+                          </ng-template>
+                        <div class="carousel-caption">
+                          <h3>{{carousel.textToDisplay}}</h3>
+                        </div>
+                    </div>
+                  </div>
+                  <a class="carousel-control-prev" href="#productCarouselIndicator" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="carousel-control-next" href="#productCarouselIndicator" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </div>
+                <div *ngIf="defaultImg == true">
+                <img [src]="selectedprimaryUrl" alt="" class="imageSrc img-thumbnail">
+            </div>
+            <div class="text-center align-items:center">
+              <div class="row tag" >
+                <p *ngFor="let tag of tagNames" class="tagName">{{tag}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <p class="overflow-auto description" [innerHtml] = productDesc></p>
+          <!-- <div class="row text-center descweight">
+            <div class="prodsize mat-elevation-z4" *ngIf="preOrderType === 'yes'">
+              <i class="fa fa-2x fa-clock-o" aria-hidden="true"></i>
+                <div style="font-size: smaller;">{{companyConfig?.preOrderTime}}</div>
+                 <div style="font-size: 8px;">Pre Order</div>
+            </div> 
+            <div *ngIf="selectedproductWeight != 0" class="prodweight mat-elevation-z4" style="margin-left: 20px;">
+              <i class="fa fa-2x fa-balance-scale" aria-hidden="true"></i>
+              <div style="font-size: smaller;">{{selectedproductWeight}}</div>
+               <div style="font-size: 8px;">Weight</div>
+            </div>
+            <div class="prodsize mat-elevation-z4" *ngIf="selectedproductSize != 0" style="margin-left: 20px;">
+                <i class="fa fa-2x fa-cube" aria-hidden="true"></i>
+               <div style="font-size: smaller;">{{selectedproductSize}}</div>
+               <div style="font-size: 8px;">Size</div>
+            </div>               
+        </div><br> -->
+        <div  class="card-container-top mat-elevation-z3">
+          <div class="card-flex">
+            <div *ngIf="preOrderType === 'yes'">
+              <div class="card-item mat-elevation-z1 card-circle-top">
+                <i class="fa fa-3x fa-clock-o" aria-hidden="true"></i>
+              </div>
+              <div class="circle-title ">
+                {{companyConfig?.preOrderTime}}<br/>
+                Pre Order
+              </div>
+            </div>
+            <div>
+              <div class="Wishlist card-item mat-elevation-z1 card-circle-top" (click)="addtoWishlist(productData)">
+                <div  *ngIf='selectedwishlist === true'>
+                  <i class="fa fa-heart fa-3x"></i>
+                </div>
+                <div  *ngIf='selectedwishlist === false'>
+                  <i class="fa fa-heart-o fa-3x"></i>
+                </div>
+              </div>
+              <div class="circle-title ">
+                Wishlist
+              </div>
+            </div>
+            <div>
+              <div class="Wishlist card-item mat-elevation-z1 card-circle-top" (click)="reviewComments(productDocId)">
+                <div  *ngIf="starRating.length == 0 else filled">
+                  <mat-icon style="color: #2A8168;transform: scale(1.2);" class="starRating">star_outline</mat-icon>
+                </div>
+                <ng-template #filled>
+                  <mat-icon style="color: #2A8168;transform: scale(1.2); " class="starRating">star</mat-icon>
+                </ng-template>
+              </div>
+              <div class="circle-title ">
+                <div  *ngIf="starRating.length != 0 ">
+                  <b>{{starRating.length}}</b><br/>
+                </div>
+                Review
+              </div>
+            </div>
+          </div>
+        </div><br/>
+        <div>
+          <div *ngIf="productData">
+            <div>
+            <div  class="card-container mat-elevation-z3" style="border: 1px solid #2A8168; background-color: #2A8168;">
+              <div class="card-flex">
+                <div *ngIf="productData?.productWeight && productData.productWeight != null && productData.productWeight != ''">
+                  <div class="Weight card-item mat-elevation-z1 card-circle">
+                    {{productData?.productWeight}}<br/>
+                    {{productData?.productWeightUom?.split('(')[1].split(')')[0]}}
+                  </div>
+                  <div class="circle-title text-light">
+                    Weight
+                  </div>
+                </div>
+                <div *ngIf="productData?.productSize && productData.productSize != null && productData.productSize != ''">
+                  <div class="Size card-item mat-elevation-z1 card-circle">
+                    {{productData?.productSize}}<br/>
+                    {{productData?.productSizeUom?.split('(')[1].split(')')[0]}}
+                  </div>
+                  <div class="circle-title text-light">
+                    Size
+                  </div>
+                </div>
+                <div *ngIf="productData?.productColor && productData.productColor != null && productData.productColor != ''">
+                  <div class="Color card-item mat-elevation-z1 card-circle" style="padding-top: 15px;">
+                    {{productData?.productColor}}
+                  </div>
+                  <div class="circle-title text-light">
+                    Color
+                  </div>
+                </div>
+                <div *ngIf="productData?.itemCount && productData.itemCount != null && productData.itemCount != ''">
+                  <div class="Weight card-item mat-elevation-z1 card-circle" style="padding-top: 15px;">
+                    {{productData?.itemCount}}<br/>
+                  </div>
+                  <div class="circle-title text-light">
+                    Count
+                  </div>
+                </div>
+                <div *ngIf="productData?.productPrice && productData.productPrice != null && productData.productPrice != ''">
+                  <div class="Price" class="Price card-item mat-elevation-z1 card-circle" style="padding-top: 15px;">
+                    {{companyConfig?.currencySymbol}} {{productData?.productPrice}}
+                  </div>
+                  <div class="circle-title text-light">
+                    Price
+                  </div>
+                </div>
+                <div *ngIf="viewCartStatus[0]">
+                  <div *ngIf="(viewCartStatus[0]?.status === false) && (productData?.currentStock > 0 && productData?.productStatus == 'active')" class="Cart" 
+                    class="Cart card-item mat-elevation-z1 card-circle" (click)="addToCart(productData,productData?.productdocId);$event.stopPropagation();">
+                    Add <br/>
+                    <mat-icon style="transform: scale(0.8);" class="matAdd">add</mat-icon>
+                  </div>
+                  <div *ngIf="viewCartStatus[0]?.status === true" class="Cart" class="Cart card-item mat-elevation-z1 card-circle" (click)="viewCart()">
+                    View<br/>
+                    <mat-icon style="transform: scale(0.8);" class="matAdd">shopping_cart</mat-icon>
+                  </div>
+                  <div *ngIf="(productData?.currentstock <= 0 || productData?.productStatus != 'active')" class="Cart" class="Cart card-item mat-elevation-z1 card-circle">
+                    <span style="font-size: 8px;">No Stock</span><br/>
+                    <mat-icon style="transform: scale(0.8);">production_quantity_limits</mat-icon>
+                  </div>
+                  <div class="circle-title text-light">
+                    Cart
+                  </div>
+                </div>
+              </div>
+            </div><br/>
+            </div>
+          </div>
+          <div *ngIf="varientProducts.length > 0">
+            <div *ngFor="let variant of varientProducts;let index=index;">
+            <div  class="card-container mat-elevation-z3" *ngIf="variant?.productPrice" (click)="productOverview(variant?.productId);">
+              <div class="card-flex">
+                <div *ngIf="variant?.productWeight && variant.productWeight != null && variant.productWeight != ''">
+                  <div class="Weight card-item mat-elevation-z1 card-circle">
+                    {{variant?.productWeight}}<br/>
+                    {{variant?.productWeightUom?.split('(')[1].split(')')[0]}}
+                  </div>
+                  <div class="circle-title ">
+                    Weight
+                  </div>
+                </div>
+                <div *ngIf="variant?.productSize && variant.productSize != null && variant.productSize != ''">
+                  <div class="Size card-item mat-elevation-z1 card-circle">
+                    {{variant?.productSize}}<br/>
+                    {{variant?.productSizeUom?.split('(')[1].split(')')[0]}}
+                  </div>
+                  <div class="circle-title ">
+                    Size
+                  </div>
+                </div>
+                <div *ngIf="variant?.productColor && variant.productColor != null && variant.productColor != ''">
+                  <div class="Color card-item mat-elevation-z1 card-circle" style="padding-top: 15px;">
+                    {{variant?.productColor}}
+                  </div>
+                  <div class="circle-title ">
+                    Color
+                  </div>
+                </div>
+                <div *ngIf="variant?.itemCount && variant.itemCount != null && variant.itemCount != ''">
+                  <div class="Weight card-item mat-elevation-z1 card-circle" style="padding-top: 15px;">
+                    {{variant?.itemCount}}<br/>
+                  </div>
+                  <div class="circle-title ">
+                    Count
+                  </div>
+                </div>
+                <div *ngIf="variant?.productPrice && variant.productPrice != null && variant.productPrice != ''">
+                  <div class="Price" class="Price card-item mat-elevation-z1 card-circle" style="padding-top: 15px;">
+                    {{companyConfig?.currencySymbol}} {{variant?.productPrice}}
+                  </div>
+                  <div class="circle-title ">
+                    Price
+                  </div>
+                </div>
+                <div *ngIf="viewCartStatus[index+1]">
+                  <div *ngIf="(viewCartStatus[index+1]?.status === false) && (variant?.currentStock > 0 && variant?.productStatus == 'active')" class="Cart" 
+                    class="Cart card-item mat-elevation-z1 card-circle" (click)="addToCart(variant,variant?.productdocId);$event.stopPropagation();">
+                    Add<br/>
+                    <mat-icon style="transform: scale(0.8);" class="matAdd">add</mat-icon>
+                  </div>
+                  <div *ngIf="viewCartStatus[index+1]?.status === true" class="Cart" class="Cart card-item mat-elevation-z1 card-circle" (click)="viewCart()">
+                    View<br/>
+                    <mat-icon style="transform: scale(0.8);" class="matAdd">shopping_cart</mat-icon>
+                  </div>
+                  <div *ngIf="(variant?.currentstock <= 0 || variant?.productStatus != 'active')" class="Cart" class="Cart card-item mat-elevation-z1 card-circle">
+                    <span style="font-size: 8px;">No Stock</span><br/>
+                    <mat-icon style="transform: scale(0.8);">production_quantity_limits</mat-icon>
+                  </div>
+                  <div class="circle-title ">
+                    Cart
+                  </div>
+                </div>
+              </div>
+            </div><br/>
+            </div>
+          </div>
+        </div>
+        <!-- <ng-template #showLoader>
+          <div style="display: flex;align-items: center;justify-content: center;">
+            <app-loader></app-loader>
+          </div>
+        </ng-template> -->
+
+
+        <!-- <div class="mat-elevation-z0 CustomFont flex-row"
+        *ngIf="weightType && weightType.length > 0">
+        <div style="width: 20%;">Weight</div>
+            <mat-card class="selectable-card" [ngClass]="{'card-active': selectedWeight  === type.weight && selectedWeightUom  === type.weightUom,
+                                                          'card-inactive': selectedWeight  !== type.weight || selectedWeightUom  !== type.weightUom  }"
+                  *ngFor="let type of weightType;" (click)="onWeightChoose(type)">
+              {{type.weight}} {{type.weightUom.split('(')[1].split(')')[0]}}
+            </mat-card>
+        </div>
+        <div class="mat-elevation-z0 CustomFont flex-row"
+        *ngIf="sizeType && sizeType.length > 0">
+        <div style="width: 20%;">Size</div>
+          <mat-card class="selectable-card" [ngClass]="{'card-active': selectedSize  === type.size && selectedSizeUom  === type.sizeUom,
+                                                        'card-inactive': selectedSize  !== type.size || selectedSizeUom  !== type.sizeUom  }"
+                *ngFor="let type of sizeType;" (click)="onSizeChoose(type)">
+              {{type.size}} {{type.sizeUom.split('(')[1].split(')')[0]}}
+          </mat-card>
+          </div>
+        <div class="mat-elevation-z0 CustomFont flex-row"
+          *ngIf="colorType && colorType.length > 0">
+          <div style="width: 20%;">Color</div>
+            <mat-card class="selectable-card" [ngClass]="{'card-active': selectedColor  === color,'card-inactive': selectedColor  !== color  }"
+                  *ngFor="let color of colorType;" (click)="onColorChoose(color)">
+              {{color}}
+            </mat-card>
+          </div> -->
+            <!-- <h4 class="price" >{{companyConfig?.currencySymbol}}  {{productPrice | number:'1.2-3'}} </h4>
+            <div class="addToButton" *ngIf="(currentstock > 0 && productStatus == 'active'); else addToCartDisable"> -->
+           <!-- <div *ngIf="preOrderType === 'yes'; else directCart">
+            <button class="btn" (click)="confirmToCart(productData)"  data-toggle="modal" data-target="#confirmModalLong">Add to Cart</button><br><br>
+           </div>
+           <ng-template #directCart> -->
+             <!-- <div class="row">
+               <div class="addCartClass">
+              <button class="btn" (click)="addToCart(productData)">Add to Cart</button>
+            </div>
+            <div class="wishListClass">
+              <div  *ngIf='selectedwishlist === true'>
+                <i class="fa fa-heart fa-2x selectedItem" (click)="addtoWishlist(productData)" style="margin-left:85%;"></i>
+              </div>
+              <div  *ngIf='selectedwishlist === false'>
+                <i class="fa fa-heart-o fa-2x selectedItem" (click)="addtoWishlist(productData)" style="margin-left:85%;"></i>
+              </div>
+            </div>
+             </div> -->
+                
+                <!-- <i class="fa fa-heart selectedItem" style="margin-left:85%;" (click)="addtoWishlist(featured)"></i><br><br> -->
+            <!-- <button style="margin-left: 3px;" class="btn" *ngIf="viewCartStatus == true" (click)="viewCart()">View Cart</button><br> -->
+        <!-- </ng-template> -->
+          <!-- </div> -->
+          <!-- <ng-template #addToCartDisable>
+            <div class="addToButton">
+              <p> <b> Currently this product is not available</b></p>
+            <button disabled class="btn" (click)="addToCart(productData)">Add to Cart</button><br><br>
+          </div>
+          </ng-template>
+            <div class="rating" *ngIf="productStarRatings != 0">
+              <ng-container *ngFor="let num of starRating">
+                <i class="fa fa-star" aria-hidden="true"></i>
+              </ng-container>
+              <ng-container *ngFor="let num of unfilledStar">
+                <i class="fa fa-star-o" aria-hidden="true"></i>
+              </ng-container>  
+              <div>
+                  <a class="review" (click)="reviewComments(productDocId)">Reviews</a>
+              </div>           
+            </div> -->
+          </div>
+      </div>
+      <div *ngIf="selectedProductList && selectedProductList.length > 0" class="relatedprod">
+     <h2 class="text-center">Related Products</h2>
+      <owl-carousel-o [options]="customOptions" (translated)="getPassedData($event)">
+        <ng-template class="slideImg"   carouselSlide *ngFor="let slide of selectedProductList">
+          <div class="featuredCard" [ngClass]="{
+            'featuredCard-1' : selectedProductList.length === 1,
+            'featuredCard-2' : selectedProductList.length === 2,
+            'featuredCard-3' : selectedProductList.length > 2
+          }">
+            <img class="imageBox img-thumbnail" [src]="slide.primaryUrl" alt="..." (click)="slideOverview(slide.productId, slide.categoryId,slide)"><br>
+            <h5>{{slide.productName}}</h5>
+          </div>
+        </ng-template>
+    </owl-carousel-o><br>
+</div> 
+  </div>
+  <!-- <div class="modal fade" id="confirmModalLong" role="dialog" aria-labelledby="confirmModalLongLongTitle"
+  aria-hidden="true">
+  <div class="modal-dialog  modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmModalLongLongTitle">Pre Order</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>This item is pre order.
+            Delivery will be tomorrow </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn" data-dismiss="modal" (click)="confirmCart(preorderItem)">Confirm</button>
+      </div>
+    </div>
+  </div>
+  </div> -->
+<!-- <br><br>
+<div class="container">
+<h4 class="text-center">{{selectedProduct?.productName}}</h4><br>
+<div class="container">
+    <ul class="breadcrumb">
+        <li><a routerLink="/home" (click)="topFunction()">Home</a></li>
+        <li><a routerLink="/products" (click)="topFunction()">Products</a></li>
+        <li><a class="category"
+                (click)="categorySelecting(selectedProduct?.categoryId)">{{selectedProduct?.categoryName}}</a></li>
+        <li>{{selectedProduct?.productName}}</li>
+    </ul>
+</div>
+<div class="container">
+
+    <div class="row mobileView">
+        <div class="col-md-6">
+            <img [src]="warrantyImg" alt="warranty"
+                style="width: 100px;height: 100px;margin-left:35%; object-fit: cover; ">
+            <div *ngIf="badgeImg == undefined else dynamic">
+                <img src="../../assets/badge.jpg" alt="3 years warranty" class="mobwarranty">
+            </div>
+            <ng-template #dynamic>
+                <img [src]="badgeImg" alt="warranty" [ngClass]="mobwarranty" style="width: 100px;height: 100px;margin-left:35%">
+            </ng-template>
+
+            <img class="imageBox" [src]="selectedImage"><br><br>
+            <div class="row">
+                <div class="col-md-8">
+                    <owl-carousel-o [options]="mobcustomOptions" (translated)="getPassedData($event)">
+                        <ng-template class="slideImg" carouselSlide *ngFor="let slide of otherImages">
+                            <div class="card mb-3" style="max-width: 536px">
+                                <div class="no-gutters">
+                                    <img class="smallImage" [src]="slide.url" alt="..."
+                                        (click)="selectingImage(slide.url)">
+                                </div>
+                            </div>
+
+                        </ng-template>
+                    </owl-carousel-o>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mobile">
+            <p class="desc" [innerHtml]='selectedProduct?.description'></p><br>
+            <div *ngIf="mrpPrice != 0;" class="mrp">
+                <div class="mrp">
+                    <h5 class="pricerow"> M.R.P : {{companyConfig?.currencySymbol}} <s class="mobilePrice"> {{selectedProduct?.productCost}}</s> </h5>
+                    <h5>
+                        <p class="pricerow"> Price : {{companyConfig?.currencySymbol}} {{selectedProduct?.productPrice}}</p>
+                    </h5>
+                    <h5>
+                        <p class="pricerow">Save : {{companyConfig?.currencySymbol}} {{selectedProduct?.productCost - selectedProduct?.productPrice}}
+                        </p>
+                    </h5>
+                </div>
+            </div>
+            <div class="mrp">
+                <div class="addToButton" *ngIf="currentstock > 0; else addToCartDisable">
+                    <button class="btn  " (click)="addToCart(selectedProduct)">Add to Cart</button>
+                    <button class="btn  " *ngIf="viewCartStatus == true" (click)="viewCart()">View Cart</button><br>
+                  </div>
+                  <ng-template #addToCartDisable>
+                    <div class="addToButton">
+                      <p> <b> Currently this product is not available</b></p>
+                    <button disabled class="btn btn-warning" (click)="addToCart(selectedProduct)" style="border: 3px solid white;">Add to Cart</button><br><br>
+                  </div>
+                  </ng-template>
+            <button class="btn  "
+            onclick="$zoho.salesiq.floatwindow.visible(&quot;show&quot;);">Request Quote!</button>
+        </div>
+        </div>
+
+    </div>
+</div>
+<div class="container">
+    <div class="row webView">
+        <div class="col-md-5">
+            <ngx-img-zoom [zoomImageSrc]="selectedImage" [previewImageSrc]="selectedImage"
+                [imgStyle]="'width:400px; height:400px;    border:1px solid #dcdcdc;'" [resultStyle]="'width:700px; height:400px; margin-left:50px; background-repeat: no-repeat; z-index: 2; position:absolute;
+           -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); top: 0;left: 100%;'"
+                [lensStyle]="'width:100px; height:100px'" [containerStyle]="">
+            </ngx-img-zoom><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-9">
+                    <owl-carousel-o [options]="customOptions" (translated)="getPassedData($event)">
+                        <ng-template class="slideImg" carouselSlide *ngFor="let slide of otherImages">
+                            <div class="card mb-3">
+                                <div class="no-gutters">
+                                    <img class="smallImage" [src]="slide.url" alt="..."
+                                        (click)="selectingImage(slide.url)">
+                                </div>
+                            </div>
+                        </ng-template>
+                    </owl-carousel-o>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <img [src]="warrantyImg" alt="warranty" class="warranty">
+            <div *ngIf="badgeImg == undefined; else default">
+        <img src="../../assets/badge.jpg" alt="3 years warranty" class="warranty">
+    </div>
+    <ng-template #default>
+        <img [src]="badgeImg" alt="warranty" class="warranty">
+    </ng-template>
+        </div>
+        <div class="col-md-5">
+            <p class="desc" [innerHtml]='selectedProduct?.description'></p><br><br><br><br>
+            <div *ngIf="mrpPrice== 0; else mrpDisplay">
+
+            </div>
+            <ng-template #mrpDisplay>
+            <h5 class="pricerow"> M.R.P : {{companyConfig?.currencySymbol}} <s class="mobilePrice"> {{selectedProduct?.productCost}}</s> </h5>
+            <h5>
+                <p class="pricerow"> Price : {{companyConfig?.currencySymbol}} {{selectedProduct?.productPrice}}</p>
+            </h5>
+            <h5>
+                <p class="pricerow">Save : {{companyConfig?.currencySymbol}} {{selectedProduct?.productCost - selectedProduct?.productPrice}}</p>
+            </h5>
+            </ng-template>
+            <div class="addToButton" *ngIf="currentstock > 0; else addToCartDisable">
+                <button class="btn  " (click)="addToCart(selectedProduct)">Add to Cart</button><br><br>
+                <button class="btn  " *ngIf="viewCartStatus == true" (click)="viewCart()">View Cart</button><br>
+              </div>
+              <ng-template #addToCartDisable>
+                <div class="addToButton">
+                  <p> <b> Currently this product is not available</b></p>
+                <button disabled class="btn btn-warning" (click)="addToCart(selectedProduct)" style="border: 3px solid white;">Add to Cart</button><br><br>
+              </div>
+              </ng-template>
+            <button class="btn  " onclick="$zoho.salesiq.floatwindow.visible(&quot;show&quot;);">Request
+                Quote!</button>
+        </div>
+    </div>
+</div>
+<div class="container" *ngIf="noSpecification == false; else specDisplay"><br>
+    <h5 class="text-center">Specifications</h5><br>
+    <div class="row">
+        <div class="col-md-6">
+            <table style="width:100%">
+                <tr>
+                    <th>MODEL</th>
+                    <th>{{selectedProduct?.productName}}</th>
+                </tr>
+                <tr *ngFor="let specification of firstTableSpecification">
+                    <td><b>{{specification.specName}}</b> </td>
+                    <td [innerHtml]='specification.specDescription'></td>
+                </tr>
+            </table><br><br>
+        </div>
+        <div class="col-md-6">
+            <table style="width:100%">
+                <tr>
+                    <th>MODEL</th>
+                    <th>{{selectedProduct?.productName}}</th>
+                </tr>
+                <tr *ngFor="let specification of secondTableSpecification">
+                    <td><b> {{specification.specName}}</b></td>
+                    <td [innerHtml]='specification.specDescription'></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div><br>
+<ng-template #specDisplay>
+    <div></div>
+</ng-template>
+</div> -->

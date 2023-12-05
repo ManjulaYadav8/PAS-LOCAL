@@ -1,0 +1,98 @@
+<div class="container" style="display: flex; align-items: center;justify-content: center;">
+    <mat-card class="mat-elevation-z3" style="border-radius: 10px;">
+        <nav mat-tab-nav-bar mat-stretch-tabs class="container mat-elevation-z3">
+            <a mat-tab-link class="secondaryNav CustomFont" routerLinkActive="active" routerLink="/login">Login</a>
+            <a mat-tab-link class="secondaryNav CustomFont" routerLinkActive="active" routerLink="/signup" >Signup</a>
+        </nav>
+        <br/>
+        <br/>
+        <form #userLogForm="ngForm" (ngSubmit)="createUser(userLogForm)">
+        <div class="row" *ngIf="authError" style="margin-right: 10px;margin-left: 10px;">
+            <small class="alert alert-danger CustomFont">{{authError?. message}}</small>
+            <br/>
+        </div>
+            <div class="form-group" style="display: flex;flex-direction: row;">
+                <div style="flex: 1;padding-left: 10px;">
+                    <label for="fullName" class="CustomFont">Name</label>
+                </div>
+                <div style="flex: 2;">
+                    <input ngModel type="text" #fullName="ngModel" name="fullName" placeholder="Name" required>
+                </div>
+            </div>
+              <small style="padding-left: 10px;" class="text-danger CustomFont" *ngIf="fullName.invalid && (fullName.dirty || fullName.touched)" >
+                Name is required<br/></small>
+            <br/>
+
+            <div class="form-group" style="display: flex;flex-direction: row;">
+                <div style="flex: 1;padding-left: 10px;">
+                    <label for="email" class="CustomFont">Email * 
+                        <i class="fa fa-question-circle-o selectedItem" container="body" data-toggle="popover"
+                        data-trigger="focus" tabindex="0" data-placement="bottom" title="Email"
+                        data-content="This information is required for company communications and will not be shared with any external entities."
+                        data-original-title=""></i>
+                    </label>
+                </div>
+                <div style="flex: 2;">
+                    <input ngModel type="email" #email="ngModel" name="email" placeholder="Enter Email" [pattern]="emailpattern" required>
+                </div>
+            </div>
+            <small style="padding-left: 10px;" class="text-danger CustomFont" *ngIf="email.invalid && (email.dirty || email.touched) && !email.errors['pattern']" >
+                Email is required<br/></small>
+                <small style="padding-left: 10px;" class="text-danger CustomFont" *ngIf="email.invalid && (email.dirty || email.touched) && email.errors['pattern']" >
+                Enter A Valid Email<br/></small>
+              <br/>
+
+              <div class="form-group" style="display: flex;flex-direction: row;">
+                <div style="flex: 1;padding-left: 10px;">
+                    <label for="mobile" class="CustomFont">Mobile 
+                        <i class="fa fa-question-circle-o selectedItem" container="body" data-toggle="popover"
+                        data-trigger="focus" tabindex="0" data-placement="bottom"
+                        title="Mobile Number"
+                        data-content="This information is required for company communications and will not be shared with any external entities."
+                        data-original-title=""></i>
+                    </label>
+                </div>
+                <div style="flex: 2;">
+                    <input ngModel type="number" #mobile="ngModel" name="mobile" placeholder="Enter Mobile" [pattern]="mobNumberPattern" required>
+                </div>
+            </div>
+              <div style="padding-left: 10px;" class="text-danger CustomFont" *ngIf="mobile.invalid && (mobile.dirty || mobile.touched)" >
+                <small>
+                    <small *ngIf="mobile.errors['required']">Mobile is required<br/></small>
+                    <small *ngIf="mobile.errors['pattern']">Enter A Valid Mobile Number<br/></small>
+                </small>
+              </div>
+              <br/>
+
+              <div class="form-group" style="display: flex;flex-direction: row;">
+                <div style="flex: 1;padding-left: 10px;">
+                    <label for="password" class="CustomFont">Password</label>
+                </div>
+                <div style="flex: 2;">
+                    <input ngModel type="password" #password="ngModel" name="password" placeholder="Enter Password" required>
+                </div>
+              </div>
+              <small style="padding-left: 10px;" class="text-danger CustomFont" *ngIf="password.invalid && (password.dirty || password.touched)">
+                Password is required<br/></small>
+              <br/>
+
+              <div class="form-group" style="display: flex;flex-direction: row;">
+                <div style="flex: 1;padding-left: 10px;">
+                    <label for="confirmPassword" class="CustomFont">Confirm Password</label>
+                </div>
+                <div style="flex: 2;">
+                    <input ngModel type="password" #confirmPassword="ngModel" name="confirmPassword" placeholder="Confirm Password" pattern="{{ password.value }}" required>
+                </div>
+              </div>
+              <div style="padding-left: 10px;" class="text-danger CustomFont" *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)">
+                <small *ngIf="confirmPassword.errors['required']"> Confirm password is required<br/></small>
+                <small *ngIf="confirmPassword.errors['pattern']"> Password confirm do not match<br/></small>
+              </div>
+              <br/>
+              <div class="form-group" style="text-align: center;">
+                    <button class="btn CustomFont" type="submit" [disabled]="userLogForm.invalid">Signup</button>
+              </div>
+
+        </form>
+    </mat-card>
+</div>

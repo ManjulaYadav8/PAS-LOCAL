@@ -1,0 +1,38 @@
+<!-- <div class="bannerbody">
+    <img [src]="selectedBannerImg" class="banner img-responsive " style="width: 100%;height: 100%;">
+    <div class="shadow">
+    </div>
+    </div> -->
+<div class="container">
+   <div class="text-center">
+    <ul class="breadcrumb">
+        <li><a routerLink="/home" (click)="topFunction()">Home</a></li>
+        <li><a routerLink="/blog" (click)="topFunction()">Blog</a></li>
+      </ul>
+    </div>
+    <h4 class="text-center">{{blogTitle}}</h4><br>
+   <!-- <div class="row"> -->
+       <!-- <div class="col-md-2 adspace"></div> -->
+       <!-- <div class="col-md-8"> -->
+           <div class="row">
+               <div class="col-md-6">
+                   <div class="firstBlog">
+                <img [src]="blogUrl" alt="blog" class="first img-responsive img-thumbnail" style="width: 100%;height: 100%;">
+            </div>
+                <div class="websecond">
+                <img [src]="blogSecond" alt="blog" class="second img-responsive img-thumbnail" style="width: 100%;height: 100%;">
+            </div>
+               </div>
+               <div class="col-md-6">
+                <p>Published on: {{blogPublishedDate | date : 'dd-MMM-yyyy'}}</p>
+                <p  [innerHtml] = blogBody> </p>
+                <div class="mobsecond">
+                <img [src]="blogSecond" alt="blog" class="second img-thumbnail" >
+            </div>
+               </div>
+           </div>
+        
+       <!-- </div> -->
+       <!-- <div class="col-md-2 adspace"></div> -->
+   <!-- </div> -->
+</div>

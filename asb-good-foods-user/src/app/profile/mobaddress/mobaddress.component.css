@@ -1,0 +1,44 @@
+.fa-pencil{
+    margin-left: 100px;
+}
+.fa-trash{
+    margin-left: 20px;
+}
+agm-map{
+    height: 400px;
+}
+.orderscroll{
+    margin:4px, 4px;
+    padding:4px;
+    width: 100%;
+    height: 550px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align:justify;
+   }
+   .address{
+    text-align: end; 
+ }
+ .adlabel{
+     text-transform: capitalize;
+ }
+ /* .mtop{
+     margin-top: 120px;
+ } */
+  mat-toolbar{
+    background-color: #2A8168;
+    color: white;
+  }
+  .modal{
+    z-index: 9999999;
+    overflow-y:auto;
+  }
+  .fill-remaining-space {
+    flex: 1 1 auto;
+  }
+
+  @media screen and (max-width:960px){
+    .input-group{
+        margin-left: 2px;
+    }
+  }

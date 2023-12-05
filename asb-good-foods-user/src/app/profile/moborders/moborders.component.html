@@ -1,0 +1,84 @@
+<div class="container">
+    <!-- <ul class="breadcrumb">
+        <li><a routerLink="/profile" (click)="topFunction()" style="color: black;">Back</a></li>
+      </ul> -->
+        <div *ngIf="orderId != 0; else noorder">
+            <i class="fa fa-2x fa-arrow-circle-left" aria-hidden="true" routerLink="/profile" (click)="topFunction()" ></i>
+            <div class="row" style="padding-left: 20px;">
+              <div class="continueshopping">
+                <button class="btn custom-font" (click)="continueShopping()">Continue Shopping</button>
+            </div>
+              <div class="sorting" style="padding-left: 10px;">
+                <div class="dropdown sort custom-font"> Sort By: 
+                  <button type="button" class="btn dropdown-toggle custom-font" id="dropdownMenuButton" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false"> {{sortVariable}} </button>
+                  <div class="dropdown-menu text-center">
+                    <button class="dropdown-item custom-font" (click)="orderIdselect(orderItems)">Order Id</button>
+                    <button class="dropdown-item custom-font" (click)="date(orderItems)">Date</button>
+                    <button class="dropdown-item custom-font" (click)="hightolow(orderItems)">Price: High To Low</button>
+                    <button class="dropdown-item custom-font" (click)="lowtohigh(orderItems)">Price: Low To High</button>
+                  </div>
+                </div>
+              </div> 
+            </div>
+            <br>
+        <div class="orderscroll">
+          <div class="form-group">
+            <input type="text" class="form-control custom-font" name="searchString" placeholder="search...." [(ngModel)]="searchString">
+        </div>
+    <div *ngFor="let order of orderItems | fresh: searchString;">
+            <div class="card" style="cursor: pointer;">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="companydata custom-font">
+                            <img src="../../assets/logo.jpg" class="companylogo img-thumbnail" alt="" (click)="viewOrderDetails(order)"><br>
+                            <!-- <h6 (click)="viewOrderDetails(order)">ASB FOOD</h6> -->
+                            <p (click)="viewOrderDetails(order)" style="font-size: small;"><b>Status :</b>{{order.orderStatusName}}</p>
+                            <button class="btn" (click)="reorder(order.orderItems)"
+                            data-toggle="modal" data-target="#confirmModalLong">Reorder</button>
+                        </div>
+                        <div class="orderdata custom-font" (click)="viewOrderDetails(order)">
+                            <p style="margin-bottom:0;"> <b>Order Id :</b> # {{order.orderId}}</p>
+                            <p style="margin : 0; padding-top:0;"> <b>Order On : </b>{{order.date | date: 'dd-MMM-yyyy'}} </p>
+                            <div><b>Items : </b>
+                            <p style="margin : 0; padding-top:0;" *ngFor="let orderItem of order.orderItems">
+                                {{orderItem.quantity}} x {{orderItem.productName}},
+                            </p>
+                        </div>
+                            <p style="margin : 0; padding-top:0;"><b>Total Amount : {{companyConfig?.currencySymbol}}</b> {{order.total | number:'1.1-2' }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div><br>
+        </div>
+    </div>
+</div>
+    <ng-template #noorder>
+        <div class="text-ceter custom-font">
+        <h2>You don't have any active orders</h2><br>
+        <button class="btn bg-light" (click)="continueShopping()">Place your first
+            Order</button>
+        </div>
+    </ng-template>
+   
+</div>
+<div class="modal fade" id="confirmModalLong" role="dialog" aria-labelledby="confirmModalLongLongTitle"
+aria-hidden="true">
+<div class="modal-dialog  modal-dialog-centered" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title custom-font" id="confirmModalLongLongTitle">Add Product to Cart</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body custom-font">
+      <p>Are You Sure Want to add this Products to Cart</p>
+    </div>
+    <div class="modal-footer custom-font">
+      <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+      <button type="button" class="btn" data-dismiss="modal" (click)="cartUpdate()">Confirm</button>
+    </div>
+  </div>
+</div>
+</div>

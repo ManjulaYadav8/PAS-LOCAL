@@ -1,0 +1,230 @@
+.statictext{
+   padding-left: 20%;
+   width: 50%;
+   /* padding-right: 20%; */
+}
+.dynamictext{
+    margin-left: 20%;
+}
+
+.imageSrc{
+    /* padding: 20px; */
+    margin-left: 20px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    /* margin-left: 25%; */
+    /* margin-left: -12px; */
+}
+.quantity{
+    margin-top: 20px;
+}
+.textqty{
+    /* margin-top: 50px; */
+    margin-left: 50px;
+}
+.billing{
+    margin-left: 200px;
+}
+.orderstatictext{
+    /* padding-left: 10%; */
+    margin-left: 20px;
+    width: 50%;
+}
+.orderdynamictext{
+    padding-left: 5%;
+}
+.card{
+    margin-left: 10%;
+    width: 80%;
+}
+.fa-3x{
+    cursor: pointer;
+    margin-left: 10%;
+    /* color: rgb(10, 43, 226); */
+    /* transform: scale(1.5); */
+}
+.buttonsm{
+    margin-left: 30px;
+    text-align: end;
+}
+/* .mtop{
+    margin-top: 50px
+} */
+.rating{
+   margin-left: 200px;
+    /* position: absolute; */
+    transform: translate(-35%,-20%) rotateY(180deg);
+    display: flex;
+    /* left: 70%; */
+ }
+.rating input{
+   display: none;
+}
+.rating label{
+   display: block;
+   cursor: pointer;
+   width: 50px;
+}
+.rating label:before{
+   content: '\f005';
+   font-family: fontAwesome;
+   position: relative;
+   display: block;
+   font-size: 50px;
+   color: #101010;
+}
+.rating label:after{
+   content: '\f005';
+   font-family: fontAwesome;
+   position: absolute;
+   display: block;
+   font-size: 50px;
+   color: #2A8168;
+   top: 0;
+   opacity: 0;
+   transition: .5s;
+   text-shadow: 0 2px 5px rgba(0, 0, 0, .5);
+}
+.rating label:hover:after, .rating label:hover ~ label:after, .rating input:checked ~ label:after{
+   opacity: 1;
+}
+.imgRes{
+    text-align: center;
+}
+.container{
+    font-family: "CustomFont";
+}
+.name{
+    font-size: medium;
+}
+.modal{
+    /* margin-top: 5%; */
+    /* width: 50%;margin-left: 20%; */
+    /* padding: 20px; */
+    /* margin-top: 100px; */
+    z-index: 9999999 !important;
+    overflow-y: auto !important;
+  }
+  mat-toolbar{
+    background-color: #2A8168;
+    color: white;
+  }
+  .fill-remaining-space {
+    flex: 1 1 auto;
+  }
+.eventDetails b{
+padding: 10px;
+}
+tr:nth-child(odd){
+    /* background-color:  #eef3b8; */
+    background-color:  #d4f3ea;
+    color: #0f0f0f;
+}
+tr:nth-child(even){
+    /* background-color: #eef388; */
+    background-color: white;
+    color: #070707;
+}
+.orderscroll{
+    height: 50px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align:justify;
+   }
+.item{
+    width: 40%;
+}
+.modalheading{
+    margin-top: -17%;
+  }
+  .modal-header{
+  background-color: #2A8168;
+  }
+  .rating > input {
+    display: none;
+  }
+@media screen and (max-width:960px) {
+    .modalheading{
+        margin-top: -23%;
+      }
+      .col-md-7{
+          width: 90%;
+          margin-left: 5%;
+      }
+    .name{
+        font-size: small;
+    }
+    .item{
+        width: 10%;
+    }
+    /* .mtop{
+        margin-top: 140px
+    } */
+    .statictext{
+        padding-left: 5%;
+        width: 50%;
+        font-size: small;
+     }
+     .dynamictext{
+         margin-left: 0%;
+         font-size: small;
+     }
+    .imageSrc{
+        /* padding: 20px; */
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        /* margin-left: 25%; */
+        /* margin-left: -12px; */
+    }  
+    .quantity{
+        text-align: center;
+    }
+    .card ,.breadcrumb{
+        margin-left: 0%;
+        width: 100%;
+    }
+    .textqty{
+        /* margin-top: 30px; */
+        margin-left: 30px;
+    }
+    .fa-3x{
+        cursor: pointer;
+        margin-left: 0%;
+        /* color: blue */
+        /* transform: scale(1.5); */
+    }
+    .buttonsm{
+        margin-left: 0px;
+        text-align: end;
+    }
+    .rating{
+        margin-left: 50px;
+        transform: translate(-0%,-20%) rotateY(180deg);
+        display: flex;
+     }
+     .rating label:before{
+        content: '\f005';
+        font-family: fontAwesome;
+        position: relative;
+        display: block;
+        font-size: 40px;
+        color: #101010;
+     }
+     .rating label:after{
+        content: '\f005';
+        font-family: fontAwesome;
+        position: absolute;
+        display: block;
+        font-size: 40px;
+        color: #2A8168;
+        top: 0;
+        opacity: 0;
+        transition: .5s;
+        text-shadow: 0 2px 5px rgba(0, 0, 0, .5);
+     }
+     .rating label:hover:after, .rating label:hover ~ label:after, .rating input:checked ~ label:after{
+        opacity: 1;
+     }
+}

@@ -1,0 +1,120 @@
+.header{
+  background-color: rgb(229, 234, 235);
+   /* width: 347px; */
+}
+.validation-error{
+  color: red;
+  margin-left: 200px;
+}
+.order-summary {
+  height: 100%;
+   width: 100%;
+ }
+ .form-group{
+   margin-top: 5px;
+ }
+.checkout{
+  font-size: 25px;
+  margin-bottom: 15px;
+}
+fieldset.scheduler-border {
+  border: 1px groove #ddd !important;
+  padding: 0 1.4em 1.4em 1.4em !important;
+  margin: 0 0 1.5em 0 !important;
+  -webkit-box-shadow:  0px 0px 0px 0px #000;
+          box-shadow:  0px 0px 0px 0px #000;
+}
+.container{
+  position: relative;
+}
+/* legend.scheduler-border {
+  font-size: 1.2em !important;
+  font-weight: bold !important;
+  text-align: left !important;
+} */
+legend.scheduler-border {
+  width:inherit; /* Or auto */
+  padding:0 10px; /* To give a bit of padding on the left and right */
+  border-bottom:none;
+}
+ @media screen and (max-width: 960px) and (orientation:portrait){
+  #sameAddress{
+    margin-left: 10px;
+   }
+  .checkout-box {
+    flex-direction: column;
+  }
+  .validation-error{
+    color: red;
+    margin-left: 0px;
+    width: 300px;
+  }
+  .customer-details {
+    width: 100%;
+  }
+  .order-summary {
+    width: 100%;
+  }
+  /* .container{
+    width: 100px;
+  } */
+  .form-group{
+    margin-left: 20px;
+    width: 100%;
+  }
+  .order-summary{
+      width: 100%;
+      height: 100%;
+  }
+  .header{
+    background-color: rgb(229, 234, 235);
+     width: 300px;
+  }
+  .btn-block{
+    margin-left: -20px;
+  }
+}
+ /* @media (max-width: 600px) {
+  section {
+    align-items: inherit;
+    flex-direction: column;
+  }
+  .label-wrap {
+    flex-shrink: 0;
+    text-align: left;
+    width: 110px;
+  }
+  .container {
+    flex-grow: 1;
+    width: auto;
+  }
+  form{
+    padding: 10px;
+  }
+  .header{
+    background-color: rgb(229, 234, 235);
+     width: 300px;
+  }
+}
+@media (max-width: 350px) { 
+  .header{
+    width: 250px;
+  }
+  .order-summary{
+    width: 250px;
+  }
+}
+@media (max-width: 1024px){
+  .col-md-9{
+    width: 300px;
+    margin-left: 0px;
+  }
+}
+@media (max-width: 1366px){
+  .header{
+    width: 300px;
+  }
+  .order-summary{
+    width: 300px;
+  }
+} */

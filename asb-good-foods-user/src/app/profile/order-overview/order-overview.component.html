@@ -1,0 +1,428 @@
+<div class="container" *ngIf="type == 'Order'; else eventOverview">
+    <i class="fa fa-2x fa-arrow-circle-left"  aria-hidden="true" routerLink="/profile" (click)="topFunction()"></i>
+    <div class="card">
+        <div class="card-header">
+            <h5 class="text-center custom-font">View order Details</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <p class="statictext custom-font ">Order date </p>
+                <p class="dynamictext custom-font">{{order?.date | date: 'dd-MMM-yyyy'}}</p>
+            </div>
+            <div class="row">
+                <p class="statictext custom-font">Order </p>
+                <p class="dynamictext custom-font"># {{order?.orderId}}</p>
+            </div>
+            <div class="row">
+                <p class="statictext custom-font">Payment Method</p>
+                <p class="dynamictext custom-font">{{order?.paymentMode}}</p>
+            </div>
+            <div class="row">
+                <p class="statictext custom-font">Delivery Mode </p>
+                <p class="dynamictext custom-font">{{order?.mode}}</p>
+            </div>
+            <div class="row">
+                <p class="statictext custom-font">Estimated Delivery Date</p>
+                <p class="dynamictext custom-font">{{order?.estimatedDeliveryDate | date: 'dd-MMM-yyyy'}}</p>
+            </div>
+            <div class="row">
+                <p class="statictext custom-font">Delivered On </p>
+                <p class="dynamictext custom-font">{{order?.deliveredDate | date: 'dd-MMM-yyyy'}}</p>
+            </div>
+            <hr>
+            <div class="text-center custom-font">
+                <a target="_blank" [href]="order?.pdf" download>Download Invoice PDF</a>
+            </div>
+            <hr style="border:1px solid black; opacity: 0.2;">
+            <div style="display: flex;flex-direction: row;">
+                <div style="flex:1">
+                    <button class="btn" mat-raised-button style="width: 100%;" (click)="reorder(order.orderItems)" 
+                    data-toggle="modal" data-target="#confirmModalLong">
+                        <span class="custom-font">Reorder</span> 
+                    </button> 
+                    <div class="modal fade" id="confirmModalLong" role="dialog" aria-labelledby="confirmModalLongLongTitle"
+                        aria-hidden="true">
+                        <div class="modal-dialog  modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title custom-font" id="confirmModalLongLongTitle">Add Product to Cart</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body custom-font">
+                              <p>Are You Sure Want to add this Products to Cart</p>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn custom-font" data-dismiss="modal">Cancel</button>
+                              <button type="button" class="btn custom-font" data-dismiss="modal" (click)="cartUpdate()">Confirm</button>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>&nbsp;&nbsp;
+                <div style="flex:1">
+                    <button class="btn" mat-raised-button style="width: 100%;"
+                    data-toggle="modal" data-target="#cancelOrder" [disabled]="!['Open','InProgress'].includes(order?.orderStatusName)"
+                    [ngStyle]="{'background-color':order?.orderStatusName === 'Cancelled' ? '#CD113B' : '#2A8168' }">
+                    <div *ngIf="order?.orderStatusName === 'Cancelled' else cnlOrd">
+                        <span class="custom-font" style="color: white;">Cancelled</span> 
+                    </div>
+                    <ng-template #cnlOrd>
+                        <span class="custom-font">Cancel Order</span> 
+                    </ng-template>
+                        
+                    </button> 
+                    <div class="modal fade" id="cancelOrder" role="dialog" aria-labelledby="cancelOrderModal"
+                        aria-hidden="true">
+                        <div class="modal-dialog  modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title custom-font" id="cancelOrderModal">Cancel Order</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body custom-font">
+                              <p>Are You Sure Want to Cancel The Order</p>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn custom-font" data-dismiss="modal">Cancel</button>
+                              <button type="button" class="btn custom-font" data-dismiss="modal" (click)="cancelOrder(order)">Confirm</button>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="text-center custom-font">Billing Address</h5>
+                        </div>
+                        <div class="card-body">
+                            <address class="text-center custom-font">
+                                {{order?.addressLine1}}<br>
+                                {{order?.addressLine2}}<br>
+                                {{order?.city}}<br>
+                                {{order?.state}}<br>
+                                {{order?.pincode}} <br>
+                            </address>
+                        </div>
+                    </div><br>
+                        <div class="card">
+                        <div class="card-header">
+                            <h5 class="text-center custom-font">Shipping Address</h5>
+                        </div>
+                        <div class="card-body">
+                            <div *ngIf="order?.sameAddress == true; else diffshippingad">
+                                <address class="text-center custom-font">
+                                    {{order?.addressLine1}}<br>
+                                    {{order?.addressLine2}}<br>
+                                    {{order?.city}}<br>
+                                    {{order?.state}}<br>
+                                    {{order?.pincode}} <br>
+                                </address>
+                            </div>
+                            <ng-template #diffshippingad>
+                                <address class="text-center custom-font">
+                                    {{order?.saddressLine1}}<br>
+                                    {{order?.saddressLine2}}<br>
+                                    {{order?.scity}}<br>
+                                    {{order?.sstate}}<br>
+                                    {{order?.spincode}} <br>
+                                </address>
+                            </ng-template>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="card" *ngIf="userProfile?.userType == 'BUSINESS'">
+                        <div class="card-header">
+                            <h5 class="text-center custom-font">Company Details</h5>
+                        </div>
+                        <div class="card-body">
+                            <div>
+                                <address class="text-center custom-font">
+                                    Company Name : {{userProfile?.companyName}}<br>
+                                    Company Gst :  {{userProfile?.companyGst}}<br>
+                                    Company Cin :  {{userProfile?.companyCin}}<br>
+                                    Company Pan :  {{userProfile?.companyPan}}<br>
+                                </address>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="text-center custom-font">Order Details</h5>
+                        </div>
+                        <div class="card-body">
+                            <div>
+                                <div *ngFor="let orderItem of order?.orderItems">
+                                    <div class="row">
+                                        <div class="imgsrc">
+                                            <img [src]="orderItem.primaryUrl" class="imageSrc img-thumbnail">
+                                        </div>
+                                        <div class="textqty">
+                                            <p class="name custom-font" style="margin-bottom:0; font-size: 14px;"><b>{{orderItem.productName}}</b>
+                                            </p>
+                                            <p class="name custom-font" style="margin: 0;padding-top: 0; font-size: 14px;">Quantity :
+                                                {{orderItem.quantity}}</p>
+                                            <p class="name custom-font" style="margin: 0;padding-top: 0; font-size: 14px;">{{companyConfig?.currencySymbol}}
+                                                {{orderItem.productPrice | number:'1.2-3' }}</p>
+                                            <button class="btn btn-xs custom-font " 
+                                            (click)="review(orderItem, order?.userId)" data-toggle="modal" data-target="#addReviewModal">Write a Review</button>
+                                        </div>
+                                    </div><hr>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="row">
+                                <p class="orderstatictext custom-font" style="margin-bottom:0;">Order Total</p>
+                                <p class="orderdynamictext custom-font" style="margin-bottom:0;">{{companyConfig?.currencySymbol}} {{order?.subtotal | number:'1.2-3' }}</p>
+                            </div>
+                            <div class="row">
+                                <p class="orderstatictext custom-font" style="padding-top: 0;margin-bottom:0;">Shipping Charges</p>
+                                <p class="orderdynamictext custom-font" style="padding-top: 0;margin-bottom:0;">{{companyConfig?.currencySymbol}} {{order?.shippingCharges | number:'1.2-3' }}</p>
+                            </div>
+                            <div class="row" *ngIf="userProfile?.userType === 'INDIVIDUAL' && order?.couponDiscount !== 0.00">
+                                <p class="orderstatictext custom-font" style="padding-top: 0;margin-bottom:0;">Coupon Discount</p>
+                                <p class="orderdynamictext custom-font" style="padding-top: 0;margin-bottom:0;">{{companyConfig?.currencySymbol}} {{order?.couponDiscount | number:'1.2-3' }}</p>
+                            </div>
+                            <div class="row" *ngIf="userProfile?.userType === 'BUSINESS' && order?.businessDiscount !== 0.00">
+                                <p class="orderstatictext custom-font" style="padding-top: 0;margin-bottom:0;">Business Discount</p>
+                                <p class="orderdynamictext custom-font" style="padding-top: 0;margin-bottom:0;">{{companyConfig?.currencySymbol}} {{order?.businessDiscount | number:'1.2-3' }}</p>
+                            </div>
+                            <div class="row" *ngIf="companyConfig.country === 'INDIA' && order?.tax !== 0.00">
+                                <p class="orderstatictext custom-font" style="padding-top: 0;margin-bottom:0;">Tax Amount</p>
+                                <p class="orderdynamictext custom-font" style="padding-top: 0;margin-bottom:0;">{{companyConfig?.currencySymbol}} {{order?.tax | number:'1.2-3' }}</p>
+                            </div>
+                            <ng-container *ngIf="companyConfig.country !== 'INDIA'">
+                                <div class="row" *ngIf="order?.variousTax?.federalTaxAmt !== 0.00">
+                                    <p class="orderstatictext custom-font" style="padding-top: 0;margin-bottom:0;">Federal Tax</p>
+                                    <p class="orderdynamictext custom-font" style="padding-top: 0;margin-bottom:0;">{{companyConfig?.currencySymbol}} {{order?.variousTax?.federalTaxAmt | number:'1.2-3' }}</p>
+                                </div>
+                                <div class="row" *ngIf="order?.variousTax?.stateTaxAmt !== 0.00">
+                                    <p class="orderstatictext custom-font" style="padding-top: 0;margin-bottom:0;">State Tax</p>
+                                    <p class="orderdynamictext custom-font" style="padding-top: 0;margin-bottom:0;">{{companyConfig?.currencySymbol}} {{order?.variousTax?.stateTaxAmt | number:'1.2-3' }}</p>
+                                </div>
+                                <div class="row" *ngIf="order?.variousTax?.salesTaxAmt !== 0.00">
+                                    <p class="orderstatictext custom-font" style="padding-top: 0;margin-bottom:0;">Sales Tax</p>
+                                    <p class="orderdynamictext custom-font" style="padding-top: 0;margin-bottom:0;">{{companyConfig?.currencySymbol}} {{order?.variousTax?.salesTaxAmt | number:'1.2-3' }}</p>
+                                </div>
+                                <div class="row" *ngIf="order?.variousTax?.vat !== 0.00">
+                                    <p class="orderstatictext custom-font" style="padding-top: 0;margin-bottom:0;">VAT</p>
+                                    <p class="orderdynamictext custom-font" style="padding-top: 0;margin-bottom:0;">{{companyConfig?.currencySymbol}} {{order?.variousTax?.vat | number:'1.2-3' }}</p>
+                                </div>
+                            </ng-container>
+                            <hr>
+                            <div class="row">
+                                <p class="orderstatictext custom-font" style="padding-top: 0;margin-bottom:0;">Total</p>
+                                <p class="orderdynamictext custom-font" style="padding-top: 0;margin-bottom:0;">{{companyConfig?.currencySymbol}} {{order?.total | number:'1.2-3' }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #eventOverview>
+    <div class="container">
+        <i class="fa fa-2x fa-arrow-circle-left selectedItem"  aria-hidden="true" routerLink="/profile" (click)="topFunction()"></i>
+        <h5 class="text-center">Event Details</h5><br>
+        <table class="table text-center">
+            <tr>
+                <td><i class="fa fa-calendar-o" aria-hidden="true"></i></td>
+                <td>Event Type</td>
+                <td>{{viewData?.eventType}}</td>
+            </tr>
+            <!-- <tr>
+                <td><i class="fa fa-calendar" aria-hidden="true"></i></td>
+                <td>Event Name</td>
+                <td>{{viewData?.eventName}}</td>
+            </tr> -->
+            <tr>
+                <td><i class="fa fa-calendar-check-o" aria-hidden="true"></i></td>
+                <td>Event Date </td>
+                <td>{{viewData?.eventDate | date: 'dd-MMM-yyyy' }}</td>
+            </tr>
+            <tr>
+                <td><i class="fa fa-clock-o" aria-hidden="true"></i></td>
+                <td>Event Time</td>
+                <td>{{viewData?.eventTime}}</td>
+            </tr>
+            <!-- <tr>
+                <td><i class="fa fa-users" aria-hidden="true"></i></td>
+                <td>Number Of People</td>
+                <td>{{viewData?.noOfSlots}}</td>
+            </tr> -->
+            <!-- <tr>
+                <td><i class="fa fa-cutlery" aria-hidden="true"></i></td>
+                <td>Items</td>
+                 <td class="item">
+                   <div class="orderscroll">{{viewData?.items}}</div> </td>
+            </tr> -->
+            <tr>
+                <td><i class="fa fa-user" aria-hidden="true"></i></td>
+                <td>Name</td>
+                <td>{{viewData?.fullName}}</td>
+            </tr>
+            <tr>
+                <td><i class="fa fa-mobile" aria-hidden="true"></i></td>
+                <td>Mobile</td>
+                <td>{{viewData?.mobile}}</td>
+            </tr>
+            <tr>
+                <td><i class="fa fa-envelope-o" aria-hidden="true"></i></td>
+                <td>Email</td>
+                <td>{{viewData?.email}}</td>
+            </tr>
+            <!-- <tr>
+                <td><i class="fa fa-map-marker" aria-hidden="true"></i></td>
+                <td>Address Line 1</td>
+                <td>{{viewData?.addressLine1}}</td>
+            </tr>
+            <tr>
+                <td><i class="fa fa-map-marker" aria-hidden="true"></i></td>
+                <td>Address Line 2</td>
+                <td>{{viewData?.addressLine2}}</td>
+            </tr>
+            <tr>
+                <td><i class="fa fa-map-signs" aria-hidden="true"></i></td>
+                <td>City</td>
+                <td>{{viewData?.city}}</td>
+            </tr>
+            <tr>
+                <td><i class="fa fa-map" aria-hidden="true"></i></td>
+                <td>State</td>
+                <td>{{viewData?.state}}</td>
+            </tr>
+            <tr>
+                <td><i class="fa fa-map-pin" aria-hidden="true"></i></td>
+                <td>Zipcode</td>
+                <td>{{viewData?.pincode}}</td>
+            </tr> -->
+
+        </table>
+    </div>
+</ng-template>
+<!-- <div class="modal fade mtop" id="addReviewModal" role="dialog" aria-labelledby="addReviewModalLongTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" id="addReviewModalLongTitle">Write a Review</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center imgRes">
+                    <img src="{{imageUrl}}" alt="..." style="width: 80px; height: 80px;" class="img-thumbnail">
+                </div><br>
+                    <form #reviewForm="ngForm" autocomplete="off">
+                      <div class="form-group row">
+                      <div class="rating">
+                        <ng-container *ngFor="let num of [5,4,3,2,1]">
+                          <input  type="radio" (click)="starHandler(num)" [id]="'star' +num" [value]="num" name="rating" >
+                          <label [for]="'star'+num"></label>
+                        </ng-container>
+                      </div>  
+                      </div>
+                      <div class="text-center">
+                      <div class="form-group row" style="margin-top: -50px;">
+                        <label for="title" class="col-md-4">Title</label>
+                      <input class="col-md-7" ngModel name="title" #title="ngModel" [(ngModel)]="reviewService.reviewData.title">
+                    </div>
+                </div>
+                    <div class="text-center">
+                    <div class="form-group row">
+                        <label for="description" class="col-md-4">Description</label>
+                      <textarea class="col-md-7" ngModel name="description" #description="ngModel" [(ngModel)]="reviewService.reviewData.description"></textarea>  
+                    </div>
+                    </div>
+                  <div class="text-center">
+                      <div *ngIf="selectedImgName != undefined">
+                    <img [src]="imgSrc" style="width: 80px; height: 80px;" class="img-thumbnail" (click)="fileUploader.click()">
+                </div>
+                    <div class="form-group">
+                      <label>Select Image to upload</label>
+                      <input type="file" class="form-control" #fileUploader accept="image/*" name="imageUrl" style="overflow: hidden;"
+                        (change)="showPreview($event)">
+                    </div>
+                  </div>
+                      <div class="form-group ">
+                        <button type="submit" class="btn btn-md btn-block" data-dismiss="modal"
+                         (click)="shareReview(reviewForm)">Submit</button>
+                      </div>
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <div class="modal fade mtop" id="addReviewModal" role="dialog" aria-labelledby="addReviewModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" >
+        <div class="modal-content">
+            <!-- <div class="modal-header">
+                <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button> <br><br><br>
+            </div> -->
+            <mat-toolbar>
+                <span class="fill-remaining-space">
+                  <h5 class="text-center text-light"><span class="CustomFont">Write A Review</span></h5>
+                </span>
+                <button mat-icon-button class="close text-light" data-dismiss="modal">
+                  <mat-icon>clear</mat-icon>
+                </button>
+              </mat-toolbar><br>
+            <div class="modal-body text-center">
+          <div class="text-center imgRes">
+            <img src="{{imageUrl}}" alt="..." style="width: 80px; height: 80px;" class="img-thumbnail">
+        </div><br>
+            <form #reviewForm="ngForm" autocomplete="off">
+              <div class="form-group row">
+              <div class="rating">
+                <ng-container *ngFor="let num of ratings">
+                  <input  type="radio" (click)="starHandler(num)" [id]="'star' +num" [value]="num" name="rating" >
+                  <label [for]="'star'+num"></label>
+                </ng-container>
+              </div>  
+              </div>
+              <div class="text-center">
+              <div class="form-group row" style="margin-top: -50px;">
+                <label for="title" class="col-md-4">Title</label>
+              <input class="col-md-7" ngModel name="title" #title="ngModel" [(ngModel)]="reviewService.reviewData.title">
+            </div>
+        </div>
+            <div class="text-center">
+            <div class="form-group row">
+                <label for="description" class="col-md-4">Description</label>
+              <textarea class="col-md-7" ngModel name="description" #description="ngModel" [(ngModel)]="reviewService.reviewData.description"></textarea>  
+            </div>
+            </div>
+          <div class="text-center">
+              <div *ngIf="selectedImgName != undefined">
+            <img [src]="imgSrc" style="width: 80px; height: 80px;" class="img-thumbnail" (click)="fileUploader.click()">
+        </div>
+            <div class="form-group">
+              <label>Select Image to upload</label>
+              <input type="file" class="form-control" #fileUploader accept="image/*" name="imageUrl" style="overflow: hidden;"
+                (change)="showPreview($event)">
+            </div>
+          </div>
+              <div class="form-group ">
+                <button type="submit" class="btn btn-md btn-block" data-dismiss="modal"
+                 (click)="shareReview(reviewForm)">Submit</button>
+              </div>
+          </form>
+        </div>
+            </div>
+        </div>
+    </div>

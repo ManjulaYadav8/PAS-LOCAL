@@ -1,0 +1,270 @@
+<!-- <app-navbar></app-navbar> -->
+<br>
+<app-loader style="display: flex;align-items: center; justify-content: center;" *ngIf="dataLoading"></app-loader>
+<div class="container">
+  <!-- <div class="loader hidden">
+    <img src="../../assets/loading.gif" alt="loading.....">
+  </div> -->
+  <mat-card class="mat-elevation-z3" style="border-radius: 10px;">
+    <div style="display: flex;align-items: center;justify-content: center;">
+      <h4 class="custom-font">Order Summary</h4>
+    </div>
+  </mat-card><br>
+  <!-- <div *ngIf="preOrderStatus == true"> -->
+    <p class="mat-elevation-z3 estimated" style="text-align: center;"><br/>
+      <span class="blink">{{startingText}} {{estimateDate | date: 'dd-MMM-yyyy' }} {{endText}} {{deliveryTime}}</span><br/>
+      <b>Choose Preferred Delivery Date </b>&nbsp;&nbsp;
+      <mat-form-field>
+        <input [(ngModel)]="reqDeliveryDate" name="reqDeliveryDate" id="reqDeliveryDate" matInput [matDatepicker]="reqDeliveryDatePicker" 
+             (ngModelChange)="chooseDeliveryDate($event)" [matDatepickerFilter]="disabledFilterDates">
+        <mat-datepicker-toggle matSuffix [for]="reqDeliveryDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker touchUi #reqDeliveryDatePicker></mat-datepicker>
+        <button mat-button matSuffix (click)="clearDeliveryDate()"><mat-icon>clear</mat-icon></button>
+      </mat-form-field>&nbsp;&nbsp;
+      <button type="button" class="btn btn-md" (click)="openHolidayList();" style="margin-bottom: 5px;">
+        <div style="display: flex;flex-direction: row;">
+          <mat-icon style="transform: scale(0.8);">event_busy</mat-icon>&nbsp;&nbsp;
+          <div style="font-size: 12px;vertical-align: middle;padding-top: 4px;">Holidays</div> 
+        </div>
+      </button>
+    </p>
+  <!-- </div> -->
+  <br/>
+  <div>
+    <ng-container *ngFor="let cart of cartItems;let i = index;">
+      <mat-card class="mat-elevation-z3" style="border-radius: 10px;">
+        <div style="display: flex;flex-direction: row;">
+          <!-- img -->
+          <div style="flex: 1;">
+            <img class="imageSrc img-thumbnail" (click)="getMoreProducts(cart)" [src]="cart.primaryUrl" alt="...">
+          </div>
+          <!-- <div style="flex: 1;" > -->
+          <!-- </div> -->
+          <!-- product info -->
+          <div style="flex: 1;" class="second-flex">
+            <div style="display: flex;justify-content: center;">
+              <h4 class="custom-font" style="color: black;">{{cart.productName}}</h4>
+            </div>
+            <!-- <div style="display: flex;justify-content: center;">
+              <div class="mtop-qty">
+                <span class="custom-font">Quantity : {{cart.quantity}}</span>
+              </div>
+            </div> -->
+            <div class="blink custom-font preOrderDisplay" style="display: flex;justify-content: center;" *ngIf="cart.preOrder === 'yes';">
+              <!-- <i class="fa fa-hourglass-half " aria-hidden="true"></i> -->
+              <i class="fa fa-clock-o blink" aria-hidden="true"></i> &nbsp;&nbsp; <span class="custom-font preorder">Pre Order</span> 
+            </div>
+           </div>
+
+            <!-- price -->
+            <div style="flex: 1;flex-wrap: wrap;" class="second-flex">
+              <div  style="display: flex; justify-content: center;flex-wrap: wrap;align-self: center;">
+                <small class="custom-font small-font" style="color: black;">{{companyConfig?.currencySymbol}}{{cart.productPrice | number:'1.2-3'}} x {{cart.quantity}} </small>
+              </div>
+              <div  style="display: flex; justify-content: center;flex-wrap: wrap;align-self: center;">
+                <h4 class="custom-font" style="color: black;">{{companyConfig?.currencySymbol}}{{cart.productPrice * cart.quantity | number:'1.2-3'}}</h4>
+              </div>
+              <!-- <div  style="display: flex; justify-content: center;flex-wrap: wrap;align-self: center; margin-top: 12px;" *ngIf="cart.tax !== 0.00 && companyConfig.taxSetting == 'exclusive'">
+                <h4 class="custom-font small-font" style="color: rgb(250, 145, 145);">Tax : {{companyConfig?.currencySymbol}}{{cart.tax | number:'1.2-3'}}</h4>
+              </div> -->
+              <div  style="display: flex; justify-content: center;flex-wrap: wrap;align-self: center; margin-top: 12px; border: none;">
+              <button class="wt-btn_sign" (click)="specialRequest(cart)" data-toggle="modal" data-target="#specialReqModal">
+                <span class="wt-btn_sign-bound">
+                  <span data-width="#fff" data-text="Add Special Request" style="font-size: small;">Add Special Request</span></span></button>
+                </div>
+            </div>
+
+        </div>
+        <div style="display: flex;flex-direction: row;justify-content: space-evenly;font-family: 'CustomFont';flex-wrap: wrap;font-size: 10px;">
+          <div style="padding-top: 5px;" *ngIf="cart?.productWeight && cart.productWeight != null && cart.productWeight != '' &&
+          cart?.productWeightUom && cart.productWeightUom != null && cart.productWeightUom != ''">
+            <div class="prodDetail"><b>Weight</b> : {{cart?.productWeight}} {{cart?.productWeightUom}}</div>
+          </div>
+          <div style="padding-top: 5px;" *ngIf="cart?.productSize && cart.productSize != null && cart.productSize != '' &&
+          cart?.productSizeUom && cart.productSizeUom != null && cart.productSizeUom != ''">
+            <div class="prodDetail"><b>Size</b> : {{cart?.productSize}} {{cart?.productSizeUom}}</div>
+          </div>
+          <div style="padding-top: 5px;" *ngIf="cart?.productColor && cart.productColor != null && cart.productColor != ''">
+            <div class="prodDetail"><b>Color</b> : {{cart?.productColor}}</div>
+          </div>
+          <div style="padding-top: 5px;" *ngIf="cart?.itemCount && cart.itemCount != null && cart.itemCount != ''">
+            <div class="prodDetail"><b>Count</b> : {{cart?.itemCount}}</div>
+          </div>
+      </div>
+      </mat-card>
+      <br/>
+   </ng-container>
+   <!-- <mat-card class="mat-elevation-z3" style="border-radius: 10px;">
+      <div style="display: flex;align-items: center;justify-content:center">
+        <h5 class="custom-font">Shipping Charges</h5> 
+      </div>
+      <hr>
+      <ng-template *ngIf="userProfile?.userType === 'INDIVIDUAL'">
+        <div style="display: flex;align-items: center;justify-content:center">
+          <h5 class="custom-font">Coupon Discount</h5>  
+        </div>
+        <hr>
+      </ng-template>
+      <ng-template *ngIf="userProfile?.userType === 'BUSINESS'">
+        <div style="display: flex;align-items: center;justify-content:center">
+          <h5 class="custom-font">Business Discount</h5>
+        </div>
+        <hr>
+      </ng-template>
+      <div style="display: flex;align-items: center;justify-content:center">
+        <h5 class="custom-font">Tax</h5>
+      </div>
+      <hr>
+      <div style="display: flex;align-items: center;justify-content:center">
+        <h5 class="custom-font">Total</h5>
+      </div>
+   </mat-card> -->
+  </div>
+  <div style="width: 100%;border-radius: 10px;" class="table-responsive mat-elevation-z3" >
+    <table class="table">
+      <tbody>
+        <tr>
+          <td class="hideColumn"></td>
+          <td width="39%"><p class="chargesSummary">Delivery Charges</p></td>
+          <td width="30%"><span class="priceTag">{{companyConfig?.currencySymbol}} {{checkOutData?.shippingCharges | number:'1.2-3' }}</span></td>
+        </tr>
+        <tr *ngIf="userProfile?.userType === 'INDIVIDUAL' && couponDiscount !== 0.00">
+          <td class="hideColumn"></td>
+          <td width="39%"><p class="chargesSummary">Coupon Discount</p></td>
+          <td width="30%"><span class="priceTag" style="color: rgb(52, 173, 52);">{{companyConfig?.currencySymbol}} {{couponDiscount | number:'1.2-3' }}</span></td>
+          <td></td>
+        </tr>
+        <tr *ngIf="userProfile?.userType === 'BUSINESS' && businessDiscount !== 0.00">
+          <td class="hideColumn"></td>
+          <td width="39%"><p class="chargesSummary"> Business Discount</p></td>
+          <td width="30%"><span class="priceTag" style="color: rgb(52, 173, 52);">{{companyConfig?.currencySymbol}} {{businessDiscount | number:'1.2-3' }}</span></td>
+          <td></td>
+        </tr>
+        <tr *ngIf="companyConfig.taxSetting == 'inclusive'">
+          <td class="hideColumn"></td>
+          <td width="39%"><p class="chargesSummary">Item Total</p></td>
+          <td width="30%"><span class="priceTag">{{companyConfig?.currencySymbol}} {{+subTotal - tax | number:'1.2-3' }}</span></td>
+          <td></td>
+        </tr>
+        <tr *ngIf="companyConfig.taxSetting == 'exclusive'">
+          <td class="hideColumn"></td>
+          <td width="39%"><p class="chargesSummary">Item Total</p></td>
+          <td width="30%"><span class="priceTag">{{companyConfig?.currencySymbol}} {{+subTotal | number:'1.2-3' }}</span></td>
+          <td></td>
+        </tr>
+        <tr *ngIf="companyConfig.country === 'INDIA' && tax !== 0.00">
+          <td class="hideColumn"></td>
+          <td width="39%"><p class="chargesSummary">Tax</p></td>
+          <td width="30%"><span class="priceTag" style="color: rgb(250, 145, 145);">{{companyConfig?.currencySymbol}} {{tax | number:'1.2-3' }}</span></td>
+          <td></td>
+        </tr>
+        <ng-container *ngIf="companyConfig.country !== 'INDIA'">
+          <ng-container *ngIf="variousTax.federalTaxAmt !== 0.00">
+          <tr>
+            <td class="hideColumn"></td>
+            <td width="39%"><p class="chargesSummary">Federal Tax</p></td>
+            <td width="30%"><span class="priceTag" style="color: rgb(250, 145, 145);">{{companyConfig?.currencySymbol}} {{variousTax.federalTaxAmt | number:'1.2-3' }}</span></td>
+             <td></td>
+          </tr>
+         </ng-container>
+         <ng-container *ngIf="variousTax.stateTaxAmt !== 0.00">
+          <tr>
+            <td class="hideColumn"></td>
+            <td width="39%"><p class="chargesSummary">State Tax</p></td>
+            <td width="30%"><span class="priceTag" style="color: rgb(250, 145, 145);">{{companyConfig?.currencySymbol}} {{variousTax.stateTaxAmt | number:'1.2-3' }}</span></td>
+            <td></td>
+          </tr>
+        </ng-container>
+        <ng-container *ngIf="variousTax.salesTaxAmt !== 0.00">
+          <tr>
+            <td class="hideColumn"></td>
+            <td width="39%"><p class="chargesSummary">Sales Tax</p></td>
+            <td width="30%"><span class="priceTag" style="color: rgb(250, 145, 145);">{{companyConfig?.currencySymbol}} {{variousTax.salesTaxAmt | number:'1.2-3' }}</span></td>
+            <td></td>
+          </tr>
+        </ng-container>
+        <ng-container *ngIf="variousTax.vat !== 0.00">
+          <tr>
+            <td class="hideColumn"></td>
+            <td width="39%"><p class="chargesSummary">VAT</p></td>
+            <td width="30%"><span class="priceTag" style="color: rgb(250, 145, 145);">{{companyConfig?.currencySymbol}} {{variousTax.vat | number:'1.2-3' }}</span></td>
+            <td></td>
+          </tr>
+        </ng-container>
+        </ng-container>
+        <tr>
+          <td class="hideColumn"></td>
+          <td width="39%"><p class="chargesSummary">Total</p></td>
+          <td width="30%" *ngIf="companyConfig.taxSetting == 'exclusive'"><span class="priceTag">{{companyConfig?.currencySymbol}} {{+subTotal + tax + +checkOutData?.shippingCharges - couponDiscount - businessDiscount | number:'1.2-3'}}</span></td>
+          <td width="30%" *ngIf="companyConfig.taxSetting == 'inclusive'"><span class="priceTag">{{companyConfig?.currencySymbol}} {{+subTotal + +checkOutData?.shippingCharges - couponDiscount - businessDiscount | number:'1.2-3'}}</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div><br>
+  <p class=" mat-elevation-z3 estimated" style="text-align: center;" *ngIf="companyConfig.paypal">** We are currently accepting only Cash On Delivery payments</p>
+  <mat-card class="mat-elevation-z3" style="border-radius: 10px;" *ngIf="companyConfig.paypal">
+    <span class="custom-font" style="color: #2A8168;font-size: 20px;">Choose Payment Mode</span><br/>&nbsp;
+    <mat-button-toggle-group appearance="legacy" #group="matButtonToggleGroup" style="width:100%;"
+               [value]="selectedPaymentMode" (change)="changePaymentMode(group.value)" >
+        <mat-button-toggle  *ngFor="let mode of paymentModeToggle;" [value]="mode" style="width:100%;" class="mat-elevation-z3"
+        [ngStyle]="{'background-color':selectedPaymentMode === mode ? '#2A8168' : '#ffffff',
+                    'color':selectedPaymentMode === mode ? 'white' : 'black' }">
+          <span class="custom-font mode-font" style="font-size: 15px;">{{mode}}</span>
+        </mat-button-toggle>
+      </mat-button-toggle-group>                  
+  </mat-card><br>
+  <div class="row">
+    <div class="col-md-6"></div>
+    <div class="col-md-3"><button class="btn shopping" (click)="continueShopping()">Continue Shopping</button></div>
+    <div class="col-md-3">
+      <button *ngIf="this.selectedPaymentMode ==='Cash On Delivery' || this.selectedPaymentMode === null" class="btn checkout" 
+             (click)="codCheckOut()" [disabled]="selectedPaymentMode === null && companyConfig.paypal">Confirm Order</button>
+       <div style="padding-top: 6px;">
+              <div [ngStyle]="{'display' : selectedPaymentMode ==='PayPal' ? 'contents' : 'none' }" #paypalRef></div>
+       </div>
+    </div><br/>&nbsp;
+  </div>
+  </div>
+
+  <div class="modal fade" id="specialReqModal" role="dialog" aria-labelledby="specialReqModalLongTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document" >
+            <div class="modal-content">
+              <mat-toolbar>
+                <span class="fill-remaining-space">
+                  <h5 class="text-center text-light"><span class="CustomFont">Special Request</span></h5>
+                   </span>
+                <button mat-icon-button class="close text-light" data-dismiss="modal">
+                  <mat-icon>clear</mat-icon>
+                </button>
+              </mat-toolbar>
+              <div style="background-color: #2A8168;">
+              <p class="text-center text-light" style="font-size: x-small;">Please choose your Spice Level Rating or mention any Special Dietary Requirements</p>
+            </div>
+                <div class="modal-body">
+                    <form #reviewForm="ngForm" autocomplete="off" style="margin-top: -3px;">
+                      <p class="text-center" style="font-size: x-small;">Spice Level Rating</p>
+                      <div class="form-group row">
+                      <div class="rating">
+                        <ng-container *ngFor="let num of [5,4,3,2,1]">
+                          <input  type="radio" (click)="starHandler(num)" [id]="'star' +num" [value]="num" name="rating" >
+                          <label [for]="'star'+num"></label>
+                        </ng-container>
+                      </div>  
+                      </div>
+                      <div class="text-center" style="font-size: x-small; margin-top: -30px;" >Special Dietary Requirements</div>
+                    <div class="text-center">
+                    <div class="form-group">
+                      <textarea class="btn-md btn-block" ngModel name="specialText" #specialText="ngModel" [(ngModel)]="cartService.cartData.specialText"
+                    style="font-size: 14px;"></textarea>  
+                    </div>
+                    </div>
+                      <div class="form-group ">
+                        <button type="submit" class="btn btn-md btn-block custom-font" style="font-size: 16px;"
+                         (click)="updatesplreq(reviewForm)" data-dismiss="modal">Submit</button>
+                      </div>
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
